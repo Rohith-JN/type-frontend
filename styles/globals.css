@@ -1,6 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: "LEXEND";
+  src: url("../public/fonts/LexendDeca-Regular.ttf");
+}
 
 :root {
     --bg-color: #262a33;
