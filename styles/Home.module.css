@@ -17,7 +17,7 @@
     background-color: var(--sub-alt-color);
 }
 .Input_Container {
-    display: flex; 
+    display: flex;
     margin-top: 9rem; 
     flex-direction: row; 
     justify-content: space-around; 
