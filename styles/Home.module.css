@@ -3,7 +3,7 @@
     flex-direction: column; 
     align-items: center; 
     width: 100%; 
-    height: 100vh; 
+    height: 100%; 
 }
 .NavBar {
     display: flex; 
@@ -17,15 +17,20 @@
     background-color: var(--sub-alt-color);
 }
 .Input_Container {
-    display: flex;
-    margin-top: 9rem; 
-    flex-direction: row; 
-    justify-content: space-around; 
-    align-items: center; 
+    margin-top: 8.5rem;
+    border-radius: 0.3rem;
     width: 50%; 
-    height: 9rem; 
-    border-radius: 0.75rem; 
-    background-color: var(--sub-alt-color);
+    height: 7.5rem; 
+    background-color: transparent;
+}
+.Input_Field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 4rem;
+    width: 50%;
+    margin-top: 0.5rem;
+    border-radius: 0.3rem;
 }
 h1.Nav_Text {
     font-family: 'lexend';
