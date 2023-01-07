@@ -11,7 +11,7 @@
     flex-direction: row; 
     justify-content: space-around; 
     align-items: center; 
-    width: 50%; 
+    width: 45%;
     height: 2.5rem; 
     border-radius: 0.75rem; 
     background-color: var(--sub-alt-color);
@@ -19,18 +19,16 @@
 .Input_Container {
     margin-top: 8.5rem;
     border-radius: 0.3rem;
-    width: 50%; 
-    height: 7.5rem; 
+    width: 60%; 
     background-color: transparent;
 }
-.Input_Field {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 4rem;
-    width: 50%;
-    margin-top: 0.5rem;
-    border-radius: 0.3rem;
+h1.Paragraph {
+    font-family: 'lexend';
+    font-size: 1.5rem; 
+    line-height: 3rem;
+    cursor: pointer;
+    color: var(--sub-color);
+    font-weight: normal;
 }
 h1.Nav_Text {
     font-family: 'lexend';
