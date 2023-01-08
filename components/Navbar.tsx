@@ -17,13 +17,21 @@ function NavOption(props: { optionText: string, isSelected: boolean, route: stri
         </div>
     );
 }
+
 const Navbar = () => {
-    const [selectedOption, setSelectedOption] = useState(1);
+    const { asPath } = useRouter();
     const options = [
         { id: 1, optionText: 'type', route: '/' },
         { id: 2, optionText: 'account', route: '/account' },
         { id: 3, optionText: 'leaderboard', route: '/leaderboard' },
     ];
+    let currentId = 1;
+    options.map((option) => {
+        if (option.route === asPath) {
+            currentId = option.id
+        }
+    })
+    const [selectedOption, setSelectedOption] = useState(currentId);
 
     return (
         <div className={styles.Navbar}>

@@ -34,7 +34,7 @@ h1.heading {
 
 .Nav_Items {
     display: flex; 
-    margin-top: 1rem; 
+    margin-top: 0.5rem; 
     flex-direction: row; 
     justify-content: space-around; 
     align-items: center; 
