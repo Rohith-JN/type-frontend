@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
             setLoading(true);
         };
         const end = () => {
-            setLoading(false);
+            setTimeout(() => setLoading(false), 900);
         };
         Router.events.on("routeChangeStart", start);
         Router.events.on("routeChangeComplete", end);

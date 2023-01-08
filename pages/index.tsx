@@ -1,7 +1,7 @@
 import styles from '../styles/Home.module.css';
-import { useState } from 'react'
+import { useEffect, useState } from 'react';
 
-function NavOption(props) {
+function NavOption(props: { optionText: string, isSelected: boolean, onClick: () => void }) {
     const { optionText, isSelected, onClick } = props;
 
     return (
@@ -11,7 +11,7 @@ function NavOption(props) {
     );
 }
 
-export default function Home(props) {
+export default function Home() {
     const [punctuation, setPunctuation] = useState(false);
     const [numbers, setNumbers] = useState(false);
     const [advanced, setAdvanced] = useState(false);
