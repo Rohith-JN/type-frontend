@@ -1,49 +1,84 @@
-.Nav_Container {
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    width: 100%; 
-    height: 100%; 
+.Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 .NavBar {
-    display: flex; 
-    margin-top: 7rem; 
-    flex-direction: row; 
-    justify-content: space-around; 
-    align-items: center; 
+    display: flex;
+    margin-top: 7rem;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
     width: 45%;
-    height: 2.5rem; 
-    border-radius: 0.75rem; 
+    height: 2.5rem;
+    border-radius: 0.75rem;
     background-color: var(--sub-alt-color);
 }
-.Input_Container {
+.TextContainer {
     margin-top: 8.5rem;
     border-radius: 0.3rem;
-    width: 60%; 
-    background-color: transparent;
+    width: 45%;
+    height: 150px;
+    background-color: var(--sub-alt-color);
+}
+.InputContainer {
+    margin-top: 0.6rem;
+    width: 45%;
+    height: 42px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.InputContainer input {
+    border-radius: 0.3rem;
+    height: 42px;
+    width: 55%;
+    background-color: var(--sub-alt-color);
+    outline: none;
+    border: none;
+}
+.InputContainer .WPM  {
+    width: 14%;
+    height: 42px;
+    background-color: var(--sub-alt-color);
+    border-radius: 0.3rem;
+}
+.InputContainer .Time {
+    width: 14%;
+    height: 42px;
+    background-color: var(--sub-alt-color);
+    border-radius: 0.3rem;
+}
+.InputContainer .Reset {
+    width: 14%;
+    height: 42px;
+    background-color: var(--sub-alt-color);
+    border-radius: 0.3rem;
 }
 h1.Paragraph {
     font-family: 'lexend';
-    font-size: 1.5rem; 
+    font-size: 1.5rem;
     line-height: 3rem;
     cursor: pointer;
     color: var(--sub-color);
     font-weight: normal;
 }
-h1.Nav_Text {
+h1.NavText {
     font-family: 'lexend';
-    font-size: 1rem; 
+    font-size: 1rem;
     line-height: 1.5rem;
     cursor: pointer;
     color: var(--sub-color);
     font-weight: normal;
 }
-h1.Nav_Text:hover {
+h1.NavText:hover {
     color: white;
 }
 .Divider {
-    width: 0.25rem; 
-    height: 1.25rem; 
-    border-radius: 0.375rem; 
+    width: 0.25rem;
+    height: 1.25rem;
+    border-radius: 0.375rem;
     background-color: var(--bg-color);
 }
