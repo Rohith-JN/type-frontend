@@ -17,45 +17,86 @@
     background-color: var(--sub-alt-color);
 }
 .TextContainer {
-    margin-top: 8.5rem;
+    margin-top: 7.5rem;
     border-radius: 0.3rem;
-    width: 45%;
+    width: 53%;
     height: 150px;
     background-color: var(--sub-alt-color);
 }
 .InputContainer {
     margin-top: 0.6rem;
-    width: 45%;
-    height: 42px;
+    width: 53%;
+    height: 60px;
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 15px;
 }
 .InputContainer input {
     border-radius: 0.3rem;
-    height: 42px;
+    height: 57px;
     width: 55%;
     background-color: var(--sub-alt-color);
     outline: none;
-    border: none;
+    border: 2px solid var(--sub-color);
+    padding: 0 0 0 20px;
+    transition: 0.3s;
+    color: white;
+    font-family: 'lexend';
+    font-size: 1.5rem;
+}
+.InputContainer input:focus {
+    border: 2px solid var(--main-color);
 }
 .InputContainer .WPM  {
-    width: 14%;
-    height: 42px;
+    width: 15%;
+    height: 60px;
     background-color: var(--sub-alt-color);
     border-radius: 0.3rem;
 }
 .InputContainer .Time {
-    width: 14%;
-    height: 42px;
+    width: 15%;
+    height: 60px;
     background-color: var(--sub-alt-color);
     border-radius: 0.3rem;
 }
 .InputContainer .Reset {
-    width: 14%;
-    height: 42px;
+    width: 12%;
+    height: 60px;
     background-color: var(--sub-alt-color);
     border-radius: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.InputContainer .Reset span {
+    color: var(--sub-color);
+    padding-top: 5px;
+}
+.InputContainer .WPM {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.InputContainer .WPM h1 {
+    font-family: 'lexend';
+    font-weight: normal;
+    font-size: 1.7rem;
+    color: var(--sub-color);
+}
+.InputContainer .WPM span {
+    font-size: 1.4rem;
+    color: var(--sub-color);
+}
+.InputContainer .Time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.InputContainer .Time h1 {
+    font-family: 'lexend';
+    font-weight: normal;
+    font-size: 1.7rem;
+    color: var(--sub-color);
 }
 h1.Paragraph {
     font-family: 'lexend';

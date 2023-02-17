@@ -1,0 +1,69 @@
+.Signup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 8rem;
+}
+.Signup form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 1rem;
+}
+.Signup h1 {
+    font-family: 'lexend';
+    font-weight: normal;
+    font-size: 2.5rem;
+    color: white;
+}
+.Signup input {
+    border-radius: 0.3rem;
+    height: 57px;
+    width: 100%;
+    background-color: var(--sub-alt-color);
+    outline: none;
+    border: 2px solid var(--sub-color);
+    padding: 0 0 0 20px;
+    transition: 0.3s;
+    color: white;
+    font-family: 'lexend';
+    font-size: 1.5rem;
+}
+.Signup input:focus {
+    border: 2px solid var(--main-color);
+}
+.Signup form button.slide:hover, .Signup form button.slide:focus {
+    box-shadow: inset 10.5em 0 0 0 #fff;
+}
+.Signup form button {
+    cursor: pointer;
+    color: white;
+    transition: 0.5s;
+    height: 50px;
+    width: 130px;
+    margin-top: 20px;
+    font-size: 15px;
+    background: none;
+    font-family: sans-serif;
+    border: 2px solid white;
+    border-radius: 3px;
+}
+.Signup form button:hover, .Signup form button:focus {
+    border-color: var(--color);
+    color: black;
+}
+.Signup p {
+    font-family: 'lexend';
+    color: var(--sub-color);
+    padding-top: 2rem;
+    font-size: 1.1rem;
+}
+.Signup span {
+    font-family: 'lexend';
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
