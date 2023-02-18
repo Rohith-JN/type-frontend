@@ -1,5 +1,5 @@
 import styles from '../styles/Navbar.module.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 function NavOption(props: { optionText: string, isSelected: boolean, route: string, onClick: () => void }) {
@@ -20,12 +20,12 @@ function NavOption(props: { optionText: string, isSelected: boolean, route: stri
 
 const Navbar = () => {
     const { asPath } = useRouter();
-    const options = [
+    const options = useMemo(() => [
         { id: 1, optionText: 'type', route: '/' },
         { id: 2, optionText: 'log-in', route: '/login' },
         { id: 3, optionText: 'sign-up', route: '/signup' },
         { id: 4, optionText: 'leaderboard', route: '/leaderboard' },
-    ];
+    ], []);
     let currentId = 1;
     options.map((option) => {
         if (option.route === asPath) {
@@ -33,6 +33,16 @@ const Navbar = () => {
         }
     })
     const [selectedOption, setSelectedOption] = useState(currentId);
+
+    useEffect(() => {
+        let currentId = 1;
+        options.forEach((option) => {
+            if (option.route === asPath) {
+                currentId = option.id;
+            }
+        });
+        setSelectedOption(currentId);
+    }, [asPath, options]);
 
     return (
         <div className={styles.Navbar}>

@@ -48,19 +48,19 @@
     border: 2px solid var(--main-color);
 }
 .InputContainer .WPM  {
-    width: 15%;
+    width: 17%;
     height: 60px;
     background-color: var(--sub-alt-color);
     border-radius: 0.3rem;
 }
 .InputContainer .Time {
-    width: 15%;
+    width: 14%;
     height: 60px;
     background-color: var(--sub-alt-color);
     border-radius: 0.3rem;
 }
 .InputContainer .Reset {
-    width: 12%;
+    width: 11%;
     height: 60px;
     background-color: var(--sub-alt-color);
     border-radius: 0.3rem;
