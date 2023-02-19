@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app'
 import Router from "next/router";
 import { useState, useEffect } from 'react';
 import Loader from '../components/Loader';
+import { AuthProvider } from '../lib/auth';
 
 export default function App({ Component, pageProps }: AppProps) {
     const [loading, setLoading] = useState(false);
@@ -26,7 +27,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
     return (
         <Layout>
-            {loading ? (<Loader />) : (<Component {...pageProps} />)}
+            <AuthProvider>
+                {loading ? (<Loader />) : (<Component {...pageProps} />)}
+            </AuthProvider>
         </Layout>
     );
 }

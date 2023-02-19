@@ -1,5 +1,5 @@
 import styles from '../styles/Home.module.css';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FiRefreshCcw } from 'react-icons/fi';
 import secondsToTime from '../components/utils/utils';
 
@@ -14,7 +14,6 @@ function NavOption(props: { optionText: string, isSelected: boolean, onClick: ()
 }
 
 export default function Home() {
-  const inputRef = useRef<HTMLInputElement>(null);
   const [punctuation, setPunctuation] = useState(false);
   const [numbers, setNumbers] = useState(false);
   const [timeSelectedOption, setTimeSelectedOption] = useState(2);
@@ -26,7 +25,6 @@ export default function Home() {
   const navOptions = [
     { id: 1, optionText: 'time' },
     { id: 2, optionText: 'words' },
-    { id: 3, optionText: 'quote' },
   ]
   const timeOptions = [
     { id: 1, optionText: '15' },
@@ -40,7 +38,7 @@ export default function Home() {
     { id: 3, optionText: '50' },
     { id: 4, optionText: '100' },
   ];
-  const navBarWidth = (navOption == 3 ? "16%" : "46%");
+  const navBarWidth = (navOption == 3 ? "16%" : "44%");
   const dividerVisible = (navOption == 3 ? false : true);
 
   return (
@@ -58,7 +56,6 @@ export default function Home() {
           </>
           }
           {dividerVisible ? <div className={styles.Divider}></div> : null}
-
           {navOptions.map((option) => (
             <NavOption
               key={option.id}
@@ -66,6 +63,10 @@ export default function Home() {
               isSelected={option.id === navOption}
               onClick={() => {
                 setNavOption(option.id);
+                if (navOption == 3) {
+                  setPunctuation(false);
+                  setNumbers(false);
+                }
               }}
             />
           ))}
@@ -94,10 +95,9 @@ export default function Home() {
           ))}
         </div>
         <div className={styles.TextContainer}>
-          <p></p>
         </div>
         <div className={styles.InputContainer}>
-          <input ref={inputRef} autoComplete="off" spellCheck='false'></input>
+          <input autoComplete="off" spellCheck='false'></input>
           <div className={styles.WPM}>
             <h1>0 <span>WPM</span></h1>
           </div>
