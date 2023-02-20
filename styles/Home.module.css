@@ -112,7 +112,6 @@ h1.NavText {
     cursor: pointer;
     color: var(--sub-color);
     font-weight: normal;
-    animation: opacityOn 1s normal forwards;
 }
 h1.NavText:hover {
     color: white;
@@ -122,16 +121,4 @@ h1.NavText:hover {
     height: 1.25rem;
     border-radius: 0.375rem;
     background-color: var(--bg-color);
-}
-
-@keyframes opacityOn {
-    0% {
-        opacity: 1;
-    }
-    30% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
 }

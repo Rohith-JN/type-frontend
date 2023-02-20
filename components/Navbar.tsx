@@ -22,9 +22,8 @@ const Navbar = () => {
     const { asPath } = useRouter();
     const options = useMemo(() => [
         { id: 1, optionText: 'type', route: '/' },
-        { id: 2, optionText: 'log-in', route: '/login' },
-        { id: 3, optionText: 'sign-up', route: '/signup' },
-        { id: 4, optionText: 'leaderboard', route: '/leaderboard' },
+        { id: 2, optionText: 'account', route: '/account' },
+        { id: 3, optionText: 'leaderboard', route: '/leaderboard' },
     ], []);
     let currentId = 1;
     options.map((option) => {

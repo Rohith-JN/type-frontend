@@ -1,23 +1,19 @@
+import styles from '../styles/Signup.module.css';
 import React, { useState } from 'react';
-import styles from '../styles/Login.module.css';
-import { useRouter } from 'next/router'
-import { NextPage } from 'next';
 import firebase from 'firebase/compat/app';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Login: NextPage = () => {
-    const router = useRouter();
+export default function Signup(props: {onClick: VoidFunction}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const onSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        await firebase.auth().signInWithEmailAndPassword(email, password).then(function () {
-            router.push('/account');
+        await firebase.auth().createUserWithEmailAndPassword(email, password).then(function () {
         }).catch(function (error) {
             const message = error.message;
-            toast(message, {
+            toast.error(message, {
                 position: "bottom-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -32,16 +28,17 @@ const Login: NextPage = () => {
 
     return (
         <>
-            <div className={styles.Login}>
-                <h1>Log In</h1>
+            <div className={styles.Signup}>
+                <h1>Sign Up</h1>
                 <form role='form' onSubmit={onSubmit}>
+                    <input autoComplete="off" spellCheck='false' type="text" placeholder='Name' required></input>
                     <input autoComplete="off" spellCheck='false' type="email" placeholder='Email' value={email}
                         onChange={(event) => setEmail(event.target.value)} required></input>
                     <input autoComplete="off" spellCheck='false' type="password" placeholder='Password' value={password}
                         onChange={(event) => setPassword(event.target.value)} required></input>
-                    <button type="submit" value="Submit" className={styles.slide}>Log in</button>
+                    <button type="submit" value="Submit" className={styles.slide}>Sign up</button>
                 </form>
-                <p>Don&apos;t have an account? <span onClick={() => router.push("/signup")}>Sign Up</span></p>
+                <p>Already have an account? <span onClick={props.onClick}>Log In</span></p>
             </div>
             <ToastContainer
                 position="bottom-center"
@@ -56,5 +53,3 @@ const Login: NextPage = () => {
         </>
     );
 }
-
-export default Login

@@ -1,5 +1,5 @@
 import styles from '../styles/Home.module.css';
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { FiRefreshCcw } from 'react-icons/fi';
 import secondsToTime from '../components/utils/utils';
 
