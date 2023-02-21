@@ -1,7 +1,8 @@
 import styles from '../styles/Home.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiRefreshCcw } from 'react-icons/fi';
 import secondsToTime from '../components/utils/utils';
+import generateWords from '../components/utils/words';
 
 function NavOption(props: { optionText: string, isSelected: boolean, onClick: () => void }) {
   const { optionText, isSelected, onClick } = props;
@@ -21,6 +22,7 @@ export default function Home() {
   const [navOption, setNavOption] = useState(1);
   const [time, setTime] = useState(secondsToTime(30));
   const [words, setWords] = useState(25);
+  const [text, setText] = useState('');
 
   const navOptions = [
     { id: 1, optionText: 'time' },
@@ -40,6 +42,12 @@ export default function Home() {
   ];
   const navBarWidth = (navOption == 3 ? "16%" : "44%");
   const dividerVisible = (navOption == 3 ? false : true);
+
+  useEffect(() => {
+    if (navOption == 2) {
+      setText(generateWords(words));
+    }
+  }, [navOption, wordSelectedOption, words]);
 
   return (
     <>
@@ -95,6 +103,7 @@ export default function Home() {
           ))}
         </div>
         <div className={styles.TextContainer}>
+          <p>{text}</p>
         </div>
         <div className={styles.InputContainer}>
           <input autoComplete="off" spellCheck='false'></input>

@@ -21,6 +21,15 @@
     width: 53%;
     height: 150px;
     background-color: var(--sub-alt-color);
+    overflow: hidden;
+}
+.TextContainer p {
+    font-family: 'lexend';
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 3rem;
+    color: var(--sub-color);
+    font-size: 1.9rem;
 }
 .InputContainer {
     margin-top: 0.6rem;
