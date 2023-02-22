@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app'
 import Router from "next/router";
 import { useState, useEffect } from 'react';
 import Loader from '../components/Loader';
-import { AuthUserProvider } from '../lib/auth';
+import { AuthUserProvider } from '../firebase/auth';
 import { store } from "../store/store";
 import { Provider } from 'react-redux';
 

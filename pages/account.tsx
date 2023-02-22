@@ -1,4 +1,4 @@
-import { useAuth } from '../lib/auth';
+import { useAuth } from '../firebase/auth';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import { useState } from 'react';
