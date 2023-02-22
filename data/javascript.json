@@ -1,5 +1,4 @@
-{
-    "words": [
+[
       "this",
       "let",
       "const",
@@ -95,4 +94,4 @@
       "throw",
       "finally"
     ]
-  }
+  

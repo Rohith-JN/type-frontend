@@ -5,6 +5,8 @@ import Router from "next/router";
 import { useState, useEffect } from 'react';
 import Loader from '../components/Loader';
 import { AuthUserProvider } from '../lib/auth';
+import { store } from "../store/store";
+import { Provider } from 'react-redux';
 
 export default function App({ Component, pageProps }: AppProps) {
     const [loading, setLoading] = useState(false);
@@ -28,7 +30,9 @@ export default function App({ Component, pageProps }: AppProps) {
     return (
         <Layout>
             <AuthUserProvider>
-                {loading ? (<Loader />) : (<Component {...pageProps} />)}
+                <Provider store={store}>
+                    {loading ? (<Loader />) : (<Component {...pageProps} />)}
+                </Provider>
             </AuthUserProvider>
         </Layout>
     );

@@ -1,119 +1,104 @@
 import styles from '../styles/Home.module.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FiRefreshCcw } from 'react-icons/fi';
-import secondsToTime from '../components/utils/utils';
-import generateWords from '../components/utils/words';
-
-function NavOption(props: { optionText: string, isSelected: boolean, onClick: () => void }) {
-  const { optionText, isSelected, onClick } = props;
-
-  return (
-    <div onClick={onClick}>
-      {isSelected ? <h1 className={styles.NavText} style={{ color: 'var(--main-color)' }}>{optionText}</h1> : <h1 className={styles.NavText}>{optionText}</h1>}
-    </div >
-  );
-}
+import NavOption from '../components/NavOption';
+import { resetTest } from "../components/utils/test";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setTime,
+  setWordList,
+  timerSet,
+} from "../store/actions";
+import { State } from "../store/reducer";
 
 export default function Home() {
   const [punctuation, setPunctuation] = useState(false);
   const [numbers, setNumbers] = useState(false);
-  const [timeSelectedOption, setTimeSelectedOption] = useState(2);
-  const [wordSelectedOption, setWordSelectedOption] = useState(2);
-  const [navOption, setNavOption] = useState(1);
-  const [time, setTime] = useState(secondsToTime(30));
-  const [words, setWords] = useState(25);
-  const [text, setText] = useState('');
+  const [selectedOption, setSelectedOption] = useState(2);
+  const [option, setOption] = useState(30);
 
-  const navOptions = [
-    { id: 1, optionText: 'time' },
-    { id: 2, optionText: 'words' },
-  ]
   const timeOptions = [
-    { id: 1, optionText: '15' },
-    { id: 2, optionText: '30' },
-    { id: 3, optionText: '60' },
-    { id: 4, optionText: '120' },
+    { id: 1, optionText: 15 },
+    { id: 2, optionText: 30 },
+    { id: 3, optionText: 60 },
+    { id: 4, optionText: 120 },
   ];
-  const wordOptions = [
-    { id: 1, optionText: '10' },
-    { id: 2, optionText: '25' },
-    { id: 3, optionText: '50' },
-    { id: 4, optionText: '100' },
-  ];
-  const navBarWidth = (navOption == 3 ? "16%" : "44%");
-  const dividerVisible = (navOption == 3 ? false : true);
+
+  const {
+    preferences: { timeLimit },
+  } = useSelector((state: State) => state);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (navOption == 2) {
-      setText(generateWords(words));
+    const time = parseInt(localStorage.getItem("time") || "60", 10);
+    import(`../data/english.json`).then((words) =>
+      dispatch(setWordList(words))
+    );
+    dispatch(timerSet(time));
+    dispatch(setTime(time));
+  }, [dispatch]);
+
+  // Set Time
+  useEffect(() => {
+    if (timeLimit !== 0) {
+      document.querySelector(".time")?.childNodes.forEach((el) => {
+        if (el instanceof HTMLButtonElement)
+          el.classList.remove("selected");
+      });
+      document
+        .querySelector(`button[value="${timeLimit}"]`)
+        ?.classList.add("selected");
+      dispatch(setTime(timeLimit));
+      localStorage.setItem("time", `${timeLimit}`);
+      resetTest();
     }
-  }, [navOption, wordSelectedOption, words]);
+  }, [dispatch, timeLimit]);
+
+  const handleOptions = ({ target }: React.MouseEvent) => {
+    if (target instanceof HTMLButtonElement && target.dataset.option) {
+      if (+target.value === timeLimit) {
+        target.blur();
+        return;
+      }
+      switch (target.dataset.option) {
+        case "time":
+          dispatch(setTime(+target.value));
+          break;
+      }
+      target.blur();
+    }
+  };
 
   return (
     <>
       <div className={styles.Container}>
-        <div className={styles.NavBar} style={{ width: navBarWidth }}>
-          {navOption == 1 && <>
-            <h1 className={styles.NavText} onClick={() => setPunctuation(!punctuation)} style={punctuation ? { color: 'var(--main-color)' } : { color: 'var(--sub-color)' }}>@punctuation</h1>
-            <h1 className={styles.NavText} onClick={() => setNumbers(!numbers)} style={numbers ? { color: 'var(--main-color)' } : { color: 'var(--sub-color)' }}>#numbers</h1>
-          </>
-          }
-          {navOption == 2 && <>
-            <h1 className={styles.NavText} onClick={() => setPunctuation(!punctuation)} style={punctuation ? { color: 'var(--main-color)' } : { color: 'var(--sub-color)' }}>@punctuation</h1>
-            <h1 className={styles.NavText} onClick={() => setNumbers(!numbers)} style={numbers ? { color: 'var(--main-color)' } : { color: 'var(--sub-color)' }}>#numbers</h1>
-          </>
-          }
-          {dividerVisible ? <div className={styles.Divider}></div> : null}
-          {navOptions.map((option) => (
+        <div className={styles.NavBar} style={{ width: "44%" }}>
+          <h1 className={styles.NavText} onClick={() => setPunctuation(!punctuation)} style={punctuation ? { color: 'var(--main-color)' } : { color: 'var(--sub-color)' }}>@punctuation</h1>
+          <h1 className={styles.NavText} onClick={() => setNumbers(!numbers)} style={numbers ? { color: 'var(--main-color)' } : { color: 'var(--sub-color)' }}>#numbers</h1>
+          <div className={styles.Divider}></div>
+          <h1 className={styles.NavText} style={{ color: 'var(--main-color)' }}>time</h1>
+          <div className={styles.Divider}></div>
+          {timeOptions.map((option) => (
             <NavOption
               key={option.id}
               optionText={option.optionText}
-              isSelected={option.id === navOption}
+              isSelected={option.id === selectedOption}
               onClick={() => {
-                setNavOption(option.id);
-                if (navOption == 3) {
-                  setPunctuation(false);
-                  setNumbers(false);
-                }
-              }}
-            />
-          ))}
-          {dividerVisible ? <div className={styles.Divider}></div> : null}
-          {navOption == 1 && timeOptions.map((option) => (
-            <NavOption
-              key={option.id}
-              optionText={option.optionText}
-              isSelected={option.id === timeSelectedOption}
-              onClick={() => {
-                setTimeSelectedOption(option.id);
-                setTime(secondsToTime(Number(option.optionText)));
-              }}
-            />
-          ))}
-          {navOption == 2 && wordOptions.map((option) => (
-            <NavOption
-              key={option.id}
-              optionText={option.optionText}
-              isSelected={option.id === wordSelectedOption}
-              onClick={() => {
-                setWordSelectedOption(option.id);
-                setWords(Number(option.optionText));
+                setSelectedOption(option.id);
+                setOption(option.optionText);
               }}
             />
           ))}
         </div>
         <div className={styles.TextContainer}>
-          <p>{text}</p>
         </div>
         <div className={styles.InputContainer}>
-          <input autoComplete="off" spellCheck='false'></input>
           <div className={styles.WPM}>
             <h1>0 <span>WPM</span></h1>
           </div>
           <div className={styles.navOption}>
-            {navOption == 1 && <h1>{time}</h1>}
-            {navOption == 2 && <h1>{words}</h1>}
-            {navOption == 3 && <h1>quote</h1>}
+            <h1>{option}</h1>
           </div>
           <div className={styles.Reset}>
             <span>
