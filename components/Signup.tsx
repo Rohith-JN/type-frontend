@@ -4,7 +4,7 @@ import firebase from 'firebase/compat/app';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function Signup(props: {onClick: VoidFunction}) {
+export default function Signup(props: { onClick: VoidFunction }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
