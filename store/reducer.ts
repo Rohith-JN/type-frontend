@@ -16,7 +16,7 @@ import {
 
 export interface State {
     preferences: {
-        timeLimit: number;
+        time: number; // user preferred time limit
     };
     word: {
         currWord: string;
@@ -27,14 +27,14 @@ export interface State {
         caretRef: RefObject<HTMLSpanElement> | null;
     };
     time: {
-        timer: number;
-        timerId: NodeJS.Timeout | null;
+        timer: number; // represents remaining time for a timer
+        timerId: NodeJS.Timeout | null; // used to clear timer interval when test is reset or completed
     };
 }
 
 export const initialState: State = {
     preferences: {
-        timeLimit: 0,
+        time: 0,
     },
     word: {
         currWord: "",
@@ -135,7 +135,7 @@ const preferenceReducer = (
         case SET_TIME:
             return {
                 ...state,
-                timeLimit: payload,
+                time: payload,
             };
         default:
             return state;

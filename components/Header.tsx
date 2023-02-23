@@ -1,5 +1,5 @@
 import styles from '../styles/Header.module.css'
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import NavOption from '../components/NavOption';
 import { resetTest } from "../utils/test";
 import { useEffect } from "react";
@@ -10,64 +10,39 @@ import {
     timerSet,
 } from "../store/actions";
 import { State } from "../store/reducer";
+import useLocalStorage from '../hooks/useLocalStorage';
 
 export const Header = () => {
+    const {
+        preferences: { time },
+    } = useSelector((state: State) => state);
+    const dispatch = useDispatch();
     const [punctuation, setPunctuation] = useState(false);
     const [numbers, setNumbers] = useState(false);
     const [selectedOption, setSelectedOption] = useState(2);
-    const [option, setOption] = useState(30);
+    const [option, setOption] = useLocalStorage("time", time || 60);
 
-    const timeOptions = [
+    const timeOptions = useMemo(() => [
         { id: 1, optionText: 15 },
         { id: 2, optionText: 30 },
         { id: 3, optionText: 60 },
         { id: 4, optionText: 120 },
-    ];
+    ], []);
 
-    const {
-        preferences: { timeLimit },
-    } = useSelector((state: State) => state);
-    const dispatch = useDispatch();
-
+    // initial setup of time property
+    // get time from localStorage and set it to timer and time
     useEffect(() => {
-        const time = parseInt(localStorage.getItem("time") || "60", 10);
         import(`../data/english.json`).then((words) =>
             dispatch(setWordList(words))
         );
-        dispatch(timerSet(time));
-        dispatch(setTime(time));
-    }, [dispatch]);
+        dispatch(timerSet(option));
+        dispatch(setTime(option));
+        setSelectedOption(timeOptions.find(opt => opt.optionText === option)?.id || 2);
+    }, [dispatch, option]);
 
-    // Set Time
     useEffect(() => {
-        if (timeLimit !== 0) {
-            document.querySelector(".time")?.childNodes.forEach((el) => {
-                if (el instanceof HTMLButtonElement)
-                    el.classList.remove("selected");
-            });
-            document
-                .querySelector(`button[value="${timeLimit}"]`)
-                ?.classList.add("selected");
-            dispatch(setTime(timeLimit));
-            localStorage.setItem("time", `${timeLimit}`);
-            resetTest();
-        }
-    }, [dispatch, timeLimit]);
-
-    const handleOptions = ({ target }: React.MouseEvent) => {
-        if (target instanceof HTMLButtonElement && target.dataset.option) {
-            if (+target.value === timeLimit) {
-                target.blur();
-                return;
-            }
-            switch (target.dataset.option) {
-                case "time":
-                    dispatch(setTime(+target.value));
-                    break;
-            }
-            target.blur();
-        }
-    };
+        resetTest()
+    }, [dispatch, time])
 
     return (
         <div className={styles.Container}>
@@ -85,6 +60,7 @@ export const Header = () => {
                         onClick={() => {
                             setSelectedOption(option.id);
                             setOption(option.optionText);
+                            dispatch(setTime(option.optionText))
                         }}
                     />
                 ))}

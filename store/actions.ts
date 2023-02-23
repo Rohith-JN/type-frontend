@@ -13,7 +13,7 @@ export const SET_REF = "SETREF";
 export const SET_CARET_REF = "SETCARETREF";
 
 // Time Actions
-export const timerDecrement = () => ({ type: TIMER_DECREMENT });
+export const timerDecrement = () => ({ type: TIMER_DECREMENT }); 
 export const timerSet = (payload: number) => ({ type: TIMER_SET, payload });
 export const setTimerId = (payload: NodeJS.Timer | null) => ({
     type: TIMERID_SET,
