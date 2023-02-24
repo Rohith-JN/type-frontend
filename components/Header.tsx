@@ -36,6 +36,8 @@ export const Header = () => {
         import(`../data/english.json`).then((words) =>
             dispatch(setWordList(words))
         );
+        dispatch(timerSet(option));
+        dispatch(setTime(option));
         setSelectedOption(timeOptions.find(opt => opt.optionText === option)?.id || 2);
     }, [dispatch, option, timeOptions]);
 
