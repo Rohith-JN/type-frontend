@@ -45,7 +45,7 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
     const {
         time: { timer, timerId },
         word: { typedWord, currWord, activeWordRef, caretRef },
-        preferences: { timeLimit },
+        preferences: { time },
     } = getState();
 
     if (!timer) {
@@ -62,7 +62,7 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
     setTimeout(() => caret.classList.add("blink"), 500);
     switch (key) {
         case "Tab":
-            if (timer !== timeLimit || timerId) {
+            if (timer !== time || timerId) {
                 resetTest();
                 document.getElementsByClassName("word")[0].scrollIntoView();
             }
@@ -83,11 +83,11 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
     }
 };
 
-export const resetTest = async () => {
+export const resetTest = () => {
     const { dispatch, getState } = store;
     const {
         time: { timerId },
-        preferences: { timeLimit },
+        preferences: { time },
     } = getState();
     if (timerId) {
         clearInterval(timerId);
@@ -96,7 +96,7 @@ export const resetTest = async () => {
     import(`../data/english.json`).then((words) =>
         dispatch(setWordList(words.default))
     );
-    dispatch(timerSet(timeLimit));
+    dispatch(timerSet(time));
 };
 
 export const startTimer = () => {
