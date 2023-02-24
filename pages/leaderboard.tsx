@@ -1,1 +1,5 @@
-export default function leaderboard() { return (<></>); }
+const Leaderboard = () => {
+    return (<></>)
+}
+
+export default Leaderboard

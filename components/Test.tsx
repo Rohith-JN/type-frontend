@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setRef, setCaretRef } from "../store/actions";
 import { State } from "../store/reducer";
+import { FiRefreshCcw } from 'react-icons/fi';
+import { resetTest } from "../utils/test";
 
 const Test = () => {
     const {
@@ -36,7 +38,7 @@ const Test = () => {
                                     id="caret"
                                     className="blink"
                                     style={{
-                                        left: typedWord.length * 14.5833,
+                                        left: typedWord.length * 14.5833, // change based on letter
                                     }}>
                                     |
                                 </span>
@@ -72,8 +74,11 @@ const Test = () => {
                     );
                 })}
             </div>
+            <div style={{ width: "100%", justifyContent: "center", display: "flex", marginTop: "30px" }} onClick={resetTest}>
+                <FiRefreshCcw style={{ width: "28px", height: "auto", cursor: "pointer", color: "var(--sub-color)" }} />
+            </div>
         </div>
-    ); 
+    );
 }
 
 export default Test

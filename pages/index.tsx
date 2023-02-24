@@ -4,10 +4,10 @@ import styles from '../styles/Home.module.css';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../store/reducer";
-import { setTimerId, timerSet } from "../store/actions";
-import { recordTest } from "../utils/test";
+import { setTimerId } from "../store/actions";
+import { recordTest, resetTest } from "../utils/test";
 
-export default function Home() {
+const Home = () => {
   const {
     time: { timerId, timer },
     word: { currWord, typedWord, activeWordRef },
@@ -57,9 +57,11 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div style={{ display: "flex", width: "100%", height: "76vh", justifyContent: "center" }}>
+      <div style={{ display: "flex", width: "100%", height: "78.5vh", justifyContent: "center", alignItems: "center" }}>
         <Test />
       </div>
     </>
   )
 }
+
+export default Home

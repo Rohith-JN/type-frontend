@@ -1,3 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap");
+
+body {
+  margin: 0;
+  font-family: Inconsolata, monospace;
+}
+
 @font-face {
   font-family: "Lexend";
   src: url("../public/fonts/LexendDeca-Regular.ttf");
@@ -15,7 +22,6 @@
     --error-extra-color: #d22a2a;
     --colorful-error-color: #ff5f5f;
     --colorful-error-extra-color: #d22a2a;
-  font-family: 'lexend';
 }
 
   .test {
@@ -24,7 +30,6 @@
     justify-content: center;
     width: 60%;
     margin-bottom: 60px;
-    margin-left: 20px;
  }
   .timer {
     font-size: 21pt;
@@ -86,6 +91,7 @@
     transition: left 0.1s ease;
     position: absolute;
     color: var(--main-color);
+    margin-left: -7.29165px;
  }
   .box #caret.blink {
     animation: blink 1.5s infinite 1s;
