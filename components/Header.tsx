@@ -15,6 +15,7 @@ import useLocalStorage from '../hooks/useLocalStorage';
 export const Header = () => {
     const {
         preferences: { time },
+        time: { timer }
     } = useSelector((state: State) => state);
     const dispatch = useDispatch();
     const [punctuation, setPunctuation] = useState(false);
@@ -35,14 +36,14 @@ export const Header = () => {
         import(`../data/english.json`).then((words) =>
             dispatch(setWordList(words))
         );
-        dispatch(timerSet(option));
-        dispatch(setTime(option));
         setSelectedOption(timeOptions.find(opt => opt.optionText === option)?.id || 2);
-    }, [dispatch, option]);
+    }, [dispatch, option, timeOptions]);
 
     useEffect(() => {
         resetTest()
-    }, [dispatch, time])
+        dispatch(setTime(option))
+        dispatch(timerSet(option));
+    }, [dispatch, option])
 
     return (
         <div className={styles.Container}>
@@ -60,7 +61,6 @@ export const Header = () => {
                         onClick={() => {
                             setSelectedOption(option.id);
                             setOption(option.optionText);
-                            dispatch(setTime(option.optionText))
                         }}
                     />
                 ))}
