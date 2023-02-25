@@ -22,6 +22,10 @@ body {
     --error-extra-color: #d22a2a;
     --colorful-error-color: #ff5f5f;
     --colorful-error-extra-color: #d22a2a;
+  }
+  ::-webkit-scrollbar { 
+    width: 0;
+    height: 0;
 }
 
   .test {
@@ -92,7 +96,7 @@ body {
     position: absolute;
     color: var(--main-color);
     margin-left: -7.29165px;
- }
+  }
   .box #caret.blink {
     animation: blink 1.5s infinite 1s;
  }

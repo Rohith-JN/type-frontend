@@ -1,12 +1,13 @@
 import { Header } from '../components/Header';
 import Test from '../components/Test';
 import styles from '../styles/Home.module.css';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../store/reducer";
 import { setTimerId } from "../store/actions";
 import { recordTest } from "../utils/test";
 import Footer from '../components/Footer';
+import Loader from '../components/Loader';
 
 const Home = () => {
   const {
@@ -14,6 +15,7 @@ const Home = () => {
     word: { currWord, typedWord, activeWordRef },
   } = useSelector((state: State) => state);
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     document.onkeydown = (e) => {
@@ -55,11 +57,22 @@ const Home = () => {
     }
   }, [dispatch, timer, timerId]);
 
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 900);
+  }, []);
+
   return (
     <>
-      <Header />
-      <Test />
-      <Footer />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <Header />
+          <Test />
+          <Footer />
+        </>
+      )}
     </>
   )
 }
