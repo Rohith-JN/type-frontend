@@ -9,11 +9,13 @@
     display: flex;
     margin-top: 7rem;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-around;  
     align-items: center;
     height: 2.5rem;
     border-radius: 0.75rem;
     background-color: var(--sub-alt-color);
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .TextContainer {
     margin-top: 7.5rem;

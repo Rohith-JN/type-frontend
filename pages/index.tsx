@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../store/reducer";
 import { setTimerId } from "../store/actions";
-import { recordTest, resetTest } from "../utils/test";
+import { recordTest } from "../utils/test";
+import Footer from '../components/Footer';
 
 const Home = () => {
   const {
@@ -57,9 +58,8 @@ const Home = () => {
   return (
     <>
       <Header />
-      <div style={{ display: "flex", width: "100%", height: "78.5vh", justifyContent: "center", alignItems: "center" }}>
-        <Test />
-      </div>
+      <Test />
+      <Footer />
     </>
   )
 }
