@@ -1,6 +1,6 @@
 import styles from '../styles/Header.module.css';
 
-export default function NavOption(props: { optionText: number, isSelected: boolean, onClick: () => void }) {
+export default function Option(props: { optionText: number, isSelected: boolean, onClick: () => void }) {
     const { optionText, isSelected, onClick } = props;
 
     return (

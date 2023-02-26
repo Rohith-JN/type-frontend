@@ -1,6 +1,5 @@
 import { Header } from '../components/Header';
 import Test from '../components/Test';
-import styles from '../styles/Home.module.css';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../store/reducer";
@@ -8,7 +7,6 @@ import { setIsTestRuning, setTimerId } from "../store/actions";
 import { recordTest } from "../utils/test";
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
-import { insertObject } from '../utils/utils';
 
 const Home = () => {
   const {

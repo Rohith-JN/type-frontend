@@ -14,7 +14,6 @@ import {
     SET_CARET_REF,
     SET_RESULT,
     SET_ISTESTRUNNING,
-    SET_THEME,
 } from "./actions";
 
 export interface State {
@@ -161,8 +160,6 @@ const preferenceReducer = (
     { type, payload }: AnyAction
 ) => {
     switch (type) {
-        case SET_THEME:
-            return { ...state, theme: payload };
         case SET_TIME:
             return {
                 ...state,

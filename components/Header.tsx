@@ -1,6 +1,6 @@
 import styles from '../styles/Header.module.css'
 import { useMemo, useState } from 'react';
-import NavOption from '../components/NavOption';
+import Option from './Option';
 import { resetTest } from "../utils/test";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,7 +51,7 @@ export const Header = () => {
                 <h1 className={styles.NavText} style={{ color: 'var(--main-color)' }}>words</h1>
                 <div className={styles.Divider}></div>
                 {wordOptions.map((option) => (
-                    <NavOption
+                    <Option
                         key={option.id}
                         optionText={option.optionText}
                         isSelected={option.id === selectedOption}

@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { State } from "../store/reducer";
 import { useEffect } from 'react';
 import { insertObject } from '../utils/utils';
-import { resetTest } from '../utils/test';
 
 const Footer = () => {
     const {
