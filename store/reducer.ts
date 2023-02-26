@@ -12,11 +12,14 @@ import {
     SET_TIME,
     SET_REF,
     SET_CARET_REF,
+    SET_RESULT,
+    SET_ISTESTRUNNING,
 } from "./actions";
 
 export interface State {
     preferences: {
         time: number; // user preferred time limit
+        isTestRunning: boolean;
     };
     word: {
         currWord: string;
@@ -30,11 +33,23 @@ export interface State {
         timer: number; // represents remaining time for a timer
         timerId: NodeJS.Timeout | null; // used to clear timer interval when test is reset or completed
     };
+    result: {
+        results: [
+            {
+                wpm: number;
+                accuracy: number;
+                correctWords: number;
+                incorrectWords: number;
+                time: number;
+            }
+        ];
+    };
 }
 
 export const initialState: State = {
     preferences: {
         time: 0,
+        isTestRunning: false,
     },
     word: {
         currWord: "",
@@ -47,6 +62,17 @@ export const initialState: State = {
     time: {
         timer: 1,
         timerId: null,
+    },
+    result: {
+        results: [
+            {
+                wpm: 0,
+                accuracy: 0,
+                correctWords: 0,
+                incorrectWords: 0,
+                time: 0,
+            },
+        ],
     },
 };
 
@@ -61,6 +87,8 @@ const timerReducer = (
             return { ...state, timer: payload };
         case TIMERID_SET:
             return { ...state, timerId: payload };
+        case SET_RESULT:
+            return { ...state, result: payload };
         default:
             return state;
     }
@@ -137,6 +165,23 @@ const preferenceReducer = (
                 ...state,
                 time: payload,
             };
+        case SET_ISTESTRUNNING:
+            return {
+                ...state,
+                isTestRunning: payload,
+            };
+        default:
+            return state;
+    }
+};
+
+const resultReducer = (
+    state = initialState.result,
+    { type, payload }: AnyAction
+) => {
+    switch (type) {
+        case SET_RESULT:
+            return { ...state, results: payload };
         default:
             return state;
     }
@@ -146,4 +191,5 @@ export default combineReducers({
     time: timerReducer,
     word: wordReducer,
     preferences: preferenceReducer,
+    result: resultReducer,
 });

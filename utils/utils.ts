@@ -1,4 +1,4 @@
-function secondsToTime(e: number) {
+export function secondsToTime(e: number) {
     const m = Math.floor((e % 3600) / 60)
             .toString()
             .padStart(2, "0"),
@@ -8,5 +8,8 @@ function secondsToTime(e: number) {
 
     return m + ":" + s;
 }
-
-export default secondsToTime;
+export function insertObject(arr: any[], obj: any) {
+    let index = arr.length;
+    arr.splice(index, 0, obj);
+    console.log(arr);
+}

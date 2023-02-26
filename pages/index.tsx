@@ -4,10 +4,11 @@ import styles from '../styles/Home.module.css';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../store/reducer";
-import { setTimerId } from "../store/actions";
+import { setIsTestRuning, setTimerId } from "../store/actions";
 import { recordTest } from "../utils/test";
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
+import { insertObject } from '../utils/utils';
 
 const Home = () => {
   const {
@@ -54,6 +55,7 @@ const Home = () => {
     if (!timer && timerId) {
       clearInterval(timerId);
       dispatch(setTimerId(null));
+      dispatch(setIsTestRuning(false))
     }
   }, [dispatch, timer, timerId]);
 
