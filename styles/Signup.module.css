@@ -16,7 +16,7 @@
     font-family: 'lexend';
     font-weight: normal;
     font-size: 2.5rem;
-    color: white;
+    color: var(--text-color);
 }
 .Signup input {
     border-radius: 0.3rem;
@@ -27,7 +27,7 @@
     border: 2px solid var(--sub-color);
     padding: 0 0 0 20px;
     transition: 0.3s;
-    color: white;
+    color: var(--text-color);
     font-family: 'lexend';
     font-size: 1.3rem;
 }
@@ -39,7 +39,7 @@
 }
 .Signup form button {
     cursor: pointer;
-    color: white;
+    color: var(--text-color);
     transition: 0.5s;
     height: 50px;
     width: 130px;
@@ -47,7 +47,7 @@
     font-size: 15px;
     background: none;
     font-family: sans-serif;
-    border: 2px solid white;
+    border: 2px solid var(--text-color);
     border-radius: 3px;
 }
 .Signup form button:hover, .Signup form button:focus {
@@ -62,7 +62,7 @@
 }
 .Signup span {
     font-family: 'lexend';
-    color: white;
+    color: var(--text-color);
     font-size: 1.1rem;
     cursor: pointer;
 }

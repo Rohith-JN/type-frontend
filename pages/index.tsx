@@ -22,8 +22,7 @@ const Home = () => {
     document.onkeydown = (e) => {
       if (
         e.key.length === 1 ||
-        e.key === "Backspace" ||
-        e.key === "Tab"
+        e.key === "Backspace"
       ) {
         recordTest(e.key, e.ctrlKey);
         e.preventDefault();

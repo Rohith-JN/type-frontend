@@ -1,0 +1,265 @@
+.superUser {
+    --bg-color: #262a33;
+    --main-color: #43ffaf;
+    --caret-color: #43ffaf;
+    --sub-color: #526777;
+    --sub-alt-color: #1f232c;
+    --text-color: #e5f7ef;
+    --error-color: #ff5f5f;
+    --error-extra-color: #d22a2a;
+    --colorful-error-color: #ff5f5f;
+    --colorful-error-extra-color: #d22a2a;
+}
+.pink {
+    --bg-color: #333a45;
+  --main-color: #f44c7f;
+  --caret-color: #f44c7f;
+  --sub-color: #939eae;
+  --sub-alt-color: #000000;
+  --sub-alt-color: #2e343d;
+  --text-color: #e9ecf0;
+  --error-color: #da3333;
+  --error-extra-color: #791717;
+  --colorful-error-color: #c5da33;
+  --colorful-error-extra-color: #849224;
+}
+.aether {
+    --bg-color: #1b1d36;
+  --main-color: #fca6d1;
+  --caret-color: #99d6ea;
+  --sub-color: #99d6ea;
+  --sub-alt-color: #17182c;
+  --text-color: #e1e7ec;
+  --error-color: #fffb85;
+  --error-extra-color: #fffb85;
+  --colorful-error-color: #fffb85;
+  --colorful-error-extra-color: #fffb85;
+}
+.alduin {
+    --bg-color: #1c1c1c;
+  --main-color: #dfd7af;
+  --caret-color: #e3e3e3;
+  --sub-color: #444444;
+  --sub-alt-color: #242424;
+  --text-color: #f5f3ed;
+  --error-color: #af5f5f;
+  --error-extra-color: #4d2113;
+  --colorful-error-color: #af5f5f;
+  --colorful-error-extra-color: #4d2113;
+}
+.arch {
+    --bg-color: #0c0d11;
+  --main-color: #7ebab5;
+  --caret-color: #7ebab5;
+  --sub-color: #454864;
+  --sub-alt-color: #171a25;
+  --text-color: #f6f5f5;
+  --error-color: #ff4754;
+  --error-extra-color: #b02a33;
+  --colorful-error-color: #ff4754;
+  --colorful-error-extra-color: #b02a33;
+}
+.aurora {
+    --bg-color: #011926;
+  --main-color: #00e980;
+  --caret-color: #00e980;
+  --sub-color: #245c69;
+  --sub-alt-color: #000c13;
+  --text-color: #fff;
+  --error-color: #b94da1;
+  --error-extra-color: #9b3a76;
+  --colorful-error-color: #b94da1;
+  --colorful-error-extra-color: #9b3a76;
+}
+.bushido {
+    --bg-color: #242933;
+  --main-color: #ec4c56;
+  --caret-color: #ec4c56;
+  --sub-color: #596172;
+  --sub-alt-color: #1c222d;
+  --text-color: #f6f0e9;
+  --error-color: #ec4c56;
+  --error-extra-color: #9b333a;
+  --colorful-error-color: #ecdc4c;
+  --colorful-error-extra-color: #bdb03d;
+}
+.carbon {
+    --bg-color: #313131;
+  --main-color: #f66e0d;
+  --caret-color: #f66e0d;
+  --sub-color: #616161;
+  --sub-alt-color: #2b2b2b;
+  --text-color: #f5e6c8;
+  --error-color: #e72d2d;
+  --error-extra-color: #7e2a33;
+  --colorful-error-color: #e72d2d;
+  --colorful-error-extra-color: #7e2a33;
+}
+.dark {
+    --bg-color: #111;
+  --main-color: #eee;
+  --caret-color: #eee;
+  --sub-color: #444;
+  --sub-alt-color: #191919;
+  --text-color: #eee;
+  --error-color: #da3333;
+  --error-extra-color: #791717;
+  --colorful-error-color: #da3333;
+  --colorful-error-extra-color: #791717;
+}
+.dev {
+    --bg-color: #1b2028;
+  --main-color: #23a9d5;
+  --caret-color: #4b5975;
+  --sub-color: #4b5975;
+  --sub-alt-color: #151a21;
+  --text-color: #ccccb5;
+  --error-color: #b81b2c;
+  --error-extra-color: #84131f;
+  --colorful-error-color: #b81b2c;
+  --colorful-error-extra-color: #84131f;
+}
+.drowning {
+    --bg-color: #191826;
+  --main-color: #4a6fb5;
+  --caret-color: #4f85e8;
+  --sub-color: #50688c;
+  --sub-alt-color: #1e1f2f;
+  --text-color: #9393a7;
+  --error-color: #be555f;
+  --error-extra-color: #7e2a33;
+  --colorful-error-color: #be555f;
+  --colorful-error-extra-color: #7e2a33;
+}
+.gruvbox {
+    --bg-color: #282828;
+    --main-color: #d79921;
+    --caret-color: #fabd2f;
+    --sub-color: #665c54;
+    --sub-alt-color: #212121;
+    --text-color: #ebdbb2;
+    --error-color: #fb4934;
+    --error-extra-color: #cc241d;
+    --colorful-error-color: #cc241d;
+    --colorful-error-extra-color: #9d0006;
+}
+.metaverse {
+    --bg-color: #232323;
+  --main-color: #d82934;
+  --caret-color: #d82934;
+  --sub-color: #5e5e5e;
+  --sub-alt-color: #1d1d1d;
+  --text-color: #e8e8e8;
+  --error-color: #da3333;
+  --error-extra-color: #791717;
+  --colorful-error-color: #d7da33;
+  --colorful-error-extra-color: #737917;
+}
+.miami {
+    --bg-color: #18181a;
+  --main-color: #e4609b;
+  --caret-color: #e4609b;
+  --sub-color: #47bac0;
+  --sub-alt-color: #0f0f10;
+  --text-color: #fff;
+  --error-color: #fff591;
+  --error-extra-color: #b6af68;
+  --colorful-error-color: #fff591;
+  --colorful-error-extra-color: #b6af68;
+}
+.mountain {
+    --bg-color: #0f0f0f;
+  --main-color: #e7e7e7;
+  --caret-color: #f5f5f5;
+  --sub-color: #4c4c4c;
+  --sub-alt-color: #1a1a1a;
+  --text-color: #e7e7e7;
+  --error-color: #ac8c8c;
+  --error-extra-color: #c49ea0;
+  --colorful-error-color: #aca98a;
+  --colorful-error-extra-color: #c4c19e;
+}
+.nord {
+    --bg-color: #242933;
+    --caret-color: #d8dee9;
+    --main-color: #d8dee9;
+    --sub-color: #617b94;
+    --sub-alt-color: #1b1f27;
+    --text-color: #d8dee9;
+    --error-color: #bf616a;
+    --error-extra-color: #793e44;
+    --colorful-error-color: #bf616a;
+    --colorful-error-extra-color: #793e44;
+}
+.paper {
+    --bg-color: #eeeeee;
+  --main-color: #444444;
+  --caret-color: #444444;
+  --sub-color: #b2b2b2;
+  --sub-alt-color: #dddddd;
+  --text-color: #444444;
+  --error-color: #d70000;
+  --error-extra-color: #d70000;
+  --colorful-error-color: #d70000;
+  --colorful-error-extra-color: #d70000;
+}
+.pulse {
+    --bg-color: #181818;
+    --main-color: #17b8bd;
+    --caret-color: #17b8bd;
+    --sub-color: #53565a;
+    --sub-alt-color: #121212;
+    --text-color: #e5f4f4;
+    --error-color: #da3333;
+    --error-extra-color: #791717;
+    --colorful-error-color: #da3333;
+    --colorful-error-extra-color: #791717;
+}
+.shadow {
+    --bg-color: #000;
+  --main-color: #eee;
+  --caret-color: #eee;
+  --sub-color: #444;
+  --sub-alt-color: #171717;
+  --text-color: #eee;
+  --error-color: #fff;
+  --error-extra-color: #d8d8d8;
+  --colorful-error-color: #fff;
+  --colorful-error-extra-color: #d8d8d8;
+}
+.stealth {
+    --bg-color: #010203;
+  --main-color: #383e42;
+  --caret-color: #e25303;
+  --sub-color: #5e676e;
+  --sub-alt-color: #121212;
+  --text-color: #383e42;
+  --error-color: #e25303;
+  --error-extra-color: #73280c;
+  --colorful-error-color: #e25303;
+  --colorful-error-extra-color: #73280c;
+}
+.viridescent {
+    --bg-color: #2c3333;
+    --main-color: #95d5b2;
+    --caret-color: #f0d3c9;
+    --sub-color: #84a98c;
+    --sub-alt-color: #232828;
+    --text-color: #e9f5db;
+    --error-color: #ff4646;
+    --error-extra-color: #ab2f2f;
+    --colorful-error-color: #bd4141;
+    --colorful-error-extra-color: #883434;
+}
+.vscode {
+    --bg-color: #1e1e1e;
+    --main-color: #007acc;
+    --caret-color: #569cd6;
+    --sub-color: #4d4d4d;
+    --sub-alt-color: #191919;
+    --text-color: #d4d4d4;
+    --error-color: #f44747;
+    --error-extra-color: #f44747;
+    --colorful-error-color: #f44747;
+    --colorful-error-extra-color: #f44747;
+}

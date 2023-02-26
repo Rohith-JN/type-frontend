@@ -5,7 +5,7 @@ const ErrorPage500 = () => {
         <Head>
             <title>Error | 500</title>
         </Head>
-        <p style={{ fontFamily: 'lexend', fontSize: "1.1rem", color: "white" }}>500 | Internal server error</p>
+        <p style={{ fontFamily: 'lexend', fontSize: "1.1rem", color: "var(--text-color)" }}>500 | Internal server error</p>
     </div>)
 }
 export default ErrorPage500

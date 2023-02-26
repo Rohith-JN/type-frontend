@@ -126,7 +126,7 @@ button.NavButton.selected:hover {
 }
 
 h1.NavText:hover {
-    color: white;
+    color: var(--text-color);
 }
 .Divider {
     width: 0.25rem;

@@ -5,7 +5,7 @@ const ErrorPage = ({ statusCode, statusMessage }: { statusCode: number, statusMe
         <Head>
             <title>Error | {statusCode}</title>
         </Head>
-        <p style={{ fontFamily: 'lexend', fontSize: "1.1rem", color: "white" }}>{statusCode} | {statusMessage}</p>
+        <p style={{ fontFamily: 'lexend', fontSize: "1.1rem", color: "var(--text-color)" }}>{statusCode} | {statusMessage}</p>
     </div>)
 }
 export default ErrorPage

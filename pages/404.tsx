@@ -5,7 +5,7 @@ const ErrorPage404 = () => {
         <Head>
             <title>Error | 404</title>
         </Head>
-        <p style={{ fontFamily: 'lexend', fontSize: "1.1rem", color: "white" }}>404 | page could not be found</p>
+        <p style={{ fontFamily: 'lexend', fontSize: "1.1rem", color: "var(--text-color)" }}>404 | page could not be found</p>
     </div>)
 }
 export default ErrorPage404
