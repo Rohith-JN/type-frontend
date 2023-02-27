@@ -12,16 +12,16 @@ body {
 
 :root {
   background-color: var(--bg-color);
-  --bg-color: #0f0f0f;
-  --main-color: #e7e7e7;
-  --caret-color: #f5f5f5;
-  --sub-color: #4c4c4c;
-  --sub-alt-color: #1a1a1a;
-  --text-color: #e7e7e7;
-  --error-color: #ac8c8c;
-  --error-extra-color: #c49ea0;
-  --colorful-error-color: #aca98a;
-  --colorful-error-extra-color: #c4c19e;
+  --bg-color: #000;
+  --main-color: #eee;
+  --caret-color: #eee;
+  --sub-color: #444;
+  --sub-alt-color: #171717;
+  --text-color: #eee;
+  --error-color: #fff;
+  --error-extra-color: #d8d8d8;
+  --colorful-error-color: #fff;
+  --colorful-error-extra-color: #d8d8d8;
 }
 
 ::-webkit-scrollbar { 

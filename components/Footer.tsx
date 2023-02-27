@@ -64,7 +64,7 @@ const Footer = () => {
                         }
                         else {
                             return (
-                                <tr key={index} style={{ marginTop: "10rem" }}>
+                                <tr key={index}>
                                     <td>{index}</td>
                                     <td>{Math.round(object.wpm)}</td>
                                     <td>{Math.round(object.accuracy)}%</td>

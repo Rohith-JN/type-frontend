@@ -85,6 +85,9 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
 };
 
 export const resetTest = () => {
+    document
+        .getElementsByClassName("word")[0]
+        .scrollIntoView({ behavior: "smooth", block: "center" });
     const { dispatch, getState } = store;
     const {
         time: { timerId },

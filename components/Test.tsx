@@ -75,8 +75,8 @@ const Test = () => {
                         );
                     })}
                 </div>
-                <div style={{ width: "100%", justifyContent: "center", display: "flex", marginTop: "30px" }} onClick={resetTest}>
-                    <FiRefreshCcw style={{ width: "28px", height: "auto", cursor: "pointer", color: "var(--sub-color)" }} />
+                <div style={{ width: "100%", justifyContent: "center", display: "flex", marginTop: "30px" }}>
+                    <FiRefreshCcw style={{ width: "28px", height: "auto", cursor: "pointer", color: "var(--sub-color)" }} onClick={resetTest} />
                 </div>
             </div>
         </div>
