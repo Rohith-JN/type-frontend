@@ -12,16 +12,17 @@ body {
 
 :root {
   background-color: var(--bg-color);
-  --bg-color: #000;
-  --main-color: #eee;
-  --caret-color: #eee;
-  --sub-color: #444;
-  --sub-alt-color: #171717;
-  --text-color: #eee;
-  --error-color: #fff;
-  --error-extra-color: #d8d8d8;
-  --colorful-error-color: #fff;
-  --colorful-error-extra-color: #d8d8d8;
+  --bg-color: #333a45;
+  --main-color: #f44c7f;
+  --caret-color: #f44c7f;
+  --sub-color: #939eae;
+  --sub-alt-color: #000000;
+  --sub-alt-color: #2e343d;
+  --text-color: #e9ecf0;
+  --error-color: #da3333;
+  --error-extra-color: #791717;
+  --colorful-error-color: #c5da33;
+  --colorful-error-extra-color: #849224;
 }
 
 ::-webkit-scrollbar { 
@@ -33,6 +34,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: 100%;
     width: 60%;
     margin-bottom: 60px;
 }
@@ -44,7 +46,7 @@ body {
 .box {
   font-size: 21pt;
   overflow: hidden;
-  height: 150px;
+  height: 153px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;

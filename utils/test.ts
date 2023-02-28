@@ -48,14 +48,10 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
         word: { typedWord, currWord, activeWordRef, caretRef },
         preferences: { time },
     } = getState();
-
     if (!timer) {
-        if (key === "Tab") {
-            resetTest();
-        }
         return;
     }
-    if (!timerId && key !== "Tab") startTimer();
+    if (!timerId) startTimer();
     const currWordEl = activeWordRef?.current!;
     currWordEl.scrollIntoView({ behavior: "smooth", block: "center" });
     const caret = caretRef?.current!;
@@ -65,7 +61,6 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
         case "Tab":
             if (timer !== time || timerId) {
                 resetTest();
-                document.getElementsByClassName("word")[0].scrollIntoView();
             }
             break;
         case " ":
@@ -85,14 +80,18 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
 };
 
 export const resetTest = () => {
-    document
-        .getElementsByClassName("word")[0]
-        .scrollIntoView({ behavior: "smooth", block: "center" });
+    const wordElements = document.getElementsByClassName("word");
+    if (wordElements.length > 0) {
+        wordElements[0].scrollIntoView({ behavior: "smooth", block: "center" });
+    }
     const { dispatch, getState } = store;
     const {
         time: { timerId },
         preferences: { time },
     } = getState();
+    document
+        .querySelectorAll(".wrong, .right")
+        .forEach((el) => el.classList.remove("wrong", "right"));
     if (timerId) {
         clearInterval(timerId);
         dispatch(setTimerId(null));

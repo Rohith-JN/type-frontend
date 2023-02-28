@@ -30,6 +30,9 @@ h1.heading {
     color: var(--text-color);
     font-weight: normal;
 }
+.Nav h1 span {
+    color: var(--main-color);
+}
 
 .Nav_Items {
     display: flex; 

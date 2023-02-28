@@ -13,13 +13,6 @@ import { State } from "../store/reducer";
 import useLocalStorage from '../hooks/useLocalStorage';
 
 export const Header = () => {
-    const {
-        preferences: { time },
-    } = useSelector((state: State) => state);
-    const dispatch = useDispatch();
-    const [selectedOption, setSelectedOption] = useState(2);
-    const [option, setOption] = useLocalStorage("time", time || 60);
-
     const wordOptions = useMemo(() => [
         { id: 1, optionText: 15 },
         { id: 2, optionText: 30 },
@@ -27,6 +20,13 @@ export const Header = () => {
         { id: 4, optionText: 60 },
         { id: 5, optionText: 120 },
     ], []);
+
+    const {
+        preferences: { time },
+    } = useSelector((state: State) => state);
+    const dispatch = useDispatch();
+    const [selectedOption, setSelectedOption] = useState(wordOptions.find(opt => opt.optionText === time)?.id || 4);
+    const [option, setOption] = useLocalStorage("time", time || 60);
 
     // initial setup of time property
     // get time from localStorage and set it to timer and time
@@ -36,7 +36,7 @@ export const Header = () => {
         );
         dispatch(timerSet(option));
         dispatch(setTime(option));
-        setSelectedOption(wordOptions.find(opt => opt.optionText === option)?.id || 2);
+        setSelectedOption(wordOptions.find(opt => opt.optionText === option)?.id || 4);
     }, [dispatch, option, wordOptions]);
 
     useEffect(() => {

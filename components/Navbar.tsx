@@ -47,7 +47,7 @@ const Navbar = () => {
         <div className={styles.Navbar}>
             <div className={styles.Nav_Container}>
                 <div className={styles.Nav}>
-                    <h1 className={styles.heading}>Type</h1>
+                    <h1 className={styles.heading}>Type<span>.io</span></h1>
                     <div className={styles.Nav_Items}>
                         {options.map((option) => (
                             <NavOption
