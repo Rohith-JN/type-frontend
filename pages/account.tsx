@@ -1,12 +1,14 @@
 import { useAuth } from '../firebase/auth';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Loader from '../components/Loader';
 
 const Account = () => {
   const { authUser } = useAuth();
-  const [loginVisible, setLoginVisible] = useState("flex")
-  const [signupVisible, setSignUpVisible] = useState("none")
+  const [loginVisible, setLoginVisible] = useState("flex");
+  const [signupVisible, setSignUpVisible] = useState("none");
+  const [isLoading, setIsLoading] = useState(true);
   const loginOnClick = () => {
     setLoginVisible("none")
     setSignUpVisible("flex")
@@ -15,20 +17,39 @@ const Account = () => {
     setSignUpVisible("none")
     setLoginVisible("flex")
   }
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 900);
+  }, []);
+
   if (authUser) {
-    return (
-      <></>
-    );
+    return <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+        </>
+      )}
+    </>
   }
   else {
-    return <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-      <div style={{ display: loginVisible }}>
-        <Login onClick={loginOnClick} />
-      </div>
-      <div style={{ display: signupVisible }}>
-        <Signup onClick={SignUpOnlick} />
-      </div>
-    </div>
+    return (
+      <>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+              <div style={{ display: loginVisible }}>
+                <Login onClick={loginOnClick} />
+              </div>
+              <div style={{ display: signupVisible }}>
+                <Signup onClick={SignUpOnlick} />
+              </div>
+            </div>
+          </>
+        )}
+      </>)
   }
 };
 
