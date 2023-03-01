@@ -39,7 +39,7 @@ const Test = () => {
                                         id="caret"
                                         className="blink"
                                         style={{
-                                            left: typedWord.length * 14.5833, // change based on letter
+                                            left: typedWord.length * 12.5833, // change based on letter
                                         }}>
                                         |
                                     </span>

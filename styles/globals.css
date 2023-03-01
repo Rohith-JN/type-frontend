@@ -44,9 +44,9 @@ body {
   color: var(--sub-color);
 }
 .box {
-  font-size: 21pt;
+  font-size: 1.5rem;
   overflow: hidden;
-  height: 153px;
+  height: 153.6px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -58,7 +58,7 @@ body {
 }
 .box .word span {
 color: var(--sub-color);
-line-height: 45px;
+line-height: 2em;
 font-weight: 100;
 }
 .box .word.wrong {

@@ -25,7 +25,7 @@ export const Header = () => {
         preferences: { time },
     } = useSelector((state: State) => state);
     const dispatch = useDispatch();
-    const [selectedOption, setSelectedOption] = useState(wordOptions.find(opt => opt.optionText === time)?.id || 4);
+    const [selectedOption, setSelectedOption] = useLocalStorage("selectedOption", wordOptions.find(opt => opt.optionText === time)?.id || 4);
     const [option, setOption] = useLocalStorage("time", time || 60);
 
     // initial setup of time property
@@ -37,7 +37,7 @@ export const Header = () => {
         dispatch(timerSet(option));
         dispatch(setTime(option));
         setSelectedOption(wordOptions.find(opt => opt.optionText === option)?.id || 4);
-    }, [dispatch, option, wordOptions]);
+    }, [dispatch, option]);
 
     useEffect(() => {
         resetTest()
