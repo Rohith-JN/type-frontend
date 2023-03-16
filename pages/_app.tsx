@@ -8,12 +8,12 @@ import { Provider } from 'react-redux';
 export default function App({ Component, pageProps }: AppProps) {
 
     return (
-        <Layout>
-            <AuthUserProvider>
-                <Provider store={store}>
+        <AuthUserProvider>
+            <Provider store={store}>
+                <Layout>
                     <Component {...pageProps} />
-                </Provider>
-            </AuthUserProvider>
-        </Layout>
+                </Layout>
+            </Provider>
+        </AuthUserProvider>
     );
 }

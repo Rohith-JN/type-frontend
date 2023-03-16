@@ -5,12 +5,14 @@ import { resetTest } from "../utils/test";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    setPallet,
     setTime,
     setWordList,
     timerSet,
 } from "../store/actions";
 import { State } from "../store/reducer";
 import useLocalStorage from '../hooks/useLocalStorage';
+import Palette from './Palette';
 
 export const Header = () => {
     const wordOptions = useMemo(() => [
@@ -22,7 +24,7 @@ export const Header = () => {
     ], []);
 
     const {
-        preferences: { time },
+        preferences: { time, palette, theme },
     } = useSelector((state: State) => state);
     const dispatch = useDispatch();
     const [selectedOption, setSelectedOption] = useLocalStorage("selectedOption", wordOptions.find(opt => opt.optionText === time)?.id || 4);
@@ -47,7 +49,7 @@ export const Header = () => {
 
     return (
         <div className={styles.Container}>
-            <div className={styles.NavBar} style={{ width: "27%" }}>
+            <div className={styles.NavBar} style={{ width: (theme.length > 6) ? "37%" : "35%" }}>
                 <h1 className={styles.NavText} style={{ color: 'var(--main-color)' }}>words</h1>
                 <div className={styles.Divider}></div>
                 {wordOptions.map((option) => (
@@ -61,7 +63,11 @@ export const Header = () => {
                         }}
                     />
                 ))}
+                <div className={styles.Divider}></div>
+                <h1 className={styles.NavText} style={{ color: 'var(--main-color)' }} onClick={() => dispatch(setPallet(true))
+                }>{theme}</h1>
             </div>
+            <Palette open={palette} />
         </div>
     );
 }

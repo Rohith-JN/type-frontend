@@ -2,7 +2,6 @@ import styles from '../styles/Footer.module.css';
 import { useSelector } from "react-redux";
 import { State } from "../store/reducer";
 import { useEffect } from 'react';
-import { insertObject } from '../utils/utils';
 
 const Footer = () => {
     const {
@@ -27,13 +26,13 @@ const Footer = () => {
 
     useEffect(() => {
         if (!timer && timerId) {
-            insertObject(results, {
+            results.splice(1, 0, {
                 wpm: ((correctChars + spaces) * 60) / time / 5,
                 accuracy: (correctWords / totalWords) * 100 ? (correctWords / totalWords) * 100 : 0,
                 correctWords: result.filter((x) => x).length,
                 incorrectWords: result.filter((x) => !x).length,
                 time: time,
-            })
+            });
         }
     })
 

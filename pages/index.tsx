@@ -1,6 +1,6 @@
 import { Header } from '../components/Header';
 import Test from '../components/Test';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../store/reducer";
 import { setIsTestRuning, setTimerId } from "../store/actions";
@@ -12,13 +12,15 @@ const Home = () => {
   const {
     time: { timerId, timer },
     word: { currWord, typedWord, activeWordRef },
+    preferences: { palette }
   } = useSelector((state: State) => state);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     document.onkeydown = (e) => {
-      if (
+      if (palette) { }
+      else if (
         e.key.length === 1 ||
         e.key === "Backspace"
       ) {
@@ -29,7 +31,7 @@ const Home = () => {
     return () => {
       document.onkeydown = null;
     };
-  }, [dispatch]);
+  }, [dispatch, palette]);
 
   useEffect(() => {
     let idx = typedWord.length - 1;

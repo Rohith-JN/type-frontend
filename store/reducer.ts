@@ -14,12 +14,16 @@ import {
     SET_CARET_REF,
     SET_RESULT,
     SET_ISTESTRUNNING,
+    SET_PALLET,
+    SET_THEME,
 } from "./actions";
 
 export interface State {
     preferences: {
         time: number; // user preferred time limit
         isTestRunning: boolean;
+        palette: boolean;
+        theme: string;
     };
     word: {
         currWord: string;
@@ -50,6 +54,8 @@ export const initialState: State = {
     preferences: {
         time: 0,
         isTestRunning: false,
+        palette: false,
+        theme: "",
     },
     word: {
         currWord: "",
@@ -165,10 +171,17 @@ const preferenceReducer = (
                 ...state,
                 time: payload,
             };
+        case SET_THEME:
+            return { ...state, theme: payload };
         case SET_ISTESTRUNNING:
             return {
                 ...state,
                 isTestRunning: payload,
+            };
+        case SET_PALLET:
+            return {
+                ...state,
+                palette: payload,
             };
         default:
             return state;

@@ -9,6 +9,8 @@ export const TIMERID_SET = "TIMERIDSET";
 export const PREV_WORD = "PREVWORD";
 export const SET_WORDLIST = "SETWORDLIST";
 export const SET_TIME = "SETTIME";
+export const SET_THEME = "SETTHEME";
+export const SET_PALLET = "SETPALLET";
 export const SET_ISTESTRUNNING = "SETISTESTRUNNING";
 export const SET_REF = "SETREF";
 export const SET_CARET_REF = "SETCARETREF";
@@ -52,6 +54,11 @@ export const setIsTestRuning = (payload: boolean) => ({
     type: SET_ISTESTRUNNING,
     payload,
 });
+export const setPallet = (payload: boolean) => ({
+    type: SET_PALLET,
+    payload,
+});
+export const setTheme = (payload: string) => ({ type: SET_THEME, payload });
 
 // Result Actions
 export const result = (payload: Array<object>) => ({

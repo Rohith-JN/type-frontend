@@ -8,8 +8,3 @@ export function secondsToTime(e: number) {
 
     return m + ":" + s;
 }
-export function insertObject(arr: any[], obj: any) {
-    let index = arr.length;
-    arr.splice(index, 0, obj);
-    console.log(arr);
-}

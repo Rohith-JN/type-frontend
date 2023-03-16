@@ -4,7 +4,7 @@
     overflow: hidden;
     position: relative;
     top: 0; 
-    background-color: var(--bg-color);
+    background-color: transparent;
     margin: 50px auto;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
