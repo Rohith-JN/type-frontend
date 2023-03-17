@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 const ErrorPage500 = () => {
-    return (<div style={{ width: "100%", height: "96vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    return (<div style={{ width: "100%", height: "87vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
         <Head>
             <title>Error | 500</title>
         </Head>

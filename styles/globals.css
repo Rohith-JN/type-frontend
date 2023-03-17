@@ -21,7 +21,6 @@ body {
 }
 
 [data-theme="superuser"] {
-  background-color: var(--bg-color) !important;
   --bg-color: #262a33;
   --main-color: #43ffaf;
   --sub-color: #526777;
@@ -31,7 +30,6 @@ body {
 }
 
 [data-theme='pink'] {
-  background-color: var(--bg-color) !important;
   --bg-color: #333a45;
   --main-color: #f44c7f;
   --sub-color: #939eae;
@@ -199,6 +197,14 @@ body {
   --sub-alt-color: #191919;
   --text-color: #d4d4d4;
   --error-color: #f44747;
+}
+[data-theme='weird'] {
+  --bg-color: white;
+  --main-color: black;
+  --sub-color: black;
+  --sub-alt-color: white;
+  --error-color: grey;
+  --text-color: grey;
 }
 
 ::-webkit-scrollbar { 

@@ -34,9 +34,6 @@
 .Signup input:focus {
     border: 2px solid var(--main-color);
 }
-.Signup form button.slide:hover, .Signup form button.slide:focus {
-    box-shadow: inset 10.5em 0 0 0 #fff;
-}
 .Signup form button {
     cursor: pointer;
     color: var(--text-color);
@@ -51,8 +48,8 @@
     border-radius: 3px;
 }
 .Signup form button:hover, .Signup form button:focus {
-    border-color: var(--color);
-    color: black;
+    border-color: var(--main-color);
+    color: var(--main-color);
 }
 .Signup p {
     font-family: 'lexend';

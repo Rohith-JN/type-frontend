@@ -34,9 +34,6 @@
 .Login input:focus {
     border: 2px solid var(--main-color);
 }
-.Login form button.slide:hover, .Login form button.slide:focus {
-    box-shadow: inset 10.5em 0 0 0 #fff;
-}
 .Login form button {
     cursor: pointer;
     color: var(--text-color);
@@ -51,8 +48,8 @@
     border-radius: 3px;
 }
 .Login form button:hover, .Login form button:focus {
-    border-color: var(--color);
-    color: black;
+    border-color: var(--main-color);
+    color: var(--main-color);
 }
 .Login p {
     font-family: 'lexend';
