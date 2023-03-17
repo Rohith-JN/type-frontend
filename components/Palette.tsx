@@ -31,7 +31,8 @@ const Options: string[] = [
     'shadow',
     'stealth',
     'viridescent',
-    'vscode'
+    'vscode',
+    'weird',
 ];
 
 const filter = (options: typeof Options, query: string) => {

@@ -8,7 +8,6 @@ const Account = () => {
   const { authUser } = useAuth();
   const [loginVisible, setLoginVisible] = useState("flex");
   const [signupVisible, setSignUpVisible] = useState("none");
-  const [isLoading, setIsLoading] = useState(true);
   const loginOnClick = () => {
     setLoginVisible("none")
     setSignUpVisible("flex")
@@ -17,14 +16,29 @@ const Account = () => {
     setSignUpVisible("none")
     setLoginVisible("flex")
   }
+
+  const [contentLoaded, setContentLoaded] = useState(false);
+
   useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 900);
+    setContentLoaded(true);
   }, []);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (contentLoaded) {
+      const timeoutId = setTimeout(() => {
+        setLoading(false);
+      }, 900);
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [contentLoaded]);
 
   if (authUser) {
     return <>
-      {isLoading ? (
+      {loading ? (
         <Loader />
       ) : (
         <>
@@ -35,7 +49,7 @@ const Account = () => {
   else {
     return (
       <>
-        {isLoading ? (
+        {loading ? (
           <Loader />
         ) : (
           <>

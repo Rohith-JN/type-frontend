@@ -2,13 +2,26 @@ import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
 
 const Leaderboard = () => {
-    const [isLoading, setIsLoading] = useState(true);
+    const [contentLoaded, setContentLoaded] = useState(false);
+
     useEffect(() => {
-        setIsLoading(true);
-        setTimeout(() => setIsLoading(false), 900);
+        setContentLoaded(true);
     }, []);
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (contentLoaded) {
+            const timeoutId = setTimeout(() => {
+                setLoading(false);
+            }, 900);
+            return () => {
+                clearTimeout(timeoutId);
+            };
+        }
+    }, [contentLoaded]);
     return <>
-        {isLoading ? (
+        {loading ? (
             <Loader />
         ) : (
             <>

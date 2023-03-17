@@ -15,7 +15,6 @@ const Home = () => {
     preferences: { palette }
   } = useSelector((state: State) => state);
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     document.onkeydown = (e) => {
@@ -58,14 +57,28 @@ const Home = () => {
     }
   }, [dispatch, timer, timerId]);
 
+  const [contentLoaded, setContentLoaded] = useState(false);
+
   useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 900);
+    setContentLoaded(true);
   }, []);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (contentLoaded) {
+      const timeoutId = setTimeout(() => {
+        setLoading(false);
+      }, 900);
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [contentLoaded]);
 
   return (
     <>
-      {isLoading ? (
+      {loading ? (
         <Loader />
       ) : (
         <>
