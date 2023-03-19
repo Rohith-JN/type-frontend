@@ -203,7 +203,7 @@ body {
   --main-color: black;
   --sub-color: black;
   --sub-alt-color: white;
-  --error-color: grey;
+  --error-color: red;
   --text-color: grey;
 }
 

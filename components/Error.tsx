@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 
-const ErrorPage = ({ statusCode, statusMessage }: { statusCode: number, statusMessage: string }) => {
+const CustomError = ({ statusCode, statusMessage }: { statusCode: number, statusMessage: string }) => {
 
     return (<div style={{ width: "100%", height: "87vh", display: "flex", justifyContent: "center", alignItems: "center" }} >
         <Head>
@@ -10,4 +10,4 @@ const ErrorPage = ({ statusCode, statusMessage }: { statusCode: number, statusMe
         <p style={{ fontFamily: 'lexend', fontSize: "1.1rem", color: "var(--text-color)" }}>{statusCode} | {statusMessage}</p>
     </div>)
 }
-export default ErrorPage
+export default CustomError
