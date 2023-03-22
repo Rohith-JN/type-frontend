@@ -13,7 +13,7 @@ class Error extends React.Component<ErrorProps> {
   static async getInitialProps({ Component, ctx }: { Component: NextComponentType<NextPageContext, any, any>, ctx: NextPageContext }) {
     let pageProps = {}
 
-    if (Component.getInitialProps) {
+    if (Component?.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
 

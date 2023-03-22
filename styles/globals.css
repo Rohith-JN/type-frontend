@@ -8,7 +8,7 @@ body {
 
 @font-face {
   font-family: "Lexend";
-  src: url("../public/fonts/LexendDeca-Regular.ttf");
+  src: url("/fonts/LexendDeca-Regular.ttf") format("truetype");
 }
 
 :root {
