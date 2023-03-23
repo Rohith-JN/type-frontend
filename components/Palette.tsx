@@ -22,18 +22,20 @@ const Options: string[] = [
     'dev',
     'drowning',
     'gruvbox',
+    'matrix',
     'metaverse',
     'miami',
     'mountain',
     'nord',
     'paper',
     'pulse',
+    'scalene',
     'shadow',
     'stealth',
     'viridescent',
     'vscode',
     'weird',
-];
+].sort();
 
 const filter = (options: typeof Options, query: string) => {
     if (!query) return options;

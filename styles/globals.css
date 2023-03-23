@@ -206,6 +206,22 @@ body {
   --error-color: red;
   --text-color: grey;
 }
+[data-theme='matrix'] {
+  --bg-color: #000000;
+  --main-color: #15ff00;
+  --sub-color: #003b00;
+  --sub-alt-color: #021500;
+  --text-color: #d1ffcd;
+  --error-color: #da3333;
+}
+[data-theme='scalene'] {
+  --bg-color: #081426;
+  --main-color: #f17754;
+  --sub-color: #ffbc90;
+  --sub-alt-color: #040e1d;
+  --text-color: #ffe4bc;
+  --error-color: #ca4754;
+}
 
 ::-webkit-scrollbar { 
   width: 0;
