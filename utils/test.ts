@@ -7,7 +7,6 @@ import {
     setWordList,
     timerSet,
     timerDecrement,
-    setIsTestRuning,
 } from "../store/actions";
 import { store } from "../store/store";
 
@@ -108,5 +107,4 @@ export const startTimer = () => {
         dispatch(timerDecrement());
     }, 1000);
     dispatch(setTimerId(timerId));
-    dispatch(setIsTestRuning(true));
 };

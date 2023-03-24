@@ -11,7 +11,6 @@ export const SET_WORDLIST = "SETWORDLIST";
 export const SET_TIME = "SETTIME";
 export const SET_THEME = "SETTHEME";
 export const SET_PALLET = "SETPALLET";
-export const SET_ISTESTRUNNING = "SETISTESTRUNNING";
 export const SET_REF = "SETREF";
 export const SET_CARET_REF = "SETCARETREF";
 export const SET_RESULT = "SETRESULT";
@@ -50,10 +49,6 @@ export const setCaretRef = (payload: RefObject<HTMLSpanElement>) => ({
 
 // Prefrences Actions
 export const setTime = (payload: number) => ({ type: SET_TIME, payload });
-export const setIsTestRuning = (payload: boolean) => ({
-    type: SET_ISTESTRUNNING,
-    payload,
-});
 export const setPallet = (payload: boolean) => ({
     type: SET_PALLET,
     payload,

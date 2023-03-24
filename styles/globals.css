@@ -236,7 +236,13 @@ body {
     width: 60%;
     margin-bottom: 60px;
 }
-.timer {
+.stats {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding-bottom: 10px;
+}
+.stats .timer, .wpm, .accuracy {
   font-size: 21pt;
   margin: 5px;
   color: var(--sub-color);
@@ -244,7 +250,7 @@ body {
 .box {
   font-size: 1.5rem;
   overflow: hidden;
-  height: 153.6px;
+  height: 149px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;

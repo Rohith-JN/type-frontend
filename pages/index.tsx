@@ -3,7 +3,7 @@ import Test from '../components/Test';
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../store/reducer";
-import { setIsTestRuning, setTimerId } from "../store/actions";
+import { setTimerId } from "../store/actions";
 import { recordTest } from "../utils/test";
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
@@ -53,7 +53,6 @@ const Home = () => {
     if (!timer && timerId) {
       clearInterval(timerId);
       dispatch(setTimerId(null));
-      dispatch(setIsTestRuning(false))
     }
   }, [dispatch, timer, timerId]);
 

@@ -13,7 +13,6 @@ import {
     SET_REF,
     SET_CARET_REF,
     SET_RESULT,
-    SET_ISTESTRUNNING,
     SET_PALLET,
     SET_THEME,
 } from "./actions";
@@ -21,7 +20,6 @@ import {
 export interface State {
     preferences: {
         time: number; // user preferred time limit
-        isTestRunning: boolean;
         palette: boolean;
         theme: string;
     };
@@ -53,7 +51,6 @@ export interface State {
 export const initialState: State = {
     preferences: {
         time: 0,
-        isTestRunning: false,
         palette: false,
         theme: "",
     },
@@ -173,11 +170,6 @@ const preferenceReducer = (
             };
         case SET_THEME:
             return { ...state, theme: payload };
-        case SET_ISTESTRUNNING:
-            return {
-                ...state,
-                isTestRunning: payload,
-            };
         case SET_PALLET:
             return {
                 ...state,

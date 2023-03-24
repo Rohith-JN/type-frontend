@@ -1,7 +1,7 @@
 import styles from '../styles/Footer.module.css';
 import { useSelector } from "react-redux";
 import { State } from "../store/reducer";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Footer = () => {
     const {
@@ -10,6 +10,7 @@ const Footer = () => {
         preferences: { time },
         result: { results }
     } = useSelector((state: State) => state);
+    const [showResult, setShowResult] = useState(false);
     const spaces = wordList.indexOf(currWord);
     let correctChars = 0;
     const result = typedHistory.map(
@@ -27,17 +28,21 @@ const Footer = () => {
     useEffect(() => {
         if (!timer && timerId) {
             results.splice(1, 0, {
-                wpm: ((correctChars + spaces) * 60) / time / 5,
-                accuracy: (correctWords / totalWords) * 100 ? (correctWords / totalWords) * 100 : 0,
-                correctWords: result.filter((x) => x).length,
-                incorrectWords: result.filter((x) => !x).length,
+                wpm: wpm,
+                accuracy: accuracy,
+                correctWords: correctWords,
+                incorrectWords: incorrectWords,
                 time: time,
             });
         }
-    })
+    }, [timer, timerId])
+
+    useEffect(() => {
+        results.length > 1 ? setShowResult(true) : setShowResult(false)
+    }, [results.length])
 
     return (
-        <div className={styles.result}>
+        <div className={styles.result} style={{ display: showResult ? "flex" : "none" }}>
             <table>
                 <thead>
                     <tr>
@@ -52,13 +57,7 @@ const Footer = () => {
                     {results.map((object, index) => {
                         if (index == 0) {
                             return (
-                                <tr key={index}>
-                                    <td>current</td>
-                                    <td>{Math.round(wpm)}</td>
-                                    <td>{Math.round(accuracy)}%</td>
-                                    <td>{correctWords}{' '}/{' '}{incorrectWords}</td>
-                                    <td>{time}</td>
-                                </tr>
+                                <></>
                             );
                         }
                         else {
