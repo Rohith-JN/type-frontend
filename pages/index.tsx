@@ -1,6 +1,6 @@
 import { Header } from '../components/Header';
 import Test from '../components/Test';
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../store/reducer";
 import { setTimerId } from "../store/actions";
