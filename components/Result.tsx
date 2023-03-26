@@ -57,7 +57,7 @@ const Result = () => {
                     {results.map((object, index) => {
                         if (index == 0) {
                             return (
-                                <div key={index}></div>
+                                <></>
                             );
                         }
                         else {

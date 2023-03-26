@@ -16,6 +16,7 @@
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.5",
     "firebase": "^9.17.1",
+    "graphql": "^16.6.0",
     "lodash": "^4.17.21",
     "next": "13.0.5",
     "react": "18.2.0",
@@ -24,7 +25,8 @@
     "react-redux": "^8.0.5",
     "react-toastify": "^9.1.1",
     "redux": "^4.2.1",
-    "typescript": "4.9.3"
+    "typescript": "4.9.3",
+    "urql": "^3.0.4"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.191"

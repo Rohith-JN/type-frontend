@@ -3,6 +3,7 @@ import Login from '../components/Login';
 import Signup from '../components/Signup';
 import { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
+import firebase from 'firebase/compat/app';
 
 const Account = () => {
   const { authUser } = useAuth();
@@ -42,6 +43,7 @@ const Account = () => {
         <Loader />
       ) : (
         <>
+          <button onClick={() => firebase.auth().signOut()}>SignOut</button>
         </>
       )}
     </>

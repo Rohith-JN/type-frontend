@@ -5,12 +5,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login(props: { onClick: VoidFunction }) {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [user, setUser] = useState({
+        email: '',
+        password: '',
+    });
 
     const onSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        await firebase.auth().signInWithEmailAndPassword(email, password).then(function () {
+        await firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(function () {
         }).catch(function (error) {
             const message = error.message;
             toast.error(message, {
@@ -31,10 +33,10 @@ export default function Login(props: { onClick: VoidFunction }) {
             <div className={styles.Login}>
                 <h1>Log In</h1>
                 <form role='form' onSubmit={onSubmit}>
-                    <input autoComplete="off" spellCheck='false' type="email" placeholder='Email' value={email}
-                        onChange={(event) => setEmail(event.target.value)} required></input>
-                    <input autoComplete="off" spellCheck='false' type="password" placeholder='Password' value={password}
-                        onChange={(event) => setPassword(event.target.value)} required></input>
+                    <input autoComplete="off" spellCheck='false' type="email" placeholder='Email' value={user.email}
+                        onChange={(event) => setUser({ ...user, email: event.target.value })} required></input>
+                    <input autoComplete="off" spellCheck='false' type="password" placeholder='Password' value={user.password}
+                        onChange={(event) => setUser({ ...user, password: event.target.value })} required></input>
                     <button type="submit" value="Submit" className={styles.slide}>Log in</button>
                 </form>
                 <p>Don&apos;t have an account? <span onClick={props.onClick}>Sign Up</span></p>
