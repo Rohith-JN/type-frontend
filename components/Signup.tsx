@@ -3,27 +3,11 @@ import React, { useState } from 'react';
 import firebase from 'firebase/compat/app';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useMutation } from 'urql';
-
-const REGISTER_MUT = `
-    mutation Register($username: String!, $email: String!, $password: String!, $uid: String! ) {
-        register(options: { username: $username, email: $email, password: $password, uid: $uid }) {
-            error {
-                field
-                message
-            }
-            user {
-                id
-                uid
-                username
-                email
-            }
-        }
-    }
-`
+import { useRegisterMutation, useValidateMutation } from '../generated/graphql';
 
 export default function Signup(props: { onClick: VoidFunction }) {
-    const [, register] = useMutation(REGISTER_MUT);
+    const [, register] = useRegisterMutation();
+    const [, validate] = useValidateMutation();
     const [user, setUser] = useState({
         username: '',
         email: '',
@@ -32,10 +16,34 @@ export default function Signup(props: { onClick: VoidFunction }) {
 
     const onSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        await firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then(function () {
-        }).catch(function (error) {
-            const message = error.message;
-            toast.error(message, {
+        const validation = await validate({
+            username: user.username,
+            email: user.email,
+            password: user.password
+        });
+
+        if (validation.data?.validate.field === null && validation.data?.validate.message === null) {
+            await firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then(function () {
+            }).catch(function (error) {
+                const message = error.message;
+                toast.error(message, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            })
+            if (firebase.auth().currentUser !== null) {
+                const uid = firebase.auth().currentUser!.uid
+                await register({ username: user.username, email: user.email, password: user.password, uid: uid });
+            }
+        }
+        else {
+            toast.error(validation.data?.validate.message, {
                 position: "bottom-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -45,10 +53,6 @@ export default function Signup(props: { onClick: VoidFunction }) {
                 progress: undefined,
                 theme: "dark",
             });
-        })
-        if (firebase.auth().currentUser !== null) {
-            const uid = firebase.auth().currentUser!.uid
-            await register({ username: user.username, email: user.email, password: user.password, uid: uid });
         }
     }
 
