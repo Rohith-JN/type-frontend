@@ -4,6 +4,7 @@ import firebase from 'firebase/compat/app';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRegisterMutation, useValidateMutation } from '../generated/graphql';
+import { toastOptions } from '../utils/utils';
 
 export default function Signup(props: { onClick: VoidFunction }) {
     const [, register] = useRegisterMutation();
@@ -25,17 +26,8 @@ export default function Signup(props: { onClick: VoidFunction }) {
         if (validation.data?.validate.field === null && validation.data?.validate.message === null) {
             await firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then(function () {
             }).catch(function (error) {
-                const message = error.message;
-                toast.error(message, {
-                    position: "bottom-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                });
+                const message = error.message.replace("Firebase:", "");
+                toast.error(message, toastOptions);
             })
             if (firebase.auth().currentUser !== null) {
                 const uid = firebase.auth().currentUser!.uid
@@ -43,16 +35,7 @@ export default function Signup(props: { onClick: VoidFunction }) {
             }
         }
         else {
-            toast.error(validation.data?.validate.message, {
-                position: "bottom-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
+            toast.error(validation.data?.validate.message, toastOptions);
         }
     }
 

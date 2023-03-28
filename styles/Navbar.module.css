@@ -44,13 +44,14 @@ h1.heading {
     height: 3rem; 
 }
 
-h1.Nav_Text {
+.Nav_Text {
     font-size: 1.15rem;
     line-height: 1.75rem; 
     cursor: pointer; 
     font-family: 'lexend';
     color: var(--sub-color);
     font-weight:normal;
+    text-decoration: none;
 }
 
 h1.Nav_Text:hover {

@@ -1,19 +1,15 @@
 import styles from '../styles/Navbar.module.css';
 import React, { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 function NavOption(props: { optionText: string, isSelected: boolean, route: string, onClick: () => void }) {
     const { optionText, isSelected, route, onClick } = props;
     const router = useRouter();
 
-    function handleClick() {
-        router.push(route);
-        onClick();
-    }
-
     return (
-        <div onClick={handleClick}>
-            {isSelected ? <h1 style={{ color: 'var(--main-color)' }} className={styles.Nav_Text}>{optionText}</h1> : <h1 className={styles.Nav_Text}>{optionText}</h1>}
+        <div onClick={onClick}>
+            {isSelected ? <Link style={{ color: 'var(--main-color)' }} className={styles.Nav_Text} href={route}>{optionText}</Link> : <Link className={styles.Nav_Text} href={route}>{optionText}</Link>}
         </div>
     );
 }

@@ -3,9 +3,12 @@ import styles from '../styles/Login.module.css';
 import firebase from 'firebase/compat/app';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useLoginMutation } from '../generated/graphql';
+import { toastOptions } from '../utils/utils';
 
 // add validation mutation here as well
 export default function Login(props: { onClick: VoidFunction }) {
+    const [, login] = useLoginMutation();
     const [user, setUser] = useState({
         email: '',
         password: '',
@@ -13,20 +16,20 @@ export default function Login(props: { onClick: VoidFunction }) {
 
     const onSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        await firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(function () {
-        }).catch(function (error) {
-            const message = error.message;
-            toast.error(message, {
-                position: "bottom-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
+        const validation = await login({
+            email: user.email,
+            password: user.password
         })
+        if (validation.data?.login.field === null && validation.data?.login.message === null) {
+            await firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(function () {
+            }).catch(function (error) {
+                const message = error.message.replace("Firebase:", "");
+                toast.error(message, toastOptions);
+            })
+        }
+        else {
+            toast.error(validation.data?.login.message, toastOptions);
+        }
     }
 
     return (
