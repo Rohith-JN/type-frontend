@@ -7,14 +7,23 @@ import { setTimerId } from "../store/actions";
 import { recordTest } from "../utils/test";
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
+import cookie from "cookie";
 
-const Home = () => {
+const Home = ({ data }: {
+  data: {
+    [key: string]: string;
+  }
+}) => {
   const {
     time: { timerId, timer },
     word: { currWord, typedWord, activeWordRef },
     preferences: { palette }
   } = useSelector((state: State) => state);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", data.theme || "");
+  }, [data.theme]);
 
   useEffect(() => {
     document.onkeydown = (e) => {
@@ -91,3 +100,16 @@ const Home = () => {
 }
 
 export default Home
+
+export async function getServerSideProps(context: { req: { headers: { cookie: any; }; }; res: { writeHead: (arg0: number, arg1: { Location: string; }) => void; end: () => void; }; }) {
+  const data = cookie.parse(context.req ? context.req.headers.cookie || "" : document.cookie)
+
+  if (context.res) {
+    if (Object.keys(data).length === 0 && data.constructor === Object) {
+      context.res.writeHead(301, { Location: "/" })
+      context.res.end()
+    }
+  }
+
+  return { props: { data: data && data } }
+}

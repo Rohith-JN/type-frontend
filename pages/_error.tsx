@@ -1,12 +1,16 @@
 import React from 'react';
 import CustomError from '../components/Error';
 import { NextComponentType, NextPageContext } from 'next';
+import cookie from "cookie";
 
 interface ErrorProps {
   Component: NextComponentType<NextPageContext, any, any>;
   pageProps: any;
   statusCode: number;
   err: boolean;
+  data: {
+    [key: string]: string;
+  }
 }
 
 class Error extends React.Component<ErrorProps> {
@@ -17,10 +21,23 @@ class Error extends React.Component<ErrorProps> {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    const { res, err } = ctx
+    const { res, req, err } = ctx
     const isErr = err ? true : false;
 
-    return { pageProps, statusCode: res ? res.statusCode : err ? err.statusCode : 404, err: isErr }
+    const data = cookie.parse(req ? req.headers.cookie || "" : document.cookie)
+
+    if (res) {
+      if (Object.keys(data).length === 0 && data.constructor === Object) {
+        res.writeHead(301, { Location: "/" })
+        res.end()
+      }
+    }
+
+    return { pageProps, statusCode: res ? res.statusCode : err ? err.statusCode : 404, err: isErr, data: data && data }
+  }
+
+  componentDidMount() {
+    document.documentElement.setAttribute("data-theme", this.props.data.theme || "");
   }
 
   render() {

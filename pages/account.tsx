@@ -4,8 +4,11 @@ import Signup from '../components/Signup';
 import { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
 import firebase from 'firebase/compat/app';
+import cookie from "cookie";
 
-const Account = () => {
+const Account = ({data} : {data: {
+  [key: string]: string;
+}}) => {
   const { authUser } = useAuth();
   const [loginVisible, setLoginVisible] = useState("flex");
   const [signupVisible, setSignUpVisible] = useState("none");
@@ -19,6 +22,10 @@ const Account = () => {
   }
 
   const [contentLoaded, setContentLoaded] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", data.theme || "");
+  }, [data.theme]);
 
   useEffect(() => {
     setContentLoaded(true);
@@ -70,3 +77,16 @@ const Account = () => {
 };
 
 export default Account;
+
+export async function getServerSideProps(context: { req: { headers: { cookie: any; }; }; res: { writeHead: (arg0: number, arg1: { Location: string; }) => void; end: () => void; }; }) {
+  const data = cookie.parse(context.req ? context.req.headers.cookie || "" : document.cookie)
+
+  if (context.res) {
+    if (Object.keys(data).length === 0 && data.constructor === Object) {
+      context.res.writeHead(301, { Location: "/" })
+      context.res.end()
+    }
+  }
+
+  return { props: { data: data && data } }
+}

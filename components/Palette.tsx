@@ -8,6 +8,7 @@ import { State } from "../store/reducer";
 import { setPallet, setTheme } from "../store/actions";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { useCookies } from "react-cookie"
 
 const Options: string[] = [
     'superuser',
@@ -53,7 +54,9 @@ const Palette = ({ open }: { open: boolean }) => {
     const {
         preferences: { theme, palette },
     } = useSelector((state: State) => state);
-    const [stateTheme, setStateTheme] = useLocalStorage("theme", theme || 'superuser')
+
+    const [cookies, setCookie] = useCookies(["theme"])
+    const [stateTheme, setStateTheme] = useState(theme || 'superuser')
 
     const changeHandler = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -67,8 +70,8 @@ const Palette = ({ open }: { open: boolean }) => {
     useOnClickOutside(divRef, () => { setSearchQuery(""); dispatch(setPallet(false)); });
 
     useEffect(() => {
-        dispatch(setTheme(stateTheme))
-    }, [dispatch, stateTheme]);
+        dispatch(setTheme(cookies.theme))
+    }, [cookies.theme, dispatch]);
 
     useEffect(
         () => document.addEventListener("keydown", (e) => e.key === " " && setSearchQuery("")), []
@@ -103,6 +106,12 @@ const Palette = ({ open }: { open: boolean }) => {
                                         onClick={() => {
                                             dispatch(setTheme(option));
                                             setStateTheme(option);
+                                            setCookie("theme", option, {
+                                                path: "/",
+                                                maxAge: 60 * 60 * 60 * 60 * 60, // Expires after 1hr
+                                                sameSite: true,
+                                            })
+                                            window.location.reload();
                                         }}
                                         draggable="false"
                                     >
