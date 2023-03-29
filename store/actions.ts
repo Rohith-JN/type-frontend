@@ -53,7 +53,10 @@ export const setPallet = (payload: boolean) => ({
     type: SET_PALLET,
     payload,
 });
-export const setTheme = (payload: string) => ({ type: SET_THEME, payload });
+export const setTheme = (payload: string) => ({
+    type: SET_THEME,
+    payload: payload ? payload : "superuser",
+});
 
 // Result Actions
 export const result = (payload: Array<object>) => ({

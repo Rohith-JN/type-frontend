@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useRegisterMutation, useValidateMutation } from '../generated/graphql';
 import { toastOptions } from '../utils/utils';
 
-export default function Signup(props: { onClick: VoidFunction }) {
+const Signup = (props: { onClick: VoidFunction }) => {
     const [, register] = useRegisterMutation();
     const [, validate] = useValidateMutation();
     const [user, setUser] = useState({
@@ -66,3 +66,4 @@ export default function Signup(props: { onClick: VoidFunction }) {
         </>
     );
 }
+export default Signup

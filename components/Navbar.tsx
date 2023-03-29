@@ -5,7 +5,6 @@ import Link from 'next/link';
 
 function NavOption(props: { optionText: string, isSelected: boolean, route: string, onClick: () => void }) {
     const { optionText, isSelected, route, onClick } = props;
-    const router = useRouter();
 
     return (
         <div onClick={onClick}>

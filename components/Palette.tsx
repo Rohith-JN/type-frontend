@@ -1,42 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import styles from "../styles/Palette.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
     FaSearch,
 } from "react-icons/fa";
-import { State } from "../store/reducer";
 import { setPallet, setTheme } from "../store/actions";
 import useOnClickOutside from "../hooks/useOnClickOutside";
-import useLocalStorage from "../hooks/useLocalStorage";
 import { useCookies } from "react-cookie"
-
-const Options: string[] = [
-    'superuser',
-    'pink',
-    'aether',
-    'alduin',
-    'arch',
-    'aurora',
-    'bushido',
-    'carbon',
-    'dark',
-    'dev',
-    'drowning',
-    'gruvbox',
-    'matrix',
-    'metaverse',
-    'miami',
-    'mountain',
-    'nord',
-    'paper',
-    'pulse',
-    'scalene',
-    'shadow',
-    'stealth',
-    'viridescent',
-    'vscode',
-    'weird',
-].sort();
+import { Options } from "../utils/utils";
 
 const filter = (options: typeof Options, query: string) => {
     if (!query) return options;
@@ -51,12 +22,7 @@ const Palette = ({ open }: { open: boolean }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [searchQuery, setSearchQuery] = useState("");
     const dispatch = useDispatch();
-    const {
-        preferences: { theme, palette },
-    } = useSelector((state: State) => state);
-
     const [cookies, setCookie] = useCookies(["theme"])
-    const [stateTheme, setStateTheme] = useState(theme || 'superuser')
 
     const changeHandler = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -68,6 +34,16 @@ const Palette = ({ open }: { open: boolean }) => {
     const divRef = useRef<HTMLDivElement>(null);
 
     useOnClickOutside(divRef, () => { setSearchQuery(""); dispatch(setPallet(false)); });
+
+    useEffect(() => {
+        if (!cookies.theme) {
+            setCookie("theme", "superuser", {
+                path: "/",
+                maxAge: 60 * 60 * 60 * 60 * 60,
+                sameSite: true,
+            })
+        }
+    }, [cookies.theme, dispatch, setCookie])
 
     useEffect(() => {
         dispatch(setTheme(cookies.theme))
@@ -105,7 +81,6 @@ const Palette = ({ open }: { open: boolean }) => {
                                         key={index}
                                         onClick={() => {
                                             dispatch(setTheme(option));
-                                            setStateTheme(option);
                                             setCookie("theme", option, {
                                                 path: "/",
                                                 maxAge: 60 * 60 * 60 * 60 * 60, // Expires after 1hr
