@@ -5,13 +5,25 @@ import { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
 import firebase from 'firebase/compat/app';
 import cookie from "cookie";
+import { useUserMutation } from '../generated/graphql';
 
-const Account = ({data} : {data: {
-  [key: string]: string;
-}}) => {
+const Account = ({ data }: {
+  data: {
+    [key: string]: string;
+  }
+}) => {
   const { authUser } = useAuth();
   const [loginVisible, setLoginVisible] = useState("flex");
   const [signupVisible, setSignUpVisible] = useState("none");
+  const [, user] = useUserMutation();
+  const [userData, setUserData] = useState({
+    username: '',
+    email: '',
+    uid: '',
+    id: 0,
+    createdAt: ''
+  });
+
   const loginOnClick = () => {
     setLoginVisible("none")
     setSignUpVisible("flex")
@@ -22,6 +34,22 @@ const Account = ({data} : {data: {
   }
 
   const [contentLoaded, setContentLoaded] = useState(false);
+
+  useEffect(() => {
+    async function getUser() {
+      if (authUser && firebase.auth().currentUser) {
+        const response = await user({ uid: firebase.auth().currentUser!.uid })
+        setUserData({
+          username: response.data?.user.user?.username!,
+          email: response.data?.user.user?.email!,
+          uid: response.data?.user.user?.uid!,
+          id: response.data?.user.user?.id!,
+          createdAt: response.data?.user.user?.createdAt! // convert to readable date
+        });
+      }
+    }
+    getUser()
+  }, [authUser, user])
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", data.theme || "");

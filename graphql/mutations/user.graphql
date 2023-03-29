@@ -1,0 +1,15 @@
+mutation User($uid: String! ) {
+    user( uid: $uid ) {
+        error {
+            field
+            message
+        }
+        user {
+            id
+            uid
+            username
+            email
+            createdAt
+        }
+    }
+}

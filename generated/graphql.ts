@@ -28,6 +28,7 @@ export type Mutation = {
   createTest: Test;
   login: FieldError;
   register: UserResponse;
+  user: UserResponse;
   validate: FieldError;
 };
 
@@ -48,6 +49,11 @@ export type MutationLoginArgs = {
 
 export type MutationRegisterArgs = {
   options: Options;
+};
+
+
+export type MutationUserArgs = {
+  uid: Scalars['String'];
 };
 
 
@@ -119,6 +125,13 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', error?: Array<{ __typename?: 'FieldError', field?: string | null, message?: string | null }> | null, user?: { __typename?: 'User', id: number, uid: string, username: string, email: string } | null } };
 
+export type UserMutationVariables = Exact<{
+  uid: Scalars['String'];
+}>;
+
+
+export type UserMutation = { __typename?: 'Mutation', user: { __typename?: 'UserResponse', error?: Array<{ __typename?: 'FieldError', field?: string | null, message?: string | null }> | null, user?: { __typename?: 'User', id: number, uid: string, username: string, email: string, createdAt: string } | null } };
+
 export type ValidateMutationVariables = Exact<{
   username: Scalars['String'];
   email: Scalars['String'];
@@ -162,6 +175,27 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const UserDocument = gql`
+    mutation User($uid: String!) {
+  user(uid: $uid) {
+    error {
+      field
+      message
+    }
+    user {
+      id
+      uid
+      username
+      email
+      createdAt
+    }
+  }
+}
+    `;
+
+export function useUserMutation() {
+  return Urql.useMutation<UserMutation, UserMutationVariables>(UserDocument);
 };
 export const ValidateDocument = gql`
     mutation Validate($username: String!, $email: String!, $password: String!) {
