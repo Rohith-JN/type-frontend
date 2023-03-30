@@ -6,6 +6,8 @@ import Loader from '../components/Loader';
 import firebase from 'firebase/compat/app';
 import cookie from "cookie";
 import { useUserMutation } from '../generated/graphql';
+import { createUrqlClient } from '../utils/createUrqlClient';
+import { withUrqlClient } from 'next-urql';
 
 const Account = ({ data }: {
   data: {
@@ -104,7 +106,7 @@ const Account = ({ data }: {
   }
 };
 
-export default Account;
+export default withUrqlClient(createUrqlClient)(Account);
 
 export async function getServerSideProps(context: { req: { headers: { cookie: any; }; }; res: { writeHead: (arg0: number, arg1: { Location: string; }) => void; end: () => void; }; }) {
   const data = cookie.parse(context.req ? context.req.headers.cookie || "" : document.cookie)

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
 import cookie from "cookie";
+import { withUrqlClient } from "next-urql";
+import { createUrqlClient } from "../utils/createUrqlClient";
 
 const Leaderboard = ({ data }: {
     data: {
@@ -39,7 +41,7 @@ const Leaderboard = ({ data }: {
     </>
 }
 
-export default Leaderboard
+export default withUrqlClient(createUrqlClient)(Leaderboard)
 
 export async function getServerSideProps(context: { req: { headers: { cookie: any; }; }; res: { writeHead: (arg0: number, arg1: { Location: string; }) => void; end: () => void; }; }) {
     const data = cookie.parse(context.req ? context.req.headers.cookie || "" : document.cookie)

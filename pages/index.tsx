@@ -8,6 +8,8 @@ import { recordTest } from "../utils/test";
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
 import cookie from "cookie";
+import { createUrqlClient } from '../utils/createUrqlClient';
+import { withUrqlClient } from 'next-urql';
 
 const Home = ({ data }: {
   data: {
@@ -99,7 +101,7 @@ const Home = ({ data }: {
   )
 }
 
-export default Home
+export default withUrqlClient(createUrqlClient)(Home)
 
 export async function getServerSideProps(context: { req: { headers: { cookie: any; }; }; res: { writeHead: (arg0: number, arg1: { Location: string; }) => void; end: () => void; }; }) {
   const data = cookie.parse(context.req ? context.req.headers.cookie || "" : document.cookie)
