@@ -26,6 +26,7 @@ export type FieldError = {
 export type Mutation = {
   __typename?: 'Mutation';
   createTest: Test;
+  deleteUser: Scalars['Boolean'];
   login: FieldError;
   register: UserResponse;
   user: UserResponse;
@@ -38,6 +39,12 @@ export type MutationCreateTestArgs = {
   time: Scalars['String'];
   words: Scalars['String'];
   wpm: Scalars['Float'];
+};
+
+
+export type MutationDeleteUserArgs = {
+  id: Scalars['Float'];
+  uid: Scalars['String'];
 };
 
 
