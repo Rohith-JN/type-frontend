@@ -1,15 +1,10 @@
 mutation User($uid: String! ) {
     user( uid: $uid ) {
         error {
-            field
-            message
+            ...RegularError
         }
         user {
-            id
-            uid
-            username
-            email
-            createdAt
+            ...RegularUser
         }
     }
 }

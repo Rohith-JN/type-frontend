@@ -37,6 +37,7 @@ export type Mutation = {
 export type MutationCreateTestArgs = {
   accuracy: Scalars['String'];
   time: Scalars['String'];
+  uid: Scalars['String'];
   words: Scalars['String'];
   wpm: Scalars['Float'];
 };
@@ -92,6 +93,7 @@ export type Test = {
   __typename?: 'Test';
   accuracy: Scalars['String'];
   createdAt: Scalars['String'];
+  creatorId: Scalars['String'];
   id: Scalars['Float'];
   time: Scalars['String'];
   words: Scalars['String'];
@@ -114,13 +116,20 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
+export type RegularErrorFragment = { __typename?: 'FieldError', field?: string | null, message?: string | null } & { ' $fragmentName'?: 'RegularErrorFragment' };
+
+export type RegularUserFragment = { __typename?: 'User', id: number, uid: string, username: string, email: string, createdAt: string } & { ' $fragmentName'?: 'RegularUserFragment' };
+
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'FieldError', field?: string | null, message?: string | null } };
+export type LoginMutation = { __typename?: 'Mutation', login: (
+    { __typename?: 'FieldError' }
+    & { ' $fragmentRefs'?: { 'RegularErrorFragment': RegularErrorFragment } }
+  ) };
 
 export type RegisterMutationVariables = Exact<{
   username: Scalars['String'];
@@ -130,14 +139,26 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', error?: Array<{ __typename?: 'FieldError', field?: string | null, message?: string | null }> | null, user?: { __typename?: 'User', id: number, uid: string, username: string, email: string } | null } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', error?: Array<(
+      { __typename?: 'FieldError' }
+      & { ' $fragmentRefs'?: { 'RegularErrorFragment': RegularErrorFragment } }
+    )> | null, user?: (
+      { __typename?: 'User' }
+      & { ' $fragmentRefs'?: { 'RegularUserFragment': RegularUserFragment } }
+    ) | null } };
 
 export type UserMutationVariables = Exact<{
   uid: Scalars['String'];
 }>;
 
 
-export type UserMutation = { __typename?: 'Mutation', user: { __typename?: 'UserResponse', error?: Array<{ __typename?: 'FieldError', field?: string | null, message?: string | null }> | null, user?: { __typename?: 'User', id: number, uid: string, username: string, email: string, createdAt: string } | null } };
+export type UserMutation = { __typename?: 'Mutation', user: { __typename?: 'UserResponse', error?: Array<(
+      { __typename?: 'FieldError' }
+      & { ' $fragmentRefs'?: { 'RegularErrorFragment': RegularErrorFragment } }
+    )> | null, user?: (
+      { __typename?: 'User' }
+      & { ' $fragmentRefs'?: { 'RegularUserFragment': RegularUserFragment } }
+    ) | null } };
 
 export type ValidateMutationVariables = Exact<{
   username: Scalars['String'];
@@ -146,17 +167,33 @@ export type ValidateMutationVariables = Exact<{
 }>;
 
 
-export type ValidateMutation = { __typename?: 'Mutation', validate: { __typename?: 'FieldError', field?: string | null, message?: string | null } };
+export type ValidateMutation = { __typename?: 'Mutation', validate: (
+    { __typename?: 'FieldError' }
+    & { ' $fragmentRefs'?: { 'RegularErrorFragment': RegularErrorFragment } }
+  ) };
 
-
+export const RegularErrorFragmentDoc = gql`
+    fragment RegularError on FieldError {
+  field
+  message
+}
+    `;
+export const RegularUserFragmentDoc = gql`
+    fragment RegularUser on User {
+  id
+  uid
+  username
+  email
+  createdAt
+}
+    `;
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
-    field
-    message
+    ...RegularError
   }
 }
-    `;
+    ${RegularErrorFragmentDoc}`;
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
@@ -167,18 +204,15 @@ export const RegisterDocument = gql`
     options: {username: $username, email: $email, password: $password, uid: $uid}
   ) {
     error {
-      field
-      message
+      ...RegularError
     }
     user {
-      id
-      uid
-      username
-      email
+      ...RegularUser
     }
   }
 }
-    `;
+    ${RegularErrorFragmentDoc}
+${RegularUserFragmentDoc}`;
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
@@ -187,19 +221,15 @@ export const UserDocument = gql`
     mutation User($uid: String!) {
   user(uid: $uid) {
     error {
-      field
-      message
+      ...RegularError
     }
     user {
-      id
-      uid
-      username
-      email
-      createdAt
+      ...RegularUser
     }
   }
 }
-    `;
+    ${RegularErrorFragmentDoc}
+${RegularUserFragmentDoc}`;
 
 export function useUserMutation() {
   return Urql.useMutation<UserMutation, UserMutationVariables>(UserDocument);
@@ -207,11 +237,10 @@ export function useUserMutation() {
 export const ValidateDocument = gql`
     mutation Validate($username: String!, $email: String!, $password: String!) {
   validate(username: $username, email: $email, password: $password) {
-    field
-    message
+    ...RegularError
   }
 }
-    `;
+    ${RegularErrorFragmentDoc}`;
 
 export function useValidateMutation() {
   return Urql.useMutation<ValidateMutation, ValidateMutationVariables>(ValidateDocument);

@@ -1,6 +1,5 @@
 mutation Validate($username: String!, $email: String!, $password: String!) {
   validate( username: $username, email: $email, password: $password ) {
-    field
-    message
+    ...RegularError
   }
 }

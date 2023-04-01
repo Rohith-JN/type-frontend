@@ -1,14 +1,10 @@
 mutation Register($username: String!, $email: String!, $password: String!, $uid: String! ) {
     register(options: { username: $username, email: $email, password: $password, uid: $uid }) {
         error {
-            field
-            message
+            ...RegularError
         }
         user {
-            id
-            uid
-            username
-            email
+            ...RegularUser
         }
     }
 }
