@@ -2,6 +2,8 @@ import styles from '../styles/Result.module.css';
 import { useSelector } from "react-redux";
 import { State } from "../store/reducer";
 import { useEffect, useState } from 'react';
+import { useCreateTestMutation } from '../generated/graphql';
+import firebase from 'firebase/compat/app';
 
 const Result = () => {
     const {
@@ -11,6 +13,7 @@ const Result = () => {
         result: { results }
     } = useSelector((state: State) => state);
     const [showResult, setShowResult] = useState(false);
+    const [, createTest] = useCreateTestMutation();
     const spaces = wordList.indexOf(currWord);
     let correctChars = 0;
     const result = typedHistory.map(
@@ -35,7 +38,22 @@ const Result = () => {
                 time: time,
             });
         }
-    }, [timer, timerId])
+    }, [timer, timerId]);
+
+    useEffect(() => {
+        async function test() {
+            if (firebase.auth().currentUser && !timer && timerId) {
+                await createTest({
+                    chars: `${correctWords} / ${incorrectWords}`,
+                    wpm: Math.round(wpm),
+                    accuracy: `${Math.round(accuracy)}%`,
+                    time: `${time}`,
+                    uid: `${firebase.auth().currentUser!.uid}`
+                })
+            }
+        }
+        test()
+    }, [timer, timerId]);
 
     useEffect(() => {
         results.length > 1 ? setShowResult(true) : setShowResult(false)

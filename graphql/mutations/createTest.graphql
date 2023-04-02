@@ -1,0 +1,10 @@
+mutation createTest($chars: String!, $wpm: Float!, $accuracy: String!, $time: String!, $uid: String!) {
+  createTest(chars: $chars, wpm: $wpm, accuracy: $accuracy, time: $time, uid: $uid) {
+    id
+    creatorId
+    time
+    accuracy
+    wpm
+    chars
+  }
+}

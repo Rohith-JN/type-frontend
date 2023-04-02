@@ -5,9 +5,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLoginMutation } from '../generated/graphql';
 import { toastOptions } from '../utils/utils';
+import { useDispatch } from 'react-redux';
+import { setResult } from '../store/actions';
 
 // add validation mutation here as well
 export default function Login(props: { onClick: VoidFunction }) {
+    const dispatch = useDispatch();
     const [, login] = useLoginMutation();
     const [user, setUser] = useState({
         email: '',
@@ -22,6 +25,7 @@ export default function Login(props: { onClick: VoidFunction }) {
         })
         if (validation.data?.login.field === null && validation.data?.login.message === null) {
             await firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(function () {
+                dispatch(setResult([]));
             }).catch(function (error) {
                 const message = error.message.replace("Firebase:", "");
                 toast.error(message, toastOptions);

@@ -59,7 +59,7 @@ export const setTheme = (payload: string) => ({
 });
 
 // Result Actions
-export const result = (payload: Array<object>) => ({
+export const setResult = (payload: Array<object>) => ({
     type: SET_RESULT,
     payload,
 });
