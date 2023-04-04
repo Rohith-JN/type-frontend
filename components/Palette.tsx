@@ -83,7 +83,7 @@ const Palette = ({ open }: { open: boolean }) => {
                                             dispatch(setTheme(option));
                                             setCookie("theme", option, {
                                                 path: "/",
-                                                maxAge: 60 * 60 * 60 * 60 * 60, // Expires after 1hr
+                                                maxAge: 60 * 60 * 60 * 60 * 60,
                                                 sameSite: true,
                                             })
                                             window.location.reload();

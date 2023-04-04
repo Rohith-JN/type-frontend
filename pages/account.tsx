@@ -5,12 +5,15 @@ import { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
 import firebase from 'firebase/compat/app';
 import cookie from "cookie";
-import { useUserMutation } from '../generated/graphql';
+import { useTestsQuery, useUserMutation } from '../generated/graphql';
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
+import { formatDate, secondsToTime } from '../utils/utils';
+import styles from '../styles/Account.module.css';
+import CustomError from '../components/Error';
 
-const Account = ({ data }: {
-  data: {
+const Account = ({ themeData }: {
+  themeData: {
     [key: string]: string;
   }
 }) => {
@@ -18,12 +21,18 @@ const Account = ({ data }: {
   const [loginVisible, setLoginVisible] = useState("flex");
   const [signupVisible, setSignUpVisible] = useState("none");
   const [, user] = useUserMutation();
+  const [{ data, fetching, error }] = useTestsQuery({
+    variables: {
+      uid: (firebase.auth().currentUser) ? firebase.auth().currentUser!.uid : '',
+      limit: 10
+    }
+  })
   const [userData, setUserData] = useState({
     username: '',
     email: '',
     uid: '',
     id: 0,
-    createdAt: ''
+    createdAt: 0
   });
 
   const loginOnClick = () => {
@@ -46,7 +55,7 @@ const Account = ({ data }: {
           email: response.data?.user.user?.email!,
           uid: response.data?.user.user?.uid!,
           id: response.data?.user.user?.id!,
-          createdAt: response.data?.user.user?.createdAt! // convert to readable date
+          createdAt: parseInt(response.data?.user.user?.createdAt!)
         });
       }
     }
@@ -54,8 +63,8 @@ const Account = ({ data }: {
   }, [authUser, user])
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", data.theme || "");
-  }, [data.theme]);
+    document.documentElement.setAttribute("data-theme", themeData.theme || "");
+  }, [themeData.theme]);
 
   useEffect(() => {
     setContentLoaded(true);
@@ -75,15 +84,50 @@ const Account = ({ data }: {
   }, [contentLoaded]);
 
   if (authUser) {
-    return <>
-      {loading ? (
-        <Loader />
-      ) : (
+    if (loading) {
+      return <Loader />
+    }
+    if (!fetching && !data && !loading) {
+      return <div>
+        <CustomError statusCode={null} statusMessage={'Oops something went wrong'} />
+      </div>
+    }
+    else {
+      return (
         <>
-          <button onClick={() => firebase.auth().signOut()}>SignOut</button>
+          {!data && fetching || loading ? (
+            <Loader />
+          ) : (
+            <div className={styles.account}>
+              <p className={styles.info}>Account created on {formatDate(userData.createdAt)}</p>
+              <table>
+                <thead>
+                  <tr>
+                    <th>S:No</th>
+                    <th>WPM</th>
+                    <th>Accuracy</th>
+                    <th>Words</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    data?.tests.map((test, index) => <tr key={index + 1}>
+                      <td>{index + 1}</td>
+                      <td>{test.wpm}</td>
+                      <td>{test.accuracy}</td>
+                      <td>{test.chars}</td>
+                      <td>{secondsToTime(parseInt(test.time))}</td>
+                    </tr>)
+                  }
+                </tbody>
+              </table>
+              {data ? <button>Load more</button> : null}
+            </div>
+          )}
         </>
-      )}
-    </>
+      )
+    }
   }
   else {
     return (
@@ -118,5 +162,5 @@ export async function getServerSideProps(context: { req: { headers: { cookie: an
     }
   }
 
-  return { props: { data: data && data } }
+  return { props: { themeData: data && data } }
 }

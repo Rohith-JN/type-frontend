@@ -89,6 +89,13 @@ export type QueryTestArgs = {
   id: Scalars['Int'];
 };
 
+
+export type QueryTestsArgs = {
+  cursor?: InputMaybe<Scalars['String']>;
+  limit: Scalars['Int'];
+  uid: Scalars['String'];
+};
+
 export type Test = {
   __typename?: 'Test';
   accuracy: Scalars['String'];
@@ -160,6 +167,15 @@ export type ValidateMutationVariables = Exact<{
 
 
 export type ValidateMutation = { __typename?: 'Mutation', validate: { __typename?: 'FieldError', field?: string | null, message?: string | null } };
+
+export type TestsQueryVariables = Exact<{
+  uid: Scalars['String'];
+  limit: Scalars['Int'];
+  cursor?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type TestsQuery = { __typename?: 'Query', tests: Array<{ __typename?: 'Test', id: number, creatorId: string, time: string, accuracy: string, wpm: number, chars: string, createdAt: string }> };
 
 
 export const CreateTestDocument = gql`
@@ -251,4 +267,21 @@ export const ValidateDocument = gql`
 
 export function useValidateMutation() {
   return Urql.useMutation<ValidateMutation, ValidateMutationVariables>(ValidateDocument);
+};
+export const TestsDocument = gql`
+    query Tests($uid: String!, $limit: Int!, $cursor: String) {
+  tests(uid: $uid, limit: $limit, cursor: $cursor) {
+    id
+    creatorId
+    time
+    accuracy
+    wpm
+    chars
+    createdAt
+  }
+}
+    `;
+
+export function useTestsQuery(options: Omit<Urql.UseQueryArgs<TestsQueryVariables>, 'query'>) {
+  return Urql.useQuery<TestsQuery, TestsQueryVariables>({ query: TestsDocument, ...options });
 };

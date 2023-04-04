@@ -11,8 +11,8 @@ import cookie from "cookie";
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
 
-const Home = ({ data }: {
-  data: {
+const Home = ({ themeData }: {
+  themeData: {
     [key: string]: string;
   }
 }) => {
@@ -24,8 +24,8 @@ const Home = ({ data }: {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", data.theme || "");
-  }, [data.theme]);
+    document.documentElement.setAttribute("data-theme", themeData.theme || "");
+  }, [themeData.theme]);
 
   useEffect(() => {
     document.onkeydown = (e) => {
@@ -113,5 +113,5 @@ export async function getServerSideProps(context: { req: { headers: { cookie: an
     }
   }
 
-  return { props: { data: data && data } }
+  return { props: { themeData: data && data } }
 }

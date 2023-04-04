@@ -4,16 +4,16 @@ import cookie from "cookie";
 import { withUrqlClient } from "next-urql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 
-const Leaderboard = ({ data }: {
-    data: {
+const Leaderboard = ({ themeData }: {
+    themeData: {
         [key: string]: string;
     }
 }) => {
     const [contentLoaded, setContentLoaded] = useState(false);
 
     useEffect(() => {
-        document.documentElement.setAttribute("data-theme", data.theme || "");
-    }, [data.theme]);
+        document.documentElement.setAttribute("data-theme", themeData.theme || "");
+    }, [themeData.theme]);
 
     useEffect(() => {
         setContentLoaded(true);
@@ -53,5 +53,5 @@ export async function getServerSideProps(context: { req: { headers: { cookie: an
         }
     }
 
-    return { props: { data: data && data } }
+    return { props: { themeData: data && data } }
 }

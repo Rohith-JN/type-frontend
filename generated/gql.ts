@@ -18,6 +18,7 @@ const documents = {
     "mutation Register($username: String!, $email: String!, $password: String!, $uid: String!) {\n  register(\n    options: {username: $username, email: $email, password: $password, uid: $uid}\n  ) {\n    error {\n      field\n      message\n    }\n    user {\n      id\n      uid\n      username\n      email\n      createdAt\n    }\n  }\n}": types.RegisterDocument,
     "mutation User($uid: String!) {\n  user(uid: $uid) {\n    error {\n      field\n      message\n    }\n    user {\n      id\n      uid\n      username\n      email\n      createdAt\n    }\n  }\n}": types.UserDocument,
     "mutation Validate($username: String!, $email: String!, $password: String!) {\n  validate(username: $username, email: $email, password: $password) {\n    field\n    message\n  }\n}": types.ValidateDocument,
+    "query Tests($uid: String!, $limit: Int!, $cursor: String) {\n  tests(uid: $uid, limit: $limit, cursor: $cursor) {\n    id\n    creatorId\n    time\n    accuracy\n    wpm\n    chars\n    createdAt\n  }\n}": types.TestsDocument,
 };
 
 /**
@@ -54,6 +55,10 @@ export function graphql(source: "mutation User($uid: String!) {\n  user(uid: $ui
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation Validate($username: String!, $email: String!, $password: String!) {\n  validate(username: $username, email: $email, password: $password) {\n    field\n    message\n  }\n}"): (typeof documents)["mutation Validate($username: String!, $email: String!, $password: String!) {\n  validate(username: $username, email: $email, password: $password) {\n    field\n    message\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query Tests($uid: String!, $limit: Int!, $cursor: String) {\n  tests(uid: $uid, limit: $limit, cursor: $cursor) {\n    id\n    creatorId\n    time\n    accuracy\n    wpm\n    chars\n    createdAt\n  }\n}"): (typeof documents)["query Tests($uid: String!, $limit: Int!, $cursor: String) {\n  tests(uid: $uid, limit: $limit, cursor: $cursor) {\n    id\n    creatorId\n    time\n    accuracy\n    wpm\n    chars\n    createdAt\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

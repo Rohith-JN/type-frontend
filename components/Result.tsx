@@ -4,6 +4,7 @@ import { State } from "../store/reducer";
 import { useEffect, useState } from 'react';
 import { useCreateTestMutation } from '../generated/graphql';
 import firebase from 'firebase/compat/app';
+import { secondsToTime } from '../utils/utils';
 
 const Result = () => {
     const {
@@ -85,7 +86,7 @@ const Result = () => {
                                     <td>{Math.round(object.wpm)}</td>
                                     <td>{Math.round(object.accuracy)}%</td>
                                     <td>{object.correctWords}{' '}/{' '}{object.incorrectWords}</td>
-                                    <td>{object.time}</td>
+                                    <td>{secondsToTime(object.time)}</td>
                                 </tr>
                             );
                         }
