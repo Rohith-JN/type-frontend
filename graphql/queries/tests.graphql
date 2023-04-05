@@ -1,11 +1,14 @@
-query Tests($uid: String!, $limit: Int!, $cursor: String) {
+query Tests($uid: String!,$limit: Int!, $cursor: String) {
   tests(uid: $uid, limit: $limit, cursor: $cursor) {
-    id
-    creatorId
-    time
-    accuracy
-    wpm
-    chars
-    createdAt
+    tests {
+      id
+      creatorId
+      time
+      accuracy
+      wpm
+      chars
+      createdAt
+    }
+    hasMore
   }
 }

@@ -17,7 +17,6 @@ p.info {
     overflow:hidden;
     max-width: 50%; 
     width: 50%;
-    padding-top: 1rem;
 }
 .account table thead tr {
     text-align: left;

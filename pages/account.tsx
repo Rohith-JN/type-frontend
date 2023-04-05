@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
 import firebase from 'firebase/compat/app';
 import cookie from "cookie";
-import { useTestsQuery, useUserMutation } from '../generated/graphql';
+import { useTestsQuery, useUserQuery } from '../generated/graphql';
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
 import { formatDate, secondsToTime } from '../utils/utils';
@@ -20,20 +20,22 @@ const Account = ({ themeData }: {
   const { authUser } = useAuth();
   const [loginVisible, setLoginVisible] = useState("flex");
   const [signupVisible, setSignUpVisible] = useState("none");
-  const [, user] = useUserMutation();
-  const [{ data, fetching, error }] = useTestsQuery({
+  const [variables, setVariables] = useState({
+    limit: 10,
+    cursor: null as null | string
+  });
+  const [{ data: userData, fetching: userFetching }] = useUserQuery({
     variables: {
-      uid: (firebase.auth().currentUser) ? firebase.auth().currentUser!.uid : '',
-      limit: 10
+      uid: (firebase.auth().currentUser) ? firebase.auth().currentUser!.uid : ''
     }
   })
-  const [userData, setUserData] = useState({
-    username: '',
-    email: '',
-    uid: '',
-    id: 0,
-    createdAt: 0
-  });
+  const [{ data: testsData, fetching: testsFetching }] = useTestsQuery({
+    variables: {
+      uid: (firebase.auth().currentUser) ? firebase.auth().currentUser!.uid : '',
+      limit: variables.limit,
+      cursor: variables.cursor
+    }
+  })
 
   const loginOnClick = () => {
     setLoginVisible("none")
@@ -45,22 +47,6 @@ const Account = ({ themeData }: {
   }
 
   const [contentLoaded, setContentLoaded] = useState(false);
-
-  useEffect(() => {
-    async function getUser() {
-      if (authUser && firebase.auth().currentUser) {
-        const response = await user({ uid: firebase.auth().currentUser!.uid })
-        setUserData({
-          username: response.data?.user.user?.username!,
-          email: response.data?.user.user?.email!,
-          uid: response.data?.user.user?.uid!,
-          id: response.data?.user.user?.id!,
-          createdAt: parseInt(response.data?.user.user?.createdAt!)
-        });
-      }
-    }
-    getUser()
-  }, [authUser, user])
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", themeData.theme || "");
@@ -87,7 +73,7 @@ const Account = ({ themeData }: {
     if (loading) {
       return <Loader />
     }
-    if (!fetching && !data && !loading) {
+    if (!userFetching && !testsFetching && !testsData && !userData && !loading) {
       return <div>
         <CustomError statusCode={null} statusMessage={'Oops something went wrong'} />
       </div>
@@ -95,12 +81,53 @@ const Account = ({ themeData }: {
     else {
       return (
         <>
-          {!data && fetching || loading ? (
+          {!userData && !testsData && userData && testsFetching || loading ? (
             <Loader />
           ) : (
             <div className={styles.account}>
-              <p className={styles.info}>Account created on {formatDate(userData.createdAt)}</p>
-              <table>
+              <p className={styles.info}>Account created on {formatDate(parseInt(userData?.user.user?.createdAt!))}</p>
+              <table style={{ paddingTop: "1rem" }}>
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>PB</th>
+                    <th>WPM</th>
+                    <th>Accuracy</th>
+                    <th>Tests taken</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0:15</td>
+                    <td>0</td>
+                    <td>0%</td>
+                    <td>0 / 0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>0:30</td>
+                    <td>0</td>
+                    <td>0%</td>
+                    <td>0 / 0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>1:00</td>
+                    <td>0</td>
+                    <td>0%</td>
+                    <td>0 / 0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>2:00</td>
+                    <td>0</td>
+                    <td>0%</td>
+                    <td>0 / 0</td>
+                    <td>0</td>
+                  </tr>
+                </tbody>
+              </table>
+              <table style={{ paddingTop: "4rem" }}>
                 <thead>
                   <tr>
                     <th>S:No</th>
@@ -112,7 +139,7 @@ const Account = ({ themeData }: {
                 </thead>
                 <tbody>
                   {
-                    data?.tests.map((test, index) => <tr key={index + 1}>
+                    testsData?.tests.tests.map((test, index) => <tr key={index + 1}>
                       <td>{index + 1}</td>
                       <td>{test.wpm}</td>
                       <td>{test.accuracy}</td>
@@ -122,8 +149,9 @@ const Account = ({ themeData }: {
                   }
                 </tbody>
               </table>
-              {data ? <button>Load more</button> : null}
+              {testsData && testsData.tests.hasMore ? <button>Load more</button> : null}
             </div>
+
           )}
         </>
       )

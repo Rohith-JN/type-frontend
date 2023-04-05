@@ -1,4 +1,4 @@
-mutation User($uid: String! ) {
+query User($uid: String! ) {
     user( uid: $uid ) {
         error {
             field

@@ -29,7 +29,6 @@ export type Mutation = {
   deleteUser: Scalars['Boolean'];
   login: FieldError;
   register: UserResponse;
-  user: UserResponse;
   validate: FieldError;
 };
 
@@ -60,11 +59,6 @@ export type MutationRegisterArgs = {
 };
 
 
-export type MutationUserArgs = {
-  uid: Scalars['String'];
-};
-
-
 export type MutationValidateArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -78,21 +72,27 @@ export type Options = {
   username: Scalars['String'];
 };
 
-export type Query = {
-  __typename?: 'Query';
-  test?: Maybe<Test>;
+export type PaginatedTests = {
+  __typename?: 'PaginatedTests';
+  hasMore: Scalars['Boolean'];
   tests: Array<Test>;
 };
 
-
-export type QueryTestArgs = {
-  id: Scalars['Int'];
+export type Query = {
+  __typename?: 'Query';
+  tests: PaginatedTests;
+  user: UserResponse;
 };
 
 
 export type QueryTestsArgs = {
   cursor?: InputMaybe<Scalars['String']>;
   limit: Scalars['Int'];
+  uid: Scalars['String'];
+};
+
+
+export type QueryUserArgs = {
   uid: Scalars['String'];
 };
 
@@ -152,13 +152,6 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', error?: Array<{ __typename?: 'FieldError', field?: string | null, message?: string | null }> | null, user?: { __typename?: 'User', id: number, uid: string, username: string, email: string, createdAt: string } | null } };
 
-export type UserMutationVariables = Exact<{
-  uid: Scalars['String'];
-}>;
-
-
-export type UserMutation = { __typename?: 'Mutation', user: { __typename?: 'UserResponse', error?: Array<{ __typename?: 'FieldError', field?: string | null, message?: string | null }> | null, user?: { __typename?: 'User', id: number, uid: string, username: string, email: string, createdAt: string } | null } };
-
 export type ValidateMutationVariables = Exact<{
   username: Scalars['String'];
   email: Scalars['String'];
@@ -175,7 +168,14 @@ export type TestsQueryVariables = Exact<{
 }>;
 
 
-export type TestsQuery = { __typename?: 'Query', tests: Array<{ __typename?: 'Test', id: number, creatorId: string, time: string, accuracy: string, wpm: number, chars: string, createdAt: string }> };
+export type TestsQuery = { __typename?: 'Query', tests: { __typename?: 'PaginatedTests', hasMore: boolean, tests: Array<{ __typename?: 'Test', id: number, creatorId: string, time: string, accuracy: string, wpm: number, chars: string, createdAt: string }> } };
+
+export type UserQueryVariables = Exact<{
+  uid: Scalars['String'];
+}>;
+
+
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'UserResponse', error?: Array<{ __typename?: 'FieldError', field?: string | null, message?: string | null }> | null, user?: { __typename?: 'User', id: number, uid: string, username: string, email: string, createdAt: string } | null } };
 
 
 export const CreateTestDocument = gql`
@@ -235,8 +235,40 @@ export const RegisterDocument = gql`
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
 };
+export const ValidateDocument = gql`
+    mutation Validate($username: String!, $email: String!, $password: String!) {
+  validate(username: $username, email: $email, password: $password) {
+    field
+    message
+  }
+}
+    `;
+
+export function useValidateMutation() {
+  return Urql.useMutation<ValidateMutation, ValidateMutationVariables>(ValidateDocument);
+};
+export const TestsDocument = gql`
+    query Tests($uid: String!, $limit: Int!, $cursor: String) {
+  tests(uid: $uid, limit: $limit, cursor: $cursor) {
+    tests {
+      id
+      creatorId
+      time
+      accuracy
+      wpm
+      chars
+      createdAt
+    }
+    hasMore
+  }
+}
+    `;
+
+export function useTestsQuery(options: Omit<Urql.UseQueryArgs<TestsQueryVariables>, 'query'>) {
+  return Urql.useQuery<TestsQuery, TestsQueryVariables>({ query: TestsDocument, ...options });
+};
 export const UserDocument = gql`
-    mutation User($uid: String!) {
+    query User($uid: String!) {
   user(uid: $uid) {
     error {
       field
@@ -253,35 +285,6 @@ export const UserDocument = gql`
 }
     `;
 
-export function useUserMutation() {
-  return Urql.useMutation<UserMutation, UserMutationVariables>(UserDocument);
-};
-export const ValidateDocument = gql`
-    mutation Validate($username: String!, $email: String!, $password: String!) {
-  validate(username: $username, email: $email, password: $password) {
-    field
-    message
-  }
-}
-    `;
-
-export function useValidateMutation() {
-  return Urql.useMutation<ValidateMutation, ValidateMutationVariables>(ValidateDocument);
-};
-export const TestsDocument = gql`
-    query Tests($uid: String!, $limit: Int!, $cursor: String) {
-  tests(uid: $uid, limit: $limit, cursor: $cursor) {
-    id
-    creatorId
-    time
-    accuracy
-    wpm
-    chars
-    createdAt
-  }
-}
-    `;
-
-export function useTestsQuery(options: Omit<Urql.UseQueryArgs<TestsQueryVariables>, 'query'>) {
-  return Urql.useQuery<TestsQuery, TestsQueryVariables>({ query: TestsDocument, ...options });
+export function useUserQuery(options: Omit<Urql.UseQueryArgs<UserQueryVariables>, 'query'>) {
+  return Urql.useQuery<UserQuery, UserQueryVariables>({ query: UserDocument, ...options });
 };
