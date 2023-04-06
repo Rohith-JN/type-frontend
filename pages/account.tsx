@@ -81,7 +81,7 @@ const Account = ({ themeData }: {
     else {
       return (
         <>
-          {!userData && !testsData && userData && testsFetching || loading ? (
+          {!userData && !testsData && userFetching && testsFetching || loading ? (
             <Loader />
           ) : (
             <div className={styles.account}>
@@ -89,6 +89,7 @@ const Account = ({ themeData }: {
               <table style={{ paddingTop: "1rem" }}>
                 <thead>
                   <tr>
+                    <th>S:No</th>
                     <th>Time</th>
                     <th>PB</th>
                     <th>WPM</th>
@@ -98,6 +99,7 @@ const Account = ({ themeData }: {
                 </thead>
                 <tbody>
                   <tr>
+                    <td>1</td>
                     <td>0:15</td>
                     <td>0</td>
                     <td>0%</td>
@@ -105,6 +107,7 @@ const Account = ({ themeData }: {
                     <td>0</td>
                   </tr>
                   <tr>
+                    <td>2</td>
                     <td>0:30</td>
                     <td>0</td>
                     <td>0%</td>
@@ -112,6 +115,7 @@ const Account = ({ themeData }: {
                     <td>0</td>
                   </tr>
                   <tr>
+                    <td>3</td>
                     <td>1:00</td>
                     <td>0</td>
                     <td>0%</td>
@@ -119,6 +123,7 @@ const Account = ({ themeData }: {
                     <td>0</td>
                   </tr>
                   <tr>
+                    <td>4</td>
                     <td>2:00</td>
                     <td>0</td>
                     <td>0%</td>
@@ -127,7 +132,7 @@ const Account = ({ themeData }: {
                   </tr>
                 </tbody>
               </table>
-              <table style={{ paddingTop: "4rem" }}>
+              {(testsData?.tests.tests.length != 0) ? <table style={{ paddingTop: "4rem" }}>
                 <thead>
                   <tr>
                     <th>S:No</th>
@@ -135,6 +140,7 @@ const Account = ({ themeData }: {
                     <th>Accuracy</th>
                     <th>Words</th>
                     <th>Time</th>
+                    <th>Taken</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -145,13 +151,17 @@ const Account = ({ themeData }: {
                       <td>{test.accuracy}</td>
                       <td>{test.chars}</td>
                       <td>{secondsToTime(parseInt(test.time))}</td>
+                      <td>{test.testTaken}</td>
                     </tr>)
                   }
                 </tbody>
-              </table>
-              {testsData && testsData.tests.hasMore ? <button>Load more</button> : null}
-            </div>
+              </table> : null}
 
+              {testsData && testsData.tests.hasMore ? <button onClick={() => setVariables({
+                limit: 10,
+                cursor: testsData.tests.tests[testsData.tests.tests.length - 1].createdAt
+              })}>Load older tests</button> : null}
+            </div>
           )}
         </>
       )
@@ -192,3 +202,4 @@ export async function getServerSideProps(context: { req: { headers: { cookie: an
 
   return { props: { themeData: data && data } }
 }
+

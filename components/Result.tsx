@@ -8,7 +8,7 @@ import { secondsToTime } from '../utils/utils';
 
 const Result = () => {
     const {
-        time: { timerId, timer },
+        time: { timerId, timer, testTaken },
         word: { currWord, wordList, typedHistory },
         preferences: { time },
         result: { results }
@@ -37,6 +37,7 @@ const Result = () => {
                 correctWords: correctWords,
                 incorrectWords: incorrectWords,
                 time: time,
+                testTaken: testTaken
             });
         }
     }, [timer, timerId]);
@@ -49,7 +50,8 @@ const Result = () => {
                     wpm: Math.round(wpm),
                     accuracy: `${Math.round(accuracy)}%`,
                     time: `${time}`,
-                    uid: `${firebase.auth().currentUser!.uid}`
+                    uid: `${firebase.auth().currentUser!.uid}`,
+                    testTaken: testTaken
                 })
             }
         }

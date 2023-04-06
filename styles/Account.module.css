@@ -5,6 +5,7 @@
     align-items: center;
     width: 100%;
     padding-top: 3rem;
+    padding-bottom: 4.2rem;
 }
 p.info {
     font-family: 'lexend';
@@ -15,8 +16,8 @@ p.info {
     border-spacing: 0; 
     border-collapse: separate;
     overflow:hidden;
-    max-width: 50%; 
-    width: 50%;
+    max-width: 55%; 
+    width: 55%;
 }
 .account table thead tr {
     text-align: left;
@@ -54,11 +55,10 @@ p.info {
 }
 
 .account button {
-    margin-bottom: 4.2rem;
     margin-top: 1.0rem;
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
-    width: 50%;
+    width: 55%;
     background-color: var(--sub-alt-color);
     outline: none;
     border: 1px solid var(--sub-alt-color);

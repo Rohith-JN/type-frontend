@@ -15,6 +15,7 @@ import {
     SET_RESULT,
     SET_PALLET,
     SET_THEME,
+    SET_TEST_TAKEN,
 } from "./actions";
 
 export interface State {
@@ -34,6 +35,7 @@ export interface State {
     time: {
         timer: number; // represents remaining time for a timer
         timerId: NodeJS.Timeout | null; // used to clear timer interval when test is reset or completed
+        testTaken: string
     };
     result: {
         results: [
@@ -43,6 +45,7 @@ export interface State {
                 correctWords: number;
                 incorrectWords: number;
                 time: number;
+                testTaken: string;
             }
         ];
     };
@@ -65,6 +68,7 @@ export const initialState: State = {
     time: {
         timer: 1,
         timerId: null,
+        testTaken: ""
     },
     result: {
         results: [
@@ -74,6 +78,7 @@ export const initialState: State = {
                 correctWords: 0,
                 incorrectWords: 0,
                 time: 0,
+                testTaken: "",
             },
         ],
     },
@@ -90,8 +95,11 @@ const timerReducer = (
             return { ...state, timer: payload };
         case TIMERID_SET:
             return { ...state, timerId: payload };
-        case SET_RESULT:
-            return { ...state, result: payload };
+        case SET_TEST_TAKEN:
+            return {
+                ...state,
+                testTaken: payload
+            };
         default:
             return state;
     }

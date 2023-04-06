@@ -36,6 +36,7 @@ export type Mutation = {
 export type MutationCreateTestArgs = {
   accuracy: Scalars['String'];
   chars: Scalars['String'];
+  testTaken: Scalars['String'];
   time: Scalars['String'];
   uid: Scalars['String'];
   wpm: Scalars['Float'];
@@ -103,6 +104,7 @@ export type Test = {
   createdAt: Scalars['String'];
   creatorId: Scalars['String'];
   id: Scalars['Float'];
+  testTaken: Scalars['String'];
   time: Scalars['String'];
   wpm: Scalars['Float'];
 };
@@ -129,10 +131,11 @@ export type CreateTestMutationVariables = Exact<{
   accuracy: Scalars['String'];
   time: Scalars['String'];
   uid: Scalars['String'];
+  testTaken: Scalars['String'];
 }>;
 
 
-export type CreateTestMutation = { __typename?: 'Mutation', createTest: { __typename?: 'Test', id: number, creatorId: string, time: string, accuracy: string, wpm: number, chars: string } };
+export type CreateTestMutation = { __typename?: 'Mutation', createTest: { __typename?: 'Test', id: number, creatorId: string, time: string, accuracy: string, wpm: number, chars: string, testTaken: string } };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -168,7 +171,7 @@ export type TestsQueryVariables = Exact<{
 }>;
 
 
-export type TestsQuery = { __typename?: 'Query', tests: { __typename?: 'PaginatedTests', hasMore: boolean, tests: Array<{ __typename?: 'Test', id: number, creatorId: string, time: string, accuracy: string, wpm: number, chars: string, createdAt: string }> } };
+export type TestsQuery = { __typename?: 'Query', tests: { __typename?: 'PaginatedTests', hasMore: boolean, tests: Array<{ __typename?: 'Test', id: number, creatorId: string, time: string, accuracy: string, wpm: number, chars: string, createdAt: string, testTaken: string }> } };
 
 export type UserQueryVariables = Exact<{
   uid: Scalars['String'];
@@ -179,13 +182,14 @@ export type UserQuery = { __typename?: 'Query', user: { __typename?: 'UserRespon
 
 
 export const CreateTestDocument = gql`
-    mutation createTest($chars: String!, $wpm: Float!, $accuracy: String!, $time: String!, $uid: String!) {
+    mutation createTest($chars: String!, $wpm: Float!, $accuracy: String!, $time: String!, $uid: String!, $testTaken: String!) {
   createTest(
     chars: $chars
     wpm: $wpm
     accuracy: $accuracy
     time: $time
     uid: $uid
+    testTaken: $testTaken
   ) {
     id
     creatorId
@@ -193,6 +197,7 @@ export const CreateTestDocument = gql`
     accuracy
     wpm
     chars
+    testTaken
   }
 }
     `;
@@ -258,6 +263,7 @@ export const TestsDocument = gql`
       wpm
       chars
       createdAt
+      testTaken
     }
     hasMore
   }

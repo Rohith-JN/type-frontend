@@ -7,6 +7,7 @@ import {
     setWordList,
     timerSet,
     timerDecrement,
+    setTestTaken,
 } from "../store/actions";
 import { store } from "../store/store";
 
@@ -43,14 +44,16 @@ const handleBackspace = (ctrlKey: boolean) => {
 export const recordTest = (key: string, ctrlKey: boolean) => {
     const { dispatch, getState } = store;
     const {
-        time: { timer, timerId },
+        time: { timer, timerId, testTaken },
         word: { typedWord, currWord, activeWordRef, caretRef },
         preferences: { time },
     } = getState();
     if (!timer) {
         return;
     }
-    if (!timerId) startTimer();
+    if (!timerId) {
+        startTimer();
+    }
     const currWordEl = activeWordRef?.current!;
     currWordEl.scrollIntoView({ behavior: "smooth", block: "center" });
     const caret = caretRef?.current!;
@@ -103,6 +106,17 @@ export const resetTest = () => {
 
 export const startTimer = () => {
     const { dispatch } = store;
+    const now = new Date();
+    const formattedDate = now.toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+    });
+    console.log(formattedDate);
+    dispatch(setTestTaken(formattedDate));
     const timerId = setInterval(() => {
         dispatch(timerDecrement());
     }, 1000);

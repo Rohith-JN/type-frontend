@@ -8,6 +8,7 @@ query Tests($uid: String!,$limit: Int!, $cursor: String) {
       wpm
       chars
       createdAt
+      testTaken
     }
     hasMore
   }

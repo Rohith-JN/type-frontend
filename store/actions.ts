@@ -14,6 +14,7 @@ export const SET_PALLET = "SETPALLET";
 export const SET_REF = "SETREF";
 export const SET_CARET_REF = "SETCARETREF";
 export const SET_RESULT = "SETRESULT";
+export const SET_TEST_TAKEN = "SETTESTTAKEN";
 
 // Time Actions
 export const timerDecrement = () => ({ type: TIMER_DECREMENT });
@@ -22,6 +23,10 @@ export const setTimerId = (payload: NodeJS.Timer | null) => ({
     type: TIMERID_SET,
     payload,
 });
+export const setTestTaken = (payload: string) => ({
+    type: SET_TEST_TAKEN,
+    payload
+})
 
 // Word Actions
 export const setWord = (payload: string) => ({ type: SET_WORD, payload });
