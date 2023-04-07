@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
 import firebase from 'firebase/compat/app';
 import cookie from "cookie";
-import { useTestsQuery, useUserQuery } from '../generated/graphql';
+import { useGetStatsQuery, useTestsQuery, useUserQuery } from '../generated/graphql';
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
 import { formatDate, secondsToTime } from '../utils/utils';
@@ -34,6 +34,12 @@ const Account = ({ themeData }: {
       uid: (firebase.auth().currentUser) ? firebase.auth().currentUser!.uid : '',
       limit: variables.limit,
       cursor: variables.cursor
+    }
+  })
+
+  const [{ data: userStats, fetching: userStatsFetching }] = useGetStatsQuery({
+    variables: {
+      uid: (firebase.auth().currentUser) ? firebase.auth().currentUser!.uid : ''
     }
   })
 
@@ -73,7 +79,7 @@ const Account = ({ themeData }: {
     if (loading) {
       return <Loader />
     }
-    if (!userFetching && !testsFetching && !testsData && !userData && !loading) {
+    if (!userFetching && !testsFetching && !userStatsFetching && !testsData && !userData && !userStats && !loading) {
       return <div>
         <CustomError statusCode={null} statusMessage={'Oops something went wrong'} />
       </div>
@@ -81,7 +87,7 @@ const Account = ({ themeData }: {
     else {
       return (
         <>
-          {!userData && !testsData && userFetching && testsFetching || loading ? (
+          {!userData && !testsData && !userStats && userFetching && testsFetching && userStatsFetching || loading ? (
             <Loader />
           ) : (
             <div className={styles.account}>
@@ -98,38 +104,16 @@ const Account = ({ themeData }: {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>0:15</td>
-                    <td>0</td>
-                    <td>0%</td>
-                    <td>0 / 0</td>
-                    <td>0</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>0:30</td>
-                    <td>0</td>
-                    <td>0%</td>
-                    <td>0 / 0</td>
-                    <td>0</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>1:00</td>
-                    <td>0</td>
-                    <td>0%</td>
-                    <td>0 / 0</td>
-                    <td>0</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>2:00</td>
-                    <td>0</td>
-                    <td>0%</td>
-                    <td>0 / 0</td>
-                    <td>0</td>
-                  </tr>
+                  {
+                    userStats?.getStats.userStats.map((stat, index) => <tr key={index + 1}>
+                      <td>{index + 1}</td>
+                      <td>{secondsToTime(parseInt(stat.time))}</td>
+                      <td>{stat.pb}</td>
+                      <td>{stat.wpm}</td>
+                      <td>{stat.accuracy}</td>
+                      <td>{stat.testsTaken}</td>
+                    </tr>)
+                  }
                 </tbody>
               </table>
               {(testsData?.tests.tests.length != 0) ? <table style={{ paddingTop: "4rem" }}>

@@ -1,0 +1,11 @@
+query GetStats($uid: String!) {
+  getStats(uid: $uid) {
+    userStats {
+      time
+      wpm
+      pb
+      accuracy
+      testsTaken
+    }
+  }
+}

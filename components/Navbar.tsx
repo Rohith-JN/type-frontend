@@ -2,6 +2,9 @@ import styles from '../styles/Navbar.module.css';
 import React, { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { MdLogout } from 'react-icons/md'
+import firebase from 'firebase/compat/app'
+import { useAuth } from '../firebase/auth';
 
 function NavOption(props: { optionText: string, isSelected: boolean, route: string, onClick: () => void }) {
     const { optionText, isSelected, route, onClick } = props;
@@ -15,6 +18,8 @@ function NavOption(props: { optionText: string, isSelected: boolean, route: stri
 
 const Navbar = () => {
     const { asPath } = useRouter();
+    const router = useRouter();
+    const { authUser } = useAuth()
     const options = useMemo(() => [
         { id: 1, optionText: 'type', route: '/' },
         { id: 2, optionText: 'account', route: '/account' },
@@ -53,6 +58,10 @@ const Navbar = () => {
                                 onClick={() => setSelectedOption(option.id)}
                             />
                         ))}
+                        {(authUser) ? <MdLogout size={20} color='var(--main-color)' style={{ cursor: "pointer" }} onClick={() => {
+                            firebase.auth().signOut()
+                            window.location.reload()
+                        }} /> : null}
                     </div>
                 </div>
             </div>

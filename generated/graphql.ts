@@ -81,8 +81,14 @@ export type PaginatedTests = {
 
 export type Query = {
   __typename?: 'Query';
+  getStats: UserStats;
   tests: PaginatedTests;
   user: UserResponse;
+};
+
+
+export type QueryGetStatsArgs = {
+  uid: Scalars['String'];
 };
 
 
@@ -95,6 +101,15 @@ export type QueryTestsArgs = {
 
 export type QueryUserArgs = {
   uid: Scalars['String'];
+};
+
+export type Stats = {
+  __typename?: 'Stats';
+  accuracy: Scalars['String'];
+  pb: Scalars['Float'];
+  testsTaken: Scalars['Float'];
+  time: Scalars['String'];
+  wpm: Scalars['Float'];
 };
 
 export type Test = {
@@ -123,6 +138,11 @@ export type UserResponse = {
   __typename?: 'UserResponse';
   error?: Maybe<Array<FieldError>>;
   user?: Maybe<User>;
+};
+
+export type UserStats = {
+  __typename?: 'UserStats';
+  userStats: Array<Stats>;
 };
 
 export type CreateTestMutationVariables = Exact<{
@@ -179,6 +199,13 @@ export type UserQueryVariables = Exact<{
 
 
 export type UserQuery = { __typename?: 'Query', user: { __typename?: 'UserResponse', error?: Array<{ __typename?: 'FieldError', field?: string | null, message?: string | null }> | null, user?: { __typename?: 'User', id: number, uid: string, username: string, email: string, createdAt: string } | null } };
+
+export type GetStatsQueryVariables = Exact<{
+  uid: Scalars['String'];
+}>;
+
+
+export type GetStatsQuery = { __typename?: 'Query', getStats: { __typename?: 'UserStats', userStats: Array<{ __typename?: 'Stats', time: string, wpm: number, pb: number, accuracy: string, testsTaken: number }> } };
 
 
 export const CreateTestDocument = gql`
@@ -293,4 +320,21 @@ export const UserDocument = gql`
 
 export function useUserQuery(options: Omit<Urql.UseQueryArgs<UserQueryVariables>, 'query'>) {
   return Urql.useQuery<UserQuery, UserQueryVariables>({ query: UserDocument, ...options });
+};
+export const GetStatsDocument = gql`
+    query GetStats($uid: String!) {
+  getStats(uid: $uid) {
+    userStats {
+      time
+      wpm
+      pb
+      accuracy
+      testsTaken
+    }
+  }
+}
+    `;
+
+export function useGetStatsQuery(options: Omit<Urql.UseQueryArgs<GetStatsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetStatsQuery, GetStatsQueryVariables>({ query: GetStatsDocument, ...options });
 };

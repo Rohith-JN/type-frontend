@@ -9,7 +9,7 @@
 .Nav_Container {
     display: flex; 
     flex-direction: row; 
-    width: 60%; 
+    width: 62%; 
     height: 2.5rem; 
     border-radius: 0.25rem; 
 }

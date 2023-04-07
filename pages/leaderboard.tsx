@@ -3,6 +3,7 @@ import Loader from "../components/Loader";
 import cookie from "cookie";
 import { withUrqlClient } from "next-urql";
 import { createUrqlClient } from "../utils/createUrqlClient";
+import styles from '../styles/Leaderboard.module.css'
 
 const Leaderboard = ({ themeData }: {
     themeData: {
@@ -36,6 +37,31 @@ const Leaderboard = ({ themeData }: {
             <Loader />
         ) : (
             <>
+                <div className={styles.leaderboard}>
+                    <p className={styles.info}>All-time Leaderboard</p>
+                    <table style={{ paddingTop: "1rem" }}>
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>User</th>
+                                <th>WPM</th>
+                                <th>Accuracy</th>
+                                <th>Time</th>
+                                <th>Taken</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>test</td>
+                                <td>214</td>
+                                <td>94%</td>
+                                <td>1:00</td>
+                                <td>21/10/22, 10:53</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </>
         )}
     </>
