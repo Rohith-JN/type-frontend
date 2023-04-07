@@ -23,6 +23,21 @@ export type FieldError = {
   message?: Maybe<Scalars['String']>;
 };
 
+export type LeaderBoard = {
+  __typename?: 'LeaderBoard';
+  leaderBoard: Array<LeaderBoardStatFields>;
+};
+
+export type LeaderBoardStatFields = {
+  __typename?: 'LeaderBoardStatFields';
+  accuracy: Scalars['String'];
+  rank: Scalars['Float'];
+  testTaken: Scalars['String'];
+  time: Scalars['String'];
+  user: Scalars['String'];
+  wpm: Scalars['Float'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createTest: Test;
@@ -82,6 +97,7 @@ export type PaginatedTests = {
 export type Query = {
   __typename?: 'Query';
   getStats: UserStats;
+  leaderboard: LeaderBoard;
   tests: PaginatedTests;
   user: UserResponse;
 };
@@ -89,6 +105,11 @@ export type Query = {
 
 export type QueryGetStatsArgs = {
   uid: Scalars['String'];
+};
+
+
+export type QueryLeaderboardArgs = {
+  time: Scalars['String'];
 };
 
 
@@ -101,15 +122,6 @@ export type QueryTestsArgs = {
 
 export type QueryUserArgs = {
   uid: Scalars['String'];
-};
-
-export type Stats = {
-  __typename?: 'Stats';
-  accuracy: Scalars['String'];
-  pb: Scalars['Float'];
-  testsTaken: Scalars['Float'];
-  time: Scalars['String'];
-  wpm: Scalars['Float'];
 };
 
 export type Test = {
@@ -140,9 +152,18 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
+export type UserStatFields = {
+  __typename?: 'UserStatFields';
+  accuracy: Scalars['String'];
+  pb: Scalars['Float'];
+  testsTaken: Scalars['Float'];
+  time: Scalars['String'];
+  wpm: Scalars['Float'];
+};
+
 export type UserStats = {
   __typename?: 'UserStats';
-  userStats: Array<Stats>;
+  userStats: Array<UserStatFields>;
 };
 
 export type CreateTestMutationVariables = Exact<{
@@ -184,6 +205,13 @@ export type ValidateMutationVariables = Exact<{
 
 export type ValidateMutation = { __typename?: 'Mutation', validate: { __typename?: 'FieldError', field?: string | null, message?: string | null } };
 
+export type LeaderboardQueryVariables = Exact<{
+  time: Scalars['String'];
+}>;
+
+
+export type LeaderboardQuery = { __typename?: 'Query', leaderboard: { __typename?: 'LeaderBoard', leaderBoard: Array<{ __typename?: 'LeaderBoardStatFields', rank: number, user: string, wpm: number, accuracy: string, time: string, testTaken: string }> } };
+
 export type TestsQueryVariables = Exact<{
   uid: Scalars['String'];
   limit: Scalars['Int'];
@@ -205,7 +233,7 @@ export type GetStatsQueryVariables = Exact<{
 }>;
 
 
-export type GetStatsQuery = { __typename?: 'Query', getStats: { __typename?: 'UserStats', userStats: Array<{ __typename?: 'Stats', time: string, wpm: number, pb: number, accuracy: string, testsTaken: number }> } };
+export type GetStatsQuery = { __typename?: 'Query', getStats: { __typename?: 'UserStats', userStats: Array<{ __typename?: 'UserStatFields', time: string, wpm: number, pb: number, accuracy: string, testsTaken: number }> } };
 
 
 export const CreateTestDocument = gql`
@@ -278,6 +306,24 @@ export const ValidateDocument = gql`
 
 export function useValidateMutation() {
   return Urql.useMutation<ValidateMutation, ValidateMutationVariables>(ValidateDocument);
+};
+export const LeaderboardDocument = gql`
+    query Leaderboard($time: String!) {
+  leaderboard(time: $time) {
+    leaderBoard {
+      rank
+      user
+      wpm
+      accuracy
+      time
+      testTaken
+    }
+  }
+}
+    `;
+
+export function useLeaderboardQuery(options: Omit<Urql.UseQueryArgs<LeaderboardQueryVariables>, 'query'>) {
+  return Urql.useQuery<LeaderboardQuery, LeaderboardQueryVariables>({ query: LeaderboardDocument, ...options });
 };
 export const TestsDocument = gql`
     query Tests($uid: String!, $limit: Int!, $cursor: String) {

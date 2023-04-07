@@ -1,15 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Loader from "../components/Loader";
+import Option from '../components/Option';
 import cookie from "cookie";
 import { withUrqlClient } from "next-urql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import styles from '../styles/Leaderboard.module.css'
+import { useLeaderboardQuery } from "../generated/graphql";
+import { secondsToTime } from "../utils/utils";
 
 const Leaderboard = ({ themeData }: {
     themeData: {
         [key: string]: string;
     }
 }) => {
+    const wordOptions = useMemo(() => [
+        { id: 1, optionText: 15 },
+        { id: 2, optionText: 30 },
+        { id: 3, optionText: 45 },
+        { id: 4, optionText: 60 },
+        { id: 5, optionText: 120 },
+    ], []);
+    const [selectedOption, setSelectedOption] = useState(4);
+    const [option, setOption] = useState(60);
+    const [{ data, fetching }] = useLeaderboardQuery({
+        variables: {
+            time: option.toString()
+        }
+    })
     const [contentLoaded, setContentLoaded] = useState(false);
 
     useEffect(() => {
@@ -39,6 +56,19 @@ const Leaderboard = ({ themeData }: {
             <>
                 <div className={styles.leaderboard}>
                     <p className={styles.info}>All-time Leaderboard</p>
+                    <div style={{display: "flex", flexDirection: "row", justifyContent: "space-around", width: "20%"}}>
+                        {wordOptions.map((option) => (
+                            <Option
+                                key={option.id}
+                                optionText={option.optionText}
+                                isSelected={option.id === selectedOption}
+                                onClick={() => { 
+                                    setSelectedOption(option.id);
+                                    setOption(option.optionText);
+                                }}
+                            />
+                        ))}
+                    </div>
                     <table style={{ paddingTop: "1rem" }}>
                         <thead>
                             <tr>
@@ -51,14 +81,16 @@ const Leaderboard = ({ themeData }: {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>test</td>
-                                <td>214</td>
-                                <td>94%</td>
-                                <td>1:00</td>
-                                <td>21/10/22, 10:53</td>
-                            </tr>
+                            {
+                                data?.leaderboard.leaderBoard.map((test, index) => <tr key={index}>
+                                    <td>{test.rank}</td>
+                                    <td>{test.user}</td>
+                                    <td>{test.wpm}</td>
+                                    <td>{test.accuracy}</td>
+                                    <td>{secondsToTime(parseInt(test.time))}</td>
+                                    <td>{test.testTaken}</td>
+                                </tr>)
+                            }
                         </tbody>
                     </table>
                 </div>
