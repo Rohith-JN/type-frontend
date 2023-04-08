@@ -29,6 +29,7 @@ const Signup = (props: { onClick: VoidFunction }) => {
         if (validation.data?.validate.field === null && validation.data?.validate.message === null) {
             await firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then(function () {
                 dispatch(setResult([]));
+                toast.success("Signed Up!", toastOptions)
             }).catch(function (error) {
                 const message = error.message.replace("Firebase:", "");
                 toast.error(message, toastOptions);
@@ -58,7 +59,7 @@ const Signup = (props: { onClick: VoidFunction }) => {
                 <p>Already have an account? <span onClick={props.onClick}>Log In</span></p>
             </div>
             <ToastContainer
-                position="bottom-center"
+                position="top-right"
                 autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}

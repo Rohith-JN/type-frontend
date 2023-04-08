@@ -26,6 +26,7 @@ export default function Login(props: { onClick: VoidFunction }) {
         if (validation.data?.login.field === null && validation.data?.login.message === null) {
             await firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(function () {
                 dispatch(setResult([]));
+                toast.success("Logged in!", toastOptions)
             }).catch(function (error) {
                 const message = error.message.replace("Firebase:", "");
                 toast.error(message, toastOptions);
@@ -50,7 +51,7 @@ export default function Login(props: { onClick: VoidFunction }) {
                 <p>Don&apos;t have an account? <span onClick={props.onClick}>Sign Up</span></p>
             </div>
             <ToastContainer
-                position="bottom-center"
+                position="top-right"
                 autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}

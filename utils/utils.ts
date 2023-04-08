@@ -12,12 +12,12 @@ export function secondsToTime(e: number) {
 }
 
 export const toastOptions: ToastOptions<{}> | undefined = {
-    position: "bottom-center"!,
+    position: "top-right",
     autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: false,
-    draggable: true,
+    draggable: false,
     progress: undefined,
     theme: "dark",
 };
