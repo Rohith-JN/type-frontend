@@ -1,7 +1,5 @@
 mutation createTest($chars: String!, $wpm: Float!, $accuracy: String!, $time: String!, $uid: String!, $testTaken: String!) {
   createTest(chars: $chars, wpm: $wpm, accuracy: $accuracy, time: $time, uid: $uid, testTaken: $testTaken) {
-    id
-    creatorId
     time
     accuracy
     wpm

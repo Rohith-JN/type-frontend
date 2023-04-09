@@ -41,7 +41,6 @@ export type LeaderBoardStatFields = {
 export type Mutation = {
   __typename?: 'Mutation';
   createTest: Test;
-  deleteUser: Scalars['Boolean'];
   login: FieldError;
   register: UserResponse;
   validate: FieldError;
@@ -55,12 +54,6 @@ export type MutationCreateTestArgs = {
   time: Scalars['String'];
   uid: Scalars['String'];
   wpm: Scalars['Float'];
-};
-
-
-export type MutationDeleteUserArgs = {
-  id: Scalars['Float'];
-  uid: Scalars['String'];
 };
 
 
@@ -88,17 +81,11 @@ export type Options = {
   username: Scalars['String'];
 };
 
-export type PaginatedTests = {
-  __typename?: 'PaginatedTests';
-  hasMore: Scalars['Boolean'];
-  tests: Array<Test>;
-};
-
 export type Query = {
   __typename?: 'Query';
   getStats: UserStats;
   leaderboard: LeaderBoard;
-  tests: PaginatedTests;
+  tests: Array<Test>;
   user: UserResponse;
 };
 
@@ -114,8 +101,6 @@ export type QueryLeaderboardArgs = {
 
 
 export type QueryTestsArgs = {
-  cursor?: InputMaybe<Scalars['String']>;
-  limit: Scalars['Int'];
   uid: Scalars['String'];
 };
 
@@ -176,7 +161,7 @@ export type CreateTestMutationVariables = Exact<{
 }>;
 
 
-export type CreateTestMutation = { __typename?: 'Mutation', createTest: { __typename?: 'Test', id: number, creatorId: string, time: string, accuracy: string, wpm: number, chars: string, testTaken: string } };
+export type CreateTestMutation = { __typename?: 'Mutation', createTest: { __typename?: 'Test', time: string, accuracy: string, wpm: number, chars: string, testTaken: string } };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -194,7 +179,7 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', error?: Array<{ __typename?: 'FieldError', field?: string | null, message?: string | null }> | null, user?: { __typename?: 'User', id: number, uid: string, username: string, email: string, createdAt: string } | null } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', error?: Array<{ __typename?: 'FieldError', field?: string | null, message?: string | null }> | null, user?: { __typename?: 'User', username: string, email: string, createdAt: string } | null } };
 
 export type ValidateMutationVariables = Exact<{
   username: Scalars['String'];
@@ -214,19 +199,17 @@ export type LeaderboardQuery = { __typename?: 'Query', leaderboard: { __typename
 
 export type TestsQueryVariables = Exact<{
   uid: Scalars['String'];
-  limit: Scalars['Int'];
-  cursor?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type TestsQuery = { __typename?: 'Query', tests: { __typename?: 'PaginatedTests', hasMore: boolean, tests: Array<{ __typename?: 'Test', id: number, creatorId: string, time: string, accuracy: string, wpm: number, chars: string, createdAt: string, testTaken: string }> } };
+export type TestsQuery = { __typename?: 'Query', tests: Array<{ __typename?: 'Test', time: string, accuracy: string, wpm: number, chars: string, createdAt: string, testTaken: string }> };
 
 export type UserQueryVariables = Exact<{
   uid: Scalars['String'];
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', user: { __typename?: 'UserResponse', error?: Array<{ __typename?: 'FieldError', field?: string | null, message?: string | null }> | null, user?: { __typename?: 'User', id: number, uid: string, username: string, email: string, createdAt: string } | null } };
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'UserResponse', error?: Array<{ __typename?: 'FieldError', field?: string | null, message?: string | null }> | null, user?: { __typename?: 'User', username: string, email: string, createdAt: string } | null } };
 
 export type GetStatsQueryVariables = Exact<{
   uid: Scalars['String'];
@@ -246,8 +229,6 @@ export const CreateTestDocument = gql`
     uid: $uid
     testTaken: $testTaken
   ) {
-    id
-    creatorId
     time
     accuracy
     wpm
@@ -282,8 +263,6 @@ export const RegisterDocument = gql`
       message
     }
     user {
-      id
-      uid
       username
       email
       createdAt
@@ -326,19 +305,14 @@ export function useLeaderboardQuery(options: Omit<Urql.UseQueryArgs<LeaderboardQ
   return Urql.useQuery<LeaderboardQuery, LeaderboardQueryVariables>({ query: LeaderboardDocument, ...options });
 };
 export const TestsDocument = gql`
-    query Tests($uid: String!, $limit: Int!, $cursor: String) {
-  tests(uid: $uid, limit: $limit, cursor: $cursor) {
-    tests {
-      id
-      creatorId
-      time
-      accuracy
-      wpm
-      chars
-      createdAt
-      testTaken
-    }
-    hasMore
+    query Tests($uid: String!) {
+  tests(uid: $uid) {
+    time
+    accuracy
+    wpm
+    chars
+    createdAt
+    testTaken
   }
 }
     `;
@@ -354,8 +328,6 @@ export const UserDocument = gql`
       message
     }
     user {
-      id
-      uid
       username
       email
       createdAt

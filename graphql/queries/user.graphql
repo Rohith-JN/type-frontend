@@ -5,8 +5,6 @@ query User($uid: String! ) {
             message
         }
         user {
-            id
-            uid
             username
             email
             createdAt

@@ -3,11 +3,13 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { MdLogout } from 'react-icons/md'
-import firebase from 'firebase/compat/app'
 import { useAuth } from '../firebase/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import { toastOptions } from '../utils/utils';
-import useFirebaseAuth from '../firebase/useFirebaseAuth';
+import { State } from '../store/reducer';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setResult } from '../store/actions';
 
 function NavOption(props: { optionText: string, isSelected: boolean, route: string, onClick: () => void }) {
     const { optionText, isSelected, route, onClick } = props;
@@ -20,8 +22,11 @@ function NavOption(props: { optionText: string, isSelected: boolean, route: stri
 }
 
 const Navbar = () => {
+    const {
+        result: { results }
+    } = useSelector((state: State) => state);
+    const dispatch = useDispatch()
     const { asPath } = useRouter();
-    const router = useRouter();
     const { authUser, signOut } = useAuth()
     const options = useMemo(() => [
         { id: 1, optionText: 'type', route: '/' },
@@ -63,7 +68,10 @@ const Navbar = () => {
                         ))}
                         {(authUser) ? <MdLogout size={20} color='var(--main-color)' style={{ cursor: "pointer" }} onClick={async () => {
 
-                            await signOut().then(() => toast.success("Signed Out!", toastOptions))
+                            await signOut().then(() => {
+                                toast.success("Signed Out!", toastOptions);
+                                dispatch(setResult([results[0]]));
+                            })
                         }} /> : null}
                     </div>
                 </div>

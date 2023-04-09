@@ -13,13 +13,13 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "mutation createTest($chars: String!, $wpm: Float!, $accuracy: String!, $time: String!, $uid: String!, $testTaken: String!) {\n  createTest(\n    chars: $chars\n    wpm: $wpm\n    accuracy: $accuracy\n    time: $time\n    uid: $uid\n    testTaken: $testTaken\n  ) {\n    id\n    creatorId\n    time\n    accuracy\n    wpm\n    chars\n    testTaken\n  }\n}": types.CreateTestDocument,
+    "mutation createTest($chars: String!, $wpm: Float!, $accuracy: String!, $time: String!, $uid: String!, $testTaken: String!) {\n  createTest(\n    chars: $chars\n    wpm: $wpm\n    accuracy: $accuracy\n    time: $time\n    uid: $uid\n    testTaken: $testTaken\n  ) {\n    time\n    accuracy\n    wpm\n    chars\n    testTaken\n  }\n}": types.CreateTestDocument,
     "mutation Login($email: String!, $password: String!) {\n  login(email: $email, password: $password) {\n    field\n    message\n  }\n}": types.LoginDocument,
-    "mutation Register($username: String!, $email: String!, $password: String!, $uid: String!) {\n  register(\n    options: {username: $username, email: $email, password: $password, uid: $uid}\n  ) {\n    error {\n      field\n      message\n    }\n    user {\n      id\n      uid\n      username\n      email\n      createdAt\n    }\n  }\n}": types.RegisterDocument,
+    "mutation Register($username: String!, $email: String!, $password: String!, $uid: String!) {\n  register(\n    options: {username: $username, email: $email, password: $password, uid: $uid}\n  ) {\n    error {\n      field\n      message\n    }\n    user {\n      username\n      email\n      createdAt\n    }\n  }\n}": types.RegisterDocument,
     "mutation Validate($username: String!, $email: String!, $password: String!) {\n  validate(username: $username, email: $email, password: $password) {\n    field\n    message\n  }\n}": types.ValidateDocument,
     "query Leaderboard($time: String!) {\n  leaderboard(time: $time) {\n    leaderBoard {\n      rank\n      user\n      wpm\n      accuracy\n      time\n      testTaken\n    }\n  }\n}": types.LeaderboardDocument,
-    "query Tests($uid: String!, $limit: Int!, $cursor: String) {\n  tests(uid: $uid, limit: $limit, cursor: $cursor) {\n    tests {\n      id\n      creatorId\n      time\n      accuracy\n      wpm\n      chars\n      createdAt\n      testTaken\n    }\n    hasMore\n  }\n}": types.TestsDocument,
-    "query User($uid: String!) {\n  user(uid: $uid) {\n    error {\n      field\n      message\n    }\n    user {\n      id\n      uid\n      username\n      email\n      createdAt\n    }\n  }\n}": types.UserDocument,
+    "query Tests($uid: String!) {\n  tests(uid: $uid) {\n    time\n    accuracy\n    wpm\n    chars\n    createdAt\n    testTaken\n  }\n}": types.TestsDocument,
+    "query User($uid: String!) {\n  user(uid: $uid) {\n    error {\n      field\n      message\n    }\n    user {\n      username\n      email\n      createdAt\n    }\n  }\n}": types.UserDocument,
     "query GetStats($uid: String!) {\n  getStats(uid: $uid) {\n    userStats {\n      time\n      wpm\n      pb\n      accuracy\n      testsTaken\n    }\n  }\n}": types.GetStatsDocument,
 };
 
@@ -40,7 +40,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation createTest($chars: String!, $wpm: Float!, $accuracy: String!, $time: String!, $uid: String!, $testTaken: String!) {\n  createTest(\n    chars: $chars\n    wpm: $wpm\n    accuracy: $accuracy\n    time: $time\n    uid: $uid\n    testTaken: $testTaken\n  ) {\n    id\n    creatorId\n    time\n    accuracy\n    wpm\n    chars\n    testTaken\n  }\n}"): (typeof documents)["mutation createTest($chars: String!, $wpm: Float!, $accuracy: String!, $time: String!, $uid: String!, $testTaken: String!) {\n  createTest(\n    chars: $chars\n    wpm: $wpm\n    accuracy: $accuracy\n    time: $time\n    uid: $uid\n    testTaken: $testTaken\n  ) {\n    id\n    creatorId\n    time\n    accuracy\n    wpm\n    chars\n    testTaken\n  }\n}"];
+export function graphql(source: "mutation createTest($chars: String!, $wpm: Float!, $accuracy: String!, $time: String!, $uid: String!, $testTaken: String!) {\n  createTest(\n    chars: $chars\n    wpm: $wpm\n    accuracy: $accuracy\n    time: $time\n    uid: $uid\n    testTaken: $testTaken\n  ) {\n    time\n    accuracy\n    wpm\n    chars\n    testTaken\n  }\n}"): (typeof documents)["mutation createTest($chars: String!, $wpm: Float!, $accuracy: String!, $time: String!, $uid: String!, $testTaken: String!) {\n  createTest(\n    chars: $chars\n    wpm: $wpm\n    accuracy: $accuracy\n    time: $time\n    uid: $uid\n    testTaken: $testTaken\n  ) {\n    time\n    accuracy\n    wpm\n    chars\n    testTaken\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -48,7 +48,7 @@ export function graphql(source: "mutation Login($email: String!, $password: Stri
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation Register($username: String!, $email: String!, $password: String!, $uid: String!) {\n  register(\n    options: {username: $username, email: $email, password: $password, uid: $uid}\n  ) {\n    error {\n      field\n      message\n    }\n    user {\n      id\n      uid\n      username\n      email\n      createdAt\n    }\n  }\n}"): (typeof documents)["mutation Register($username: String!, $email: String!, $password: String!, $uid: String!) {\n  register(\n    options: {username: $username, email: $email, password: $password, uid: $uid}\n  ) {\n    error {\n      field\n      message\n    }\n    user {\n      id\n      uid\n      username\n      email\n      createdAt\n    }\n  }\n}"];
+export function graphql(source: "mutation Register($username: String!, $email: String!, $password: String!, $uid: String!) {\n  register(\n    options: {username: $username, email: $email, password: $password, uid: $uid}\n  ) {\n    error {\n      field\n      message\n    }\n    user {\n      username\n      email\n      createdAt\n    }\n  }\n}"): (typeof documents)["mutation Register($username: String!, $email: String!, $password: String!, $uid: String!) {\n  register(\n    options: {username: $username, email: $email, password: $password, uid: $uid}\n  ) {\n    error {\n      field\n      message\n    }\n    user {\n      username\n      email\n      createdAt\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -60,11 +60,11 @@ export function graphql(source: "query Leaderboard($time: String!) {\n  leaderbo
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query Tests($uid: String!, $limit: Int!, $cursor: String) {\n  tests(uid: $uid, limit: $limit, cursor: $cursor) {\n    tests {\n      id\n      creatorId\n      time\n      accuracy\n      wpm\n      chars\n      createdAt\n      testTaken\n    }\n    hasMore\n  }\n}"): (typeof documents)["query Tests($uid: String!, $limit: Int!, $cursor: String) {\n  tests(uid: $uid, limit: $limit, cursor: $cursor) {\n    tests {\n      id\n      creatorId\n      time\n      accuracy\n      wpm\n      chars\n      createdAt\n      testTaken\n    }\n    hasMore\n  }\n}"];
+export function graphql(source: "query Tests($uid: String!) {\n  tests(uid: $uid) {\n    time\n    accuracy\n    wpm\n    chars\n    createdAt\n    testTaken\n  }\n}"): (typeof documents)["query Tests($uid: String!) {\n  tests(uid: $uid) {\n    time\n    accuracy\n    wpm\n    chars\n    createdAt\n    testTaken\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query User($uid: String!) {\n  user(uid: $uid) {\n    error {\n      field\n      message\n    }\n    user {\n      id\n      uid\n      username\n      email\n      createdAt\n    }\n  }\n}"): (typeof documents)["query User($uid: String!) {\n  user(uid: $uid) {\n    error {\n      field\n      message\n    }\n    user {\n      id\n      uid\n      username\n      email\n      createdAt\n    }\n  }\n}"];
+export function graphql(source: "query User($uid: String!) {\n  user(uid: $uid) {\n    error {\n      field\n      message\n    }\n    user {\n      username\n      email\n      createdAt\n    }\n  }\n}"): (typeof documents)["query User($uid: String!) {\n  user(uid: $uid) {\n    error {\n      field\n      message\n    }\n    user {\n      username\n      email\n      createdAt\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
