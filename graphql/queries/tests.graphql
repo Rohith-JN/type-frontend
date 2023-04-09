@@ -1,15 +1,10 @@
-query Tests($uid: String!,$limit: Int!, $cursor: String) {
-  tests(uid: $uid, limit: $limit, cursor: $cursor) {
-    tests {
-      id
-      creatorId
+query Tests($uid: String!) {
+  tests(uid: $uid) {
       time
       accuracy
       wpm
       chars
       createdAt
       testTaken
-    }
-    hasMore
   }
 }

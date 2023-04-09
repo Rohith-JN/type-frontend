@@ -20,26 +20,20 @@ const Account = ({ themeData }: {
   const { authUser } = useAuth();
   const [loginVisible, setLoginVisible] = useState("flex");
   const [signupVisible, setSignUpVisible] = useState("none");
-  const [variables, setVariables] = useState({
-    limit: 10,
-    cursor: null as null | string
-  });
   const [{ data: userData, fetching: userFetching }] = useUserQuery({
     variables: {
-      uid: (firebase.auth().currentUser) ? firebase.auth().currentUser!.uid : ''
+      uid: (authUser) ? authUser['uid'] : ''
     }
   })
   const [{ data: testsData, fetching: testsFetching }] = useTestsQuery({
     variables: {
-      uid: (firebase.auth().currentUser) ? firebase.auth().currentUser!.uid : '',
-      limit: variables.limit,
-      cursor: variables.cursor
+      uid: (authUser) ? authUser['uid'] : '',
     }
   })
 
   const [{ data: userStats, fetching: userStatsFetching }] = useGetStatsQuery({
     variables: {
-      uid: (firebase.auth().currentUser) ? firebase.auth().currentUser!.uid : ''
+      uid: (authUser) ? authUser['uid'] : ''
     }
   })
 
@@ -116,7 +110,7 @@ const Account = ({ themeData }: {
                   }
                 </tbody>
               </table>
-              {(testsData?.tests.tests.length != 0) ? <table style={{ paddingTop: "4rem" }}>
+              {(testsData?.tests.length != 0) ? <table style={{ paddingTop: "4rem" }}>
                 <thead>
                   <tr>
                     <th>S:No</th>
@@ -129,7 +123,7 @@ const Account = ({ themeData }: {
                 </thead>
                 <tbody>
                   {
-                    testsData?.tests.tests.map((test, index) => <tr key={index + 1}>
+                    testsData?.tests.map((test, index) => <tr key={index + 1}>
                       <td>{index + 1}</td>
                       <td>{test.wpm}</td>
                       <td>{test.accuracy}</td>
@@ -140,11 +134,6 @@ const Account = ({ themeData }: {
                   }
                 </tbody>
               </table> : null}
-
-              {testsData && testsData.tests.hasMore ? <button onClick={() => setVariables({
-                limit: 10,
-                cursor: testsData.tests.tests[testsData.tests.tests.length - 1].createdAt
-              })}>Load older tests</button> : null}
             </div>
           )}
         </>
