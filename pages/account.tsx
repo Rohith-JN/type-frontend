@@ -3,7 +3,6 @@ import Login from '../components/Login';
 import Signup from '../components/Signup';
 import { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
-import firebase from 'firebase/compat/app';
 import cookie from "cookie";
 import { useGetStatsQuery, useTestsQuery, useUserQuery } from '../generated/graphql';
 import { createUrqlClient } from '../utils/createUrqlClient';
@@ -11,6 +10,7 @@ import { withUrqlClient } from 'next-urql';
 import { formatDate, secondsToTime } from '../utils/utils';
 import styles from '../styles/Account.module.css';
 import CustomError from '../components/Error';
+import Chart from '../components/Chart';
 
 const Account = ({ themeData }: {
   themeData: {
@@ -110,7 +110,8 @@ const Account = ({ themeData }: {
                   }
                 </tbody>
               </table>
-              {(testsData?.tests.length != 0) ? <table style={{ paddingTop: "4rem" }}>
+              {(authUser) ? <Chart wpmData={testsData?.tests.wpmData!} accuracyData={testsData?.tests.accuracyData!} chartLabels={(testsData?.tests.labels!.length !> 1) ? testsData?.tests.labels! : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} /> : null}
+              {(testsData?.tests.tests.length != 0) ? <table style={{ paddingTop: "7rem" }}>
                 <thead>
                   <tr>
                     <th>S:No</th>
@@ -123,7 +124,7 @@ const Account = ({ themeData }: {
                 </thead>
                 <tbody>
                   {
-                    testsData?.tests.map((test, index) => <tr key={index + 1}>
+                    testsData?.tests.tests.map((test, index) => <tr key={index + 1}>
                       <td>{index + 1}</td>
                       <td>{test.wpm}</td>
                       <td>{test.accuracy}</td>
@@ -175,4 +176,3 @@ export async function getServerSideProps(context: { req: { headers: { cookie: an
 
   return { props: { themeData: data && data } }
 }
-

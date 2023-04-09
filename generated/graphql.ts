@@ -85,7 +85,7 @@ export type Query = {
   __typename?: 'Query';
   getStats: UserStats;
   leaderboard: LeaderBoard;
-  tests: Array<Test>;
+  tests: Tests;
   user: UserResponse;
 };
 
@@ -119,6 +119,15 @@ export type Test = {
   testTaken: Scalars['String'];
   time: Scalars['String'];
   wpm: Scalars['Float'];
+};
+
+export type Tests = {
+  __typename?: 'Tests';
+  accuracyData: Array<Scalars['Float']>;
+  labels: Array<Scalars['Float']>;
+  testTaken: Array<Scalars['String']>;
+  tests: Array<Test>;
+  wpmData: Array<Scalars['Float']>;
 };
 
 export type User = {
@@ -202,7 +211,7 @@ export type TestsQueryVariables = Exact<{
 }>;
 
 
-export type TestsQuery = { __typename?: 'Query', tests: Array<{ __typename?: 'Test', time: string, accuracy: string, wpm: number, chars: string, createdAt: string, testTaken: string }> };
+export type TestsQuery = { __typename?: 'Query', tests: { __typename?: 'Tests', wpmData: Array<number>, accuracyData: Array<number>, labels: Array<number>, testTaken: Array<string>, tests: Array<{ __typename?: 'Test', time: string, accuracy: string, wpm: number, chars: string, createdAt: string, testTaken: string }> } };
 
 export type UserQueryVariables = Exact<{
   uid: Scalars['String'];
@@ -307,11 +316,17 @@ export function useLeaderboardQuery(options: Omit<Urql.UseQueryArgs<LeaderboardQ
 export const TestsDocument = gql`
     query Tests($uid: String!) {
   tests(uid: $uid) {
-    time
-    accuracy
-    wpm
-    chars
-    createdAt
+    tests {
+      time
+      accuracy
+      wpm
+      chars
+      createdAt
+      testTaken
+    }
+    wpmData
+    accuracyData
+    labels
     testTaken
   }
 }

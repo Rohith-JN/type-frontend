@@ -1,10 +1,16 @@
 query Tests($uid: String!) {
   tests(uid: $uid) {
-      time
-      accuracy
-      wpm
-      chars
-      createdAt
+      tests {
+        time
+        accuracy
+        wpm
+        chars
+        createdAt
+        testTaken
+      }
+      wpmData
+      accuracyData
+      labels
       testTaken
   }
 }
