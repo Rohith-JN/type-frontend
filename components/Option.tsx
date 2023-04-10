@@ -6,7 +6,7 @@ const Option = (props: { optionText: number, isSelected: boolean, onClick: () =>
     return (
         <div onClick={onClick}>
             {isSelected ? <h1 className={styles.NavText} style={{ color: 'var(--main-color)' }}>{optionText}</h1> : <h1 className={styles.NavText}>{optionText}</h1>}
-        </div >
+        </div>
     );
 }
 export default Option

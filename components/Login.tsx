@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from '../styles/Login.module.css';
-import firebase from 'firebase/compat/app';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLoginMutation } from '../generated/graphql';
@@ -10,7 +9,6 @@ import { setResult } from '../store/actions';
 import { useAuth } from '../firebase/auth';
 import { State } from '../store/reducer';
 
-// add validation mutation here as well
 export default function Login(props: { onClick: VoidFunction }) {
     const {
         result: { results }

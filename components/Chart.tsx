@@ -7,7 +7,7 @@ import {
     LineElement,
     Title,
     Tooltip,
-    Legend,
+    Legend
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -90,7 +90,7 @@ const Chart = ({ chartLabels, wpmData, accuracyData }: { chartLabels: Array<numb
                 },
                 ticks: {
                     autoSkip: true,
-                    maxTicksLimit: 15,
+                    maxTicksLimit: 10,
                     font: {
                         family: 'lexend, sans-serif',
                     },
