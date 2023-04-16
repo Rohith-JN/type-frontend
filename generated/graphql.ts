@@ -86,7 +86,6 @@ export type Query = {
   getStats: UserStats;
   leaderboard: LeaderBoard;
   tests: Tests;
-  user: UserResponse;
 };
 
 
@@ -101,11 +100,6 @@ export type QueryLeaderboardArgs = {
 
 
 export type QueryTestsArgs = {
-  uid: Scalars['String'];
-};
-
-
-export type QueryUserArgs = {
   uid: Scalars['String'];
 };
 
@@ -150,6 +144,9 @@ export type UserStatFields = {
   __typename?: 'UserStatFields';
   accuracy: Scalars['String'];
   pb: Scalars['Float'];
+  recentAccuracy: Scalars['String'];
+  recentPb: Scalars['Float'];
+  recentWpm: Scalars['Float'];
   testsTaken: Scalars['Float'];
   time: Scalars['String'];
   wpm: Scalars['Float'];
@@ -213,19 +210,12 @@ export type TestsQueryVariables = Exact<{
 
 export type TestsQuery = { __typename?: 'Query', tests: { __typename?: 'Tests', wpmData: Array<number>, accuracyData: Array<number>, labels: Array<number>, testTaken: Array<string>, tests: Array<{ __typename?: 'Test', time: string, accuracy: string, wpm: number, chars: string, createdAt: string, testTaken: string }> } };
 
-export type UserQueryVariables = Exact<{
-  uid: Scalars['String'];
-}>;
-
-
-export type UserQuery = { __typename?: 'Query', user: { __typename?: 'UserResponse', error?: Array<{ __typename?: 'FieldError', field?: string | null, message?: string | null }> | null, user?: { __typename?: 'User', username: string, email: string, createdAt: string } | null } };
-
 export type GetStatsQueryVariables = Exact<{
   uid: Scalars['String'];
 }>;
 
 
-export type GetStatsQuery = { __typename?: 'Query', getStats: { __typename?: 'UserStats', userStats: Array<{ __typename?: 'UserStatFields', time: string, wpm: number, pb: number, accuracy: string, testsTaken: number }> } };
+export type GetStatsQuery = { __typename?: 'Query', getStats: { __typename?: 'UserStats', userStats: Array<{ __typename?: 'UserStatFields', time: string, wpm: number, pb: number, accuracy: string, recentWpm: number, recentAccuracy: string, testsTaken: number }> } };
 
 
 export const CreateTestDocument = gql`
@@ -335,25 +325,6 @@ export const TestsDocument = gql`
 export function useTestsQuery(options: Omit<Urql.UseQueryArgs<TestsQueryVariables>, 'query'>) {
   return Urql.useQuery<TestsQuery, TestsQueryVariables>({ query: TestsDocument, ...options });
 };
-export const UserDocument = gql`
-    query User($uid: String!) {
-  user(uid: $uid) {
-    error {
-      field
-      message
-    }
-    user {
-      username
-      email
-      createdAt
-    }
-  }
-}
-    `;
-
-export function useUserQuery(options: Omit<Urql.UseQueryArgs<UserQueryVariables>, 'query'>) {
-  return Urql.useQuery<UserQuery, UserQueryVariables>({ query: UserDocument, ...options });
-};
 export const GetStatsDocument = gql`
     query GetStats($uid: String!) {
   getStats(uid: $uid) {
@@ -362,6 +333,8 @@ export const GetStatsDocument = gql`
       wpm
       pb
       accuracy
+      recentWpm
+      recentAccuracy
       testsTaken
     }
   }

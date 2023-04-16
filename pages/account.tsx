@@ -4,13 +4,15 @@ import Signup from '../components/Signup';
 import { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
 import cookie from "cookie";
-import { useGetStatsQuery, useTestsQuery, useUserQuery } from '../generated/graphql';
+import { useGetStatsQuery, useTestsQuery } from '../generated/graphql';
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
-import { formatDate, secondsToTime } from '../utils/utils';
+import { secondsToTime } from '../utils/utils';
 import styles from '../styles/Account.module.css';
 import CustomError from '../components/Error';
 import Chart from '../components/Chart';
+import firebase from 'firebase/compat/app';
+import HoverComponent from '../components/HoverComponent';
 
 const Account = ({ themeData }: {
   themeData: {
@@ -20,11 +22,6 @@ const Account = ({ themeData }: {
   const { authUser } = useAuth();
   const [loginVisible, setLoginVisible] = useState("flex");
   const [signupVisible, setSignUpVisible] = useState("none");
-  const [{ data: userData, fetching: userFetching }] = useUserQuery({
-    variables: {
-      uid: (authUser) ? authUser['uid'] : ''
-    }
-  })
   const [{ data: testsData, fetching: testsFetching }] = useTestsQuery({
     variables: {
       uid: (authUser) ? authUser['uid'] : '',
@@ -73,19 +70,24 @@ const Account = ({ themeData }: {
     if (loading) {
       return <Loader />
     }
-    if (!userFetching && !testsFetching && !userStatsFetching && !testsData && !userData && !userStats && !loading) {
+    if (!testsFetching && !userStatsFetching && !testsData && !userStats && !loading) {
       return <div>
         <CustomError statusCode={null} statusMessage={'Oops something went wrong'} />
       </div>
     }
     else {
+      const userCreationDate = new Date(firebase.auth().currentUser!.metadata.creationTime!).toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      });
       return (
         <>
-          {!userData && !testsData && !userStats && userFetching && testsFetching && userStatsFetching || loading ? (
+          {!testsData && !userStats && testsFetching && userStatsFetching || loading ? (
             <Loader />
           ) : (
             <div className={styles.account}>
-              <p className={styles.info}>Account created on {formatDate(parseInt(userData?.user.user?.createdAt!))}</p>
+              <p className={styles.info}>Account created on {userCreationDate.toString()}</p>
               <table style={{ paddingTop: "1rem" }}>
                 <thead>
                   <tr>
@@ -103,14 +105,16 @@ const Account = ({ themeData }: {
                       <td>{index + 1}</td>
                       <td>{secondsToTime(parseInt(stat.time))}</td>
                       <td>{stat.pb}</td>
-                      <td>{stat.wpm}</td>
-                      <td>{stat.accuracy}</td>
+                      <td>
+                        <HoverComponent text={'All Time Average'} spanText={stat.wpm.toString()} /> / <HoverComponent text={'Past 10 Average'} spanText={stat.recentWpm.toString()} /></td>
+                      <td>
+                        {<HoverComponent text={'All Time Average'} spanText={stat.accuracy.toString()} />} / {<HoverComponent text={'Past 10 Average'} spanText={stat.recentAccuracy.toString()} />}</td>
                       <td>{stat.testsTaken}</td>
                     </tr>)
                   }
                 </tbody>
               </table>
-              {(authUser) ? <Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length !> 1) ? testsData?.tests.labels! : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} /> : null}
+              {(authUser) ? <Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} /> : null}
               {(testsData?.tests.tests.length != 0) ? <table style={{ paddingTop: "7rem" }}>
                 <thead>
                   <tr>

@@ -5,6 +5,8 @@ query GetStats($uid: String!) {
       wpm
       pb
       accuracy
+      recentWpm
+      recentAccuracy
       testsTaken
     }
   }
