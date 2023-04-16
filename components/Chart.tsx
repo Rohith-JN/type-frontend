@@ -167,6 +167,9 @@ const Chart = ({ chartLabels, wpmData, accuracyData }: { chartLabels: Array<numb
                         }
                     },
                 },
+                border: {
+                    color: subColor
+                }
             },
         },
         elements: {

@@ -3,7 +3,7 @@ import firebase from 'firebase/compat/app';
 
 const formatAuthUser = (user) => ({
   uid: user.uid,
-  email: user.email
+  email: user.email,
 });
 
 export default function useFirebaseAuth() {
