@@ -49,7 +49,7 @@ export const Header = () => {
 
     return (
         <div className={styles.Container}>
-            <div className={styles.NavBar} style={{ width: (theme.length > 6) ? "37%" : "35%" }}>
+            <div className={styles.NavBar}>
                 <h1 className={styles.NavText} style={{ color: 'var(--main-color)' }}>words</h1>
                 <div className={styles.Divider}></div>
                 {wordOptions.map((option) => (

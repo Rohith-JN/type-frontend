@@ -21,7 +21,7 @@ ChartJS.register(
     Legend
 );
 
-const Chart = ({ chartLabels, wpmData, accuracyData }: { chartLabels: Array<number>, wpmData: Array<number>, accuracyData: Array<number> }) => {
+const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels: Array<number>, wpmData: Array<number>, accuracyData: Array<number>, takenData: Array<string> }) => {
 
     const rootStyles = getComputedStyle(document.documentElement);
     const mainColor = rootStyles.getPropertyValue('--main-color');
@@ -50,15 +50,60 @@ const Chart = ({ chartLabels, wpmData, accuracyData }: { chartLabels: Array<numb
         ],
     };
 
+    const footer = (tooltipItems: any[]) => {
+        if (tooltipItems.length > 0) {
+            const dataIndex = tooltipItems[0].dataIndex;
+            const testTaken = takenData[dataIndex];
+            return testTaken;
+        }
+        return '';
+    };
+
     const options: any = {
         tooltips: {
             enabled: true,
             mode: 'label',
         },
+        interaction: {
+            mode: 'index',
+            intersect: false,
+        },
         bezierCurve: true,
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
+            tooltip: {
+                padding: {
+                    top: 10,
+                    bottom: 10,
+                    left: 10,
+                    right: 10,
+                },
+                titleFont: {
+                    family: 'lexend, sans-serif',
+                    size: 10,
+                    weight: 'light',
+                    color: subColor,
+                },
+                bodyFont: {
+                    family: 'lexend, sans-serif',
+                    size: 10,
+                    weight: 'light',
+                    color: subColor,
+                },
+                footerFont: {
+                    family: 'lexend, sans-serif',
+                    size: 10,
+                    weight: 'light',
+                    color: subColor,
+                },
+                callbacks: {
+                    footer: footer,
+                    title: (tooltipItems: any[]) => {
+                        return `Test: ${tooltipItems[0].label}`;
+                    }
+                }
+            },
             legend: {
                 position: 'top',
                 display: false,
@@ -73,9 +118,6 @@ const Chart = ({ chartLabels, wpmData, accuracyData }: { chartLabels: Array<numb
             title: {
                 display: false,
             },
-        },
-        interaction: {
-            intersect: false,
         },
         scales: {
             x: {

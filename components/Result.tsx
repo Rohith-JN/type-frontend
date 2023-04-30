@@ -72,6 +72,7 @@ const Result = () => {
                         <th>Accuracy</th>
                         <th>Words</th>
                         <th>Time</th>
+                        <th>Taken</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -89,6 +90,7 @@ const Result = () => {
                                     <td>{Math.round(object.accuracy)}%</td>
                                     <td>{object.correctWords}{' '}/{' '}{object.incorrectWords}</td>
                                     <td>{secondsToTime(object.time)}</td>
+                                    <td>{object.testTaken}</td>
                                 </tr>
                             );
                         }

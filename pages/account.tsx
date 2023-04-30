@@ -12,7 +12,6 @@ import styles from '../styles/Account.module.css';
 import CustomError from '../components/Error';
 import Chart from '../components/Chart';
 import firebase from 'firebase/compat/app';
-import HoverComponent from '../components/HoverComponent';
 
 const Account = ({ themeData }: {
   themeData: {
@@ -88,7 +87,10 @@ const Account = ({ themeData }: {
           ) : (
             <div className={styles.account}>
               <p className={styles.info}>Account created on {userCreationDate.toString()}</p>
-              <table style={{ paddingTop: "1rem" }}>
+              <div style={{ width: "55%", display: "flex", flexDirection: "column", gap: "0px", paddingTop: "1rem" }}>
+                <p style={{ fontFamily: 'lexend', fontWeight: "light", color: "var(--sub-color)", fontSize: "13px" }}>All Time Average / Past 10 Average</p>
+              </div>
+              <table>
                 <thead>
                   <tr>
                     <th>S:No</th>
@@ -106,15 +108,15 @@ const Account = ({ themeData }: {
                       <td>{secondsToTime(parseInt(stat.time))}</td>
                       <td>{stat.pb}</td>
                       <td>
-                        <HoverComponent text={'All Time Average'} spanText={stat.wpm.toString()} /> / <HoverComponent text={'Past 10 Average'} spanText={stat.recentWpm.toString()} /></td>
+                        {stat.wpm.toString()} / {stat.recentWpm.toString()}</td>
                       <td>
-                        {<HoverComponent text={'All Time Average'} spanText={stat.accuracy.toString()} />} / {<HoverComponent text={'Past 10 Average'} spanText={stat.recentAccuracy.toString()} />}</td>
+                        {stat.accuracy.toString()} / {stat.recentAccuracy.toString()}</td>
                       <td>{stat.testsTaken}</td>
                     </tr>)
                   }
                 </tbody>
               </table>
-              {(authUser) ? <Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} /> : null}
+              {(authUser) ? <Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} takenData={testsData?.tests.testTaken!} /> : null}
               {(testsData?.tests.tests.length != 0) ? <table style={{ paddingTop: "7rem" }}>
                 <thead>
                   <tr>
@@ -139,6 +141,7 @@ const Account = ({ themeData }: {
                   }
                 </tbody>
               </table> : null}
+              <button>Load more</button>
             </div>
           )}
         </>
