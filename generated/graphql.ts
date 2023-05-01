@@ -81,10 +81,23 @@ export type Options = {
   username: Scalars['String'];
 };
 
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  endCursor: Scalars['String'];
+  hasNextPage: Scalars['Boolean'];
+};
+
+export type PaginatedTests = {
+  __typename?: 'PaginatedTests';
+  pageInfo: PageInfo;
+  tests: Array<Test>;
+};
+
 export type Query = {
   __typename?: 'Query';
   getStats: UserStats;
   leaderboard: LeaderBoard;
+  paginatedTests: PaginatedTests;
   tests: Tests;
 };
 
@@ -96,6 +109,13 @@ export type QueryGetStatsArgs = {
 
 export type QueryLeaderboardArgs = {
   time: Scalars['String'];
+};
+
+
+export type QueryPaginatedTestsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  uid: Scalars['String'];
 };
 
 
@@ -145,7 +165,6 @@ export type UserStatFields = {
   accuracy: Scalars['String'];
   pb: Scalars['Float'];
   recentAccuracy: Scalars['String'];
-  recentPb: Scalars['Float'];
   recentWpm: Scalars['Float'];
   testsTaken: Scalars['Float'];
   time: Scalars['String'];
@@ -203,12 +222,21 @@ export type LeaderboardQueryVariables = Exact<{
 
 export type LeaderboardQuery = { __typename?: 'Query', leaderboard: { __typename?: 'LeaderBoard', leaderBoard: Array<{ __typename?: 'LeaderBoardStatFields', rank: number, user: string, wpm: number, accuracy: string, time: string, testTaken: string }> } };
 
+export type PaginatedTestsQueryVariables = Exact<{
+  uid: Scalars['String'];
+  first: Scalars['Int'];
+  after?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type PaginatedTestsQuery = { __typename?: 'Query', paginatedTests: { __typename?: 'PaginatedTests', tests: Array<{ __typename?: 'Test', time: string, accuracy: string, wpm: number, chars: string, createdAt: string, testTaken: string }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor: string } } };
+
 export type TestsQueryVariables = Exact<{
   uid: Scalars['String'];
 }>;
 
 
-export type TestsQuery = { __typename?: 'Query', tests: { __typename?: 'Tests', wpmData: Array<number>, accuracyData: Array<number>, labels: Array<number>, testTaken: Array<string>, tests: Array<{ __typename?: 'Test', time: string, accuracy: string, wpm: number, chars: string, createdAt: string, testTaken: string }> } };
+export type TestsQuery = { __typename?: 'Query', tests: { __typename?: 'Tests', wpmData: Array<number>, accuracyData: Array<number>, labels: Array<number>, testTaken: Array<string> } };
 
 export type GetStatsQueryVariables = Exact<{
   uid: Scalars['String'];
@@ -303,9 +331,9 @@ export const LeaderboardDocument = gql`
 export function useLeaderboardQuery(options: Omit<Urql.UseQueryArgs<LeaderboardQueryVariables>, 'query'>) {
   return Urql.useQuery<LeaderboardQuery, LeaderboardQueryVariables>({ query: LeaderboardDocument, ...options });
 };
-export const TestsDocument = gql`
-    query Tests($uid: String!) {
-  tests(uid: $uid) {
+export const PaginatedTestsDocument = gql`
+    query paginatedTests($uid: String!, $first: Int!, $after: String) {
+  paginatedTests(uid: $uid, first: $first, after: $after) {
     tests {
       time
       accuracy
@@ -314,6 +342,20 @@ export const TestsDocument = gql`
       createdAt
       testTaken
     }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
+    `;
+
+export function usePaginatedTestsQuery(options: Omit<Urql.UseQueryArgs<PaginatedTestsQueryVariables>, 'query'>) {
+  return Urql.useQuery<PaginatedTestsQuery, PaginatedTestsQueryVariables>({ query: PaginatedTestsDocument, ...options });
+};
+export const TestsDocument = gql`
+    query Tests($uid: String!) {
+  tests(uid: $uid) {
     wpmData
     accuracyData
     labels

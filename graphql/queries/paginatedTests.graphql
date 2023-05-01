@@ -1,0 +1,16 @@
+query paginatedTests($uid: String!, $first: Int!, $after: String) {
+  paginatedTests(uid: $uid, first: $first, after: $after) {
+    tests {
+       time
+        accuracy
+        wpm
+        chars
+        createdAt
+        testTaken
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}

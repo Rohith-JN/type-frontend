@@ -1,13 +1,5 @@
 query Tests($uid: String!) {
   tests(uid: $uid) {
-      tests {
-        time
-        accuracy
-        wpm
-        chars
-        createdAt
-        testTaken
-      }
       wpmData
       accuracyData
       labels

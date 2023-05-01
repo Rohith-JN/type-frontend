@@ -1,7 +1,7 @@
 import { useAuth } from '../firebase/auth';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Loader from '../components/Loader';
 import cookie from "cookie";
 import { useGetStatsQuery, useTestsQuery } from '../generated/graphql';
@@ -12,6 +12,7 @@ import styles from '../styles/Account.module.css';
 import CustomError from '../components/Error';
 import Chart from '../components/Chart';
 import firebase from 'firebase/compat/app';
+import { gql, useClient } from 'urql';
 
 const Account = ({ themeData }: {
   themeData: {
@@ -19,19 +20,58 @@ const Account = ({ themeData }: {
   }
 }) => {
   const { authUser } = useAuth();
+  const uid = (authUser) ? authUser['uid'] : ''
   const [loginVisible, setLoginVisible] = useState("flex");
   const [signupVisible, setSignUpVisible] = useState("none");
-  const [{ data: testsData, fetching: testsFetching }] = useTestsQuery({
-    variables: {
-      uid: (authUser) ? authUser['uid'] : '',
-    }
-  })
+  const [{ data: testsData, fetching: testsFetching }] = useTestsQuery({ variables: { uid: uid } })
+  const [{ data: userStats, fetching: userStatsFetching }] = useGetStatsQuery({ variables: { uid: uid } })
 
-  const [{ data: userStats, fetching: userStatsFetching }] = useGetStatsQuery({
-    variables: {
-      uid: (authUser) ? authUser['uid'] : ''
+  const paginatedTestQuery = gql`
+  query paginatedTests($uid: String!, $first: Int!, $after: String) {
+    paginatedTests(uid: $uid, first: $first, after: $after) {
+      tests {
+        time
+        accuracy
+        wpm
+        chars
+        createdAt
+        testTaken
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
-  })
+  }
+`;
+
+  const [tests, setTests] = useState<any[]>([]);
+  const [endCursor, setEndCursor] = useState<string | null>(null);
+  const graphqlClient = useClient();
+  const handleLoadMore = useCallback(() => {
+    if (!endCursor) {
+      return;
+    }
+    graphqlClient
+      .query(paginatedTestQuery, { uid, first: 10, after: endCursor })
+      .toPromise()
+      .then((nextResult) => { 
+        const { tests: newTests, pageInfo } = nextResult.data.paginatedTests;
+        setTests((oldTests) => [...oldTests, ...newTests]);
+        setEndCursor(pageInfo.endCursor);
+      });
+  }, [endCursor, graphqlClient, paginatedTestQuery, uid]);
+
+  useEffect(() => {
+    graphqlClient
+      .query(paginatedTestQuery, { uid, first: 10 })
+      .toPromise()
+      .then((result) => {
+        const { tests: newTests, pageInfo } = result.data.paginatedTests;
+        setTests(newTests);
+        setEndCursor(pageInfo.endCursor);
+      });
+  }, [graphqlClient, paginatedTestQuery, uid]);
 
   const loginOnClick = () => {
     setLoginVisible("none")
@@ -117,7 +157,7 @@ const Account = ({ themeData }: {
                 </tbody>
               </table>
               {(authUser) ? <Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} takenData={testsData?.tests.testTaken!} /> : null}
-              {(testsData?.tests.tests.length != 0) ? <table style={{ paddingTop: "7rem" }}>
+              {(tests.length != 0) ? <table style={{ paddingTop: "7rem" }}>
                 <thead>
                   <tr>
                     <th>S:No</th>
@@ -130,7 +170,7 @@ const Account = ({ themeData }: {
                 </thead>
                 <tbody>
                   {
-                    testsData?.tests.tests.map((test, index) => <tr key={index + 1}>
+                    tests.map((test: any, index: number) => <tr key={index + 1}>
                       <td>{index + 1}</td>
                       <td>{test.wpm}</td>
                       <td>{test.accuracy}</td>
@@ -141,7 +181,9 @@ const Account = ({ themeData }: {
                   }
                 </tbody>
               </table> : null}
-              <button>Load more</button>
+              <button onClick={handleLoadMore} disabled={tests.length % 10 !== 0}>
+                {tests.length % 10 === 0 ? "Load more" : "No more tests"}
+              </button>
             </div>
           )}
         </>
