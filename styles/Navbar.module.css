@@ -3,14 +3,16 @@
     margin-top: 1rem;
     justify-content: center; 
     align-items: center; 
-    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-.Nav_Container {
+.NavContainer {
     display: flex; 
     flex-direction: row; 
-    width: 62%; 
-    height: 2.5rem; 
+    max-width: 57rem;
+    width: 57rem; 
+    height: 4rem; 
     border-radius: 0.25rem; 
 }
 
@@ -33,18 +35,27 @@ h1.heading {
 .Nav h1 span {
     color: var(--main-color);
 }
-
-.Nav_Items {
+.NavItems .NavOptions {
     display: flex; 
     margin-top: 0.5rem; 
     flex-direction: row; 
-    justify-content: space-around; 
+    justify-content: space-between; 
     align-items: center; 
-    width: 40%; 
+    max-width: 23rem; 
+    width: 23rem; 
     height: 3rem; 
 }
+.NavItems .IconOptions {
+    margin-top: 1rem; 
+    display: none;
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: center; 
+    max-width: 10rem; 
+    width: 10rem; 
+}
 
-.Nav_Text {
+.NavText {
     font-size: 1.15rem;
     line-height: 1.75rem; 
     cursor: pointer; 
@@ -54,6 +65,33 @@ h1.heading {
     text-decoration: none;
 }
 
-h1.Nav_Text:hover {
+h1.NavText:hover {
     color: var(--text-color);
+}
+
+@media screen and (max-width: 800px){
+    h1.heading {
+        font-size: 2.5rem;
+    }
+}
+@media screen and (max-width: 650px){
+    .NavItems .NavOptions {
+        width: 20rem;
+    }
+}
+@media screen and (max-width: 570px){
+    .NavItems .NavOptions {
+        display: none;
+    }
+    .NavItems .IconOptions {
+        display: flex;
+    }
+}   
+@media screen and (max-width: 400px){
+    h1.heading {
+        font-size: 2rem;
+    }
+    .NavItems .IconOptions {
+        margin-top: 0.7rem; 
+    }
 }

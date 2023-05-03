@@ -56,7 +56,7 @@ const Leaderboard = ({ themeData }: {
             <>
                 <div className={styles.leaderboard}>
                     <p className={styles.info}>All-time Leaderboard</p>
-                    <div style={{display: "flex", flexDirection: "row", justifyContent: "space-around", width: "20%"}}>
+                    <div style={{display: "flex", flexDirection: "row", justifyContent: "space-around", width: "19rem"}}>
                         {wordOptions.map((option) => (
                             <Option
                                 key={option.id}

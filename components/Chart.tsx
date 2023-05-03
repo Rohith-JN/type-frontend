@@ -225,11 +225,7 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
     data.datasets[0].data = wpmData;
     data.datasets[1].data = accuracyData;
 
-    return (
-        <div style={{ width: "70%", height: "400px", marginTop: "7rem" }}>
-            <Line options={options} data={data} />
-        </div>
-    );
+    return (<Line options={options} data={data} />);
 }
 
 export default Chart;

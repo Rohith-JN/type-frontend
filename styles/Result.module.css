@@ -7,8 +7,10 @@
     border-spacing: 0; 
     border-collapse: separate;
     overflow:hidden;
-    max-width: 50%; 
-    width: 50%;
+    max-width: 51rem; 
+    width: 51rem;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 .result table thead tr {
     text-align: left;
@@ -43,4 +45,20 @@
 .result table tbody td:last-child, .result table thead th:last-child {
     border-bottom-right-radius: 6px; 
     border-top-right-radius: 6px; 
+}
+@media screen and (max-width: 650px){
+    table th.sno { display: none; }
+    table td.sno { display: none; }
+    .result table tbody td:nth-child(2), .result table thead th:nth-child(2) {
+        border-top-left-radius: 6px; 
+        border-bottom-left-radius: 6px;
+    }
+}
+@media screen and (max-width: 470px) {
+    table th.testTaken { display: none; }
+    table td.testTaken { display: none; }
+    .result table tbody td:nth-child(5), .result table thead th:nth-child(5) {
+        border-bottom-right-radius: 6px; 
+        border-top-right-radius: 6px; 
+    }
 }

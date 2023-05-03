@@ -233,7 +233,10 @@ body {
     flex-direction: column;
     justify-content: center;
     height: 100%;
-    width: 60%;
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: 58rem;
+    width: 58rem;
     margin-bottom: 60px;
 }
 .stats {

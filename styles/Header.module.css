@@ -2,10 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 .NavBar {
     display: flex;
-    margin-top: 4rem;
+    margin-top: 2rem;
     flex-direction: row;
     justify-content: space-around;  
     align-items: center;
@@ -14,83 +15,8 @@
     background-color: var(--sub-alt-color);
     padding-left: 10px;
     padding-right: 10px;
-    width: 36%;
-}
-.TextContainer {
-    margin-top: 7.5rem;
-    border-radius: 0.3rem;
-    width: 53%;
-    height: 180px;
-    background-color: var(--sub-alt-color);
-    overflow: hidden;
-}
-.TextContainer p {
-    font-family: 'lexend';
-    padding-left: 30px;
-    padding-right: 30px;
-    line-height: 3rem;
-    color: var(--sub-color);
-    font-size: 1.9rem;
-}
-.InputContainer {
-    margin-top: 0.6rem;
-    width: 53%;
-    height: 60px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: 15px;
-}
-.InputContainer .WPM  {
-    width: 17%;
-    height: 60px;
-    background-color: var(--sub-alt-color);
-    border-radius: 0.3rem;
-}
-.InputContainer .navOption {
-    width: 14%;
-    height: 60px;
-    background-color: var(--sub-alt-color);
-    border-radius: 0.3rem;
-}
-.InputContainer .Reset {
-    width: 11%;
-    height: 60px;
-    background-color: var(--sub-alt-color);
-    border-radius: 0.3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.InputContainer .Reset span {
-    color: var(--sub-color);
-    padding-top: 5px;
-}
-.InputContainer .WPM {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.InputContainer .WPM h1 {
-    font-family: 'lexend';
-    font-weight: normal;
-    font-size: 1.7rem;
-    color: var(--sub-color);
-}
-.InputContainer .WPM span {
-    font-size: 1.4rem;
-    color: var(--sub-color);
-}
-.InputContainer .navOption {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.InputContainer .navOption h1 {
-    font-family: 'lexend';
-    font-weight: normal;
-    font-size: 1.7rem;
-    color: var(--sub-color);
+    max-width: 35rem;
+    width: 35rem;
 }
 h1.Paragraph {
     font-family: 'lexend';
@@ -108,21 +34,6 @@ h1.NavText {
     color: var(--sub-color);
     font-weight: normal;
 }
-button.NavButton {
-    font-family: 'lexend';
-    font-size: 1rem;
-    line-height: 1.5rem;
-    cursor: pointer;
-    color: var(--sub-color);
-    font-weight: normal;
-    all: unset;
-}
-button.NavButton.selected {
-    color: var(--main-color);
-}
-button.NavButton.selected:hover {
-    color: var(--main-color);
-}
 
 h1.NavText:hover {
     color: var(--text-color);
@@ -132,4 +43,18 @@ h1.NavText:hover {
     height: 1.25rem;
     border-radius: 0.375rem;
     background-color: var(--bg-color);
+}
+
+@media screen and (max-width: 750px){
+    .NavBar {
+        width: 25rem;
+    }
+}
+@media screen and (max-width: 470px){
+    .NavBar h1.firstOption, .firstOption {
+        display: none;
+    }
+    .NavBar {
+        width: 20rem;
+    }
 }

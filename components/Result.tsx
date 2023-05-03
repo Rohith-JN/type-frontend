@@ -67,12 +67,12 @@ const Result = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>S:No</th>
+                        <th className={styles.sno}>S:No</th>
                         <th>WPM</th>
                         <th>Accuracy</th>
                         <th>Words</th>
                         <th>Time</th>
-                        <th>Taken</th>
+                        <th className={styles.testTaken}>Taken</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,12 +85,12 @@ const Result = () => {
                         else {
                             return (
                                 <tr key={index}>
-                                    <td>{index}</td>
+                                    <td className={styles.sno}>{index}</td>
                                     <td>{Math.round(object.wpm)}</td>
                                     <td>{Math.round(object.accuracy)}%</td>
                                     <td>{object.correctWords}{' '}/{' '}{object.incorrectWords}</td>
                                     <td>{secondsToTime(object.time)}</td>
-                                    <td>{object.testTaken}</td>
+                                    <td className={styles.testTaken}>{object.testTaken}</td>
                                 </tr>
                             );
                         }

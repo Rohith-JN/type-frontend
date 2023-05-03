@@ -46,12 +46,12 @@ export const Header = () => {
         dispatch(setTime(option))
         dispatch(timerSet(option));
     }, [dispatch, option])
-
+ 
     return (
         <div className={styles.Container}>
             <div className={styles.NavBar}>
-                <h1 className={styles.NavText} style={{ color: 'var(--main-color)' }}>words</h1>
-                <div className={styles.Divider}></div>
+                <h1 className={`${styles.NavText} ${styles.firstOption}`} style={{ color: 'var(--main-color)' }}>words</h1>
+                <div className={`${styles.Divider} ${styles.firstOption}`}></div>
                 {wordOptions.map((option) => (
                     <Option
                         key={option.id}

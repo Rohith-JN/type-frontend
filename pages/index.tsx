@@ -91,11 +91,14 @@ const Home = ({ themeData }: {
       {loading ? (
         <Loader />
       ) : (
-        <>
+        <div>
           <Header />
           <Test />
           <Footer />
-        </>
+          <div style={{ width: "100%", display: "flex", justifyContent: "center", marginTop: "6.2rem" }}>
+            <p style={{ color: "var(--sub-color)", fontSize: "15px", fontFamily: "lexend" }}>Designed & built by <a href="https://github.com/Rohith-JN" target="_blank" style={{ textDecoration: "underline", cursor: "pointer", color: "var(--sub-color)" }} rel="noreferrer">Rohith JN</a></p>
+          </div>
+        </div>
       )}
     </>
   )

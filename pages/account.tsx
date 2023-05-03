@@ -127,63 +127,65 @@ const Account = ({ themeData }: {
           ) : (
             <div className={styles.account}>
               <p className={styles.info}>Account created on {userCreationDate.toString()}</p>
-              <div style={{ width: "55%", display: "flex", flexDirection: "column", gap: "0px", paddingTop: "1rem" }}>
+              <div className={styles.stats}>
                 <p style={{ fontFamily: 'lexend', fontWeight: "light", color: "var(--sub-color)", fontSize: "13px" }}>All Time Average / Past 10 Average</p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>S:No</th>
+                      <th>Time</th>
+                      <th>PB</th>
+                      <th>WPM</th>
+                      <th>Accuracy</th>
+                      <th>Tests taken</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      userStats?.getStats.userStats.map((stat, index) => <tr key={index + 1}>
+                        <td>{index + 1}</td>
+                        <td>{secondsToTime(parseInt(stat.time))}</td>
+                        <td>{stat.pb}</td>
+                        <td>
+                          {stat.wpm.toString()} / {stat.recentWpm.toString()}</td>
+                        <td>
+                          {stat.accuracy.toString()} / {stat.recentAccuracy.toString()}</td>
+                        <td>{stat.testsTaken}</td>
+                      </tr>)
+                    }
+                  </tbody>
+                </table>
               </div>
-              <table>
-                <thead>
-                  <tr>
-                    <th>S:No</th>
-                    <th>Time</th>
-                    <th>PB</th>
-                    <th>WPM</th>
-                    <th>Accuracy</th>
-                    <th>Tests taken</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    userStats?.getStats.userStats.map((stat, index) => <tr key={index + 1}>
-                      <td>{index + 1}</td>
-                      <td>{secondsToTime(parseInt(stat.time))}</td>
-                      <td>{stat.pb}</td>
-                      <td>
-                        {stat.wpm.toString()} / {stat.recentWpm.toString()}</td>
-                      <td>
-                        {stat.accuracy.toString()} / {stat.recentAccuracy.toString()}</td>
-                      <td>{stat.testsTaken}</td>
-                    </tr>)
-                  }
-                </tbody>
-              </table>
-              {(authUser) ? <Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} takenData={testsData?.tests.testTaken!} /> : null}
-              {(tests.length != 0) ? <table style={{ paddingTop: "7rem" }}>
-                <thead>
-                  <tr>
-                    <th>S:No</th>
-                    <th>WPM</th>
-                    <th>Accuracy</th>
-                    <th>Words</th>
-                    <th>Time</th>
-                    <th>Taken</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    tests.map((test: any, index: number) => <tr key={index + 1}>
-                      <td>{index + 1}</td>
-                      <td>{test.wpm}</td>
-                      <td>{test.accuracy}</td>
-                      <td>{test.chars}</td>
-                      <td>{secondsToTime(parseInt(test.time))}</td>
-                      <td>{test.testTaken}</td>
-                    </tr>)
-                  }
-                </tbody>
-              </table> : null}
-              <button onClick={handleLoadMore} disabled={tests.length % 10 !== 0}>
-                {tests.length % 10 === 0 ? "Load more" : "No more tests"}
-              </button>
+              {(authUser) ? <div style={{ width: "68rem", maxWidth: "68rem", height: "400px", marginBottom: "7rem", marginTop: "7rem" }}><Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} takenData={testsData?.tests.testTaken!} /></div> : null}
+              {(tests.length != 0) ? <div className={styles.tests}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>S:No</th>
+                      <th>WPM</th>
+                      <th>Accuracy</th>
+                      <th>Words</th>
+                      <th>Time</th>
+                      <th>Taken</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      tests.map((test: any, index: number) => <tr key={index + 1}>
+                        <td>{index + 1}</td>
+                        <td>{test.wpm}</td>
+                        <td>{test.accuracy}</td>
+                        <td>{test.chars}</td>
+                        <td>{secondsToTime(parseInt(test.time))}</td>
+                        <td>{test.testTaken}</td>
+                      </tr>)
+                    }
+                  </tbody>
+                </table>
+                <button onClick={handleLoadMore} disabled={tests.length % 10 !== 0}>
+                  {tests.length % 10 === 0 ? "Load more" : "No more tests"}
+                </button>
+              </div> : null}
             </div>
           )}
         </>

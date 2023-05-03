@@ -18,6 +18,7 @@
     background-color: var(--sub-alt-color);
     max-height: 50vh;
     height: fit-content;
+    max-width: 35rem;
     width: 35rem;
     margin: 8% auto;
     left: 0;
@@ -95,3 +96,8 @@
     margin-right: 0.625rem;
   }
   
+  @media screen and (max-width: 590px) {
+    .palette {
+      display: none;
+    }
+}
