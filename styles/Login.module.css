@@ -2,7 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 7rem;
+    margin-top: 5rem;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
 }
 .Login form {
     display: flex;
@@ -62,4 +65,10 @@
     color: var(--text-color);
     font-size: 1.1rem;
     cursor: pointer;
+}
+
+@media screen and (max-width: 400px) {
+    .Login input {
+        width: 100%;
+    }
 }

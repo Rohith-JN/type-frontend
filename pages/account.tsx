@@ -132,52 +132,52 @@ const Account = ({ themeData }: {
                 <table>
                   <thead>
                     <tr>
-                      <th>S:No</th>
+                      <th className={styles.sno}>S:No</th>
                       <th>Time</th>
                       <th>PB</th>
                       <th>WPM</th>
                       <th>Accuracy</th>
-                      <th>Tests taken</th>
+                      <th className={styles.testsTaken}>Tests taken</th>
                     </tr>
                   </thead>
                   <tbody>
                     {
                       userStats?.getStats.userStats.map((stat, index) => <tr key={index + 1}>
-                        <td>{index + 1}</td>
+                        <td className={styles.sno}>{index + 1}</td>
                         <td>{secondsToTime(parseInt(stat.time))}</td>
                         <td>{stat.pb}</td>
                         <td>
                           {stat.wpm.toString()} / {stat.recentWpm.toString()}</td>
                         <td>
                           {stat.accuracy.toString()} / {stat.recentAccuracy.toString()}</td>
-                        <td>{stat.testsTaken}</td>
+                        <td className={styles.testsTaken}>{stat.testsTaken}</td>
                       </tr>)
                     }
                   </tbody>
                 </table>
               </div>
-              {(authUser) ? <div style={{ width: "68rem", maxWidth: "68rem", height: "400px", marginBottom: "7rem", marginTop: "7rem" }}><Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} takenData={testsData?.tests.testTaken!} /></div> : null}
+              {(authUser) ? <div className={styles.graph}><Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} takenData={testsData?.tests.testTaken!} /></div> : null}
               {(tests.length != 0) ? <div className={styles.tests}>
                 <table>
                   <thead>
                     <tr>
-                      <th>S:No</th>
+                      <th className={styles.sno}>S:No</th>
                       <th>WPM</th>
                       <th>Accuracy</th>
                       <th>Words</th>
                       <th>Time</th>
-                      <th>Taken</th>
+                      <th className={styles.taken}>Taken</th>
                     </tr>
                   </thead>
                   <tbody>
                     {
                       tests.map((test: any, index: number) => <tr key={index + 1}>
-                        <td>{index + 1}</td>
+                        <td className={styles.sno}>{index + 1}</td>
                         <td>{test.wpm}</td>
                         <td>{test.accuracy}</td>
                         <td>{test.chars}</td>
                         <td>{secondsToTime(parseInt(test.time))}</td>
-                        <td>{test.testTaken}</td>
+                        <td className={styles.taken}>{test.testTaken}</td>
                       </tr>)
                     }
                   </tbody>

@@ -7,13 +7,26 @@
     padding-top: 2rem;
     padding-bottom: 4.2rem;
 }
+.graph {
+    width: 69rem; 
+    max-width: 69rem; 
+    height: 400px;
+    margin-bottom: 7rem; 
+    margin-top: 7rem;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
 p.info {
     font-family: 'lexend';
     color: var(--sub-color);
     font-size: 1.2rem;
 }
 .stats, .tests {
-    width: 54rem;
+    width: 55rem;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
 }
 .account table {
     border-spacing: 0; 
@@ -70,4 +83,45 @@ p.info {
     font-size: 1rem;
     border-radius: 7px;
     cursor: pointer;
+    
 }
+
+@media only screen and (max-width: 68rem) {
+    .graph {
+      width: 100%;
+    }
+  }
+
+  @media only screen and (max-width: 54rem) {
+    .stats, .tests {
+        width: 100%;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    table th.sno { display: none; }
+    table td.sno { display: none; }
+    .account table tbody td:nth-child(2), .account table thead th:nth-child(2) {
+        border-top-left-radius: 6px; 
+        border-bottom-left-radius: 6px;
+    }
+    .graph {
+        height: 300px;
+        margin-bottom: 5rem; 
+        margin-top: 5rem;
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    table th.taken { display: none; }
+    table td.taken { display: none; }
+    .account table tbody td:nth-child(5), .account table thead th:nth-child(5) {
+        border-bottom-right-radius: 6px; 
+        border-top-right-radius: 6px; 
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    table th.testsTaken { display: none; }
+    table td.testsTaken { display: none; }
+  }
