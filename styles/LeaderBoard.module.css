@@ -12,13 +12,16 @@ p.info {
     color: var(--sub-color);
     font-size: 1.2rem;
 }
+.leaderboard .leaderboards {
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
 .leaderboard table {
     border-spacing: 0; 
     border-collapse: separate;
     overflow:hidden;
-    max-width: 54rem; 
-    padding-left: 20px;
-    padding-right: 20px;
+    max-width: 100%; 
     width: 54rem;
 }
 .leaderboard table thead tr {
@@ -54,4 +57,29 @@ p.info {
 .leaderboard table tbody td:last-child, .leaderboard table thead th:last-child {
     border-bottom-right-radius: 6px; 
     border-top-right-radius: 6px; 
+}
+
+
+@media only screen and (max-width: 54rem) {
+    .leaderboard .leaderboards {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 530px) {
+    table th.rank { display: none; }
+    table td.rank { display: none; }
+    .leaderboard table tbody td:nth-child(2), .leaderboard table thead th:nth-child(2) {
+        border-top-left-radius: 6px; 
+        border-bottom-left-radius: 6px;
+    }
+}
+
+@media screen and (max-width: 470px) {
+    table th.taken { display: none; }
+    table td.taken { display: none; }
+    .leaderboard table tbody td:nth-child(5), .leaderboard table thead th:nth-child(5) {
+        border-bottom-right-radius: 6px; 
+        border-top-right-radius: 6px; 
+    }
 }

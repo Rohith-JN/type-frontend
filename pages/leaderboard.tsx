@@ -69,30 +69,33 @@ const Leaderboard = ({ themeData }: {
                             />
                         ))}
                     </div>
+                    <div className={styles.leaderboards}>
                     <table style={{ paddingTop: "1rem" }}>
                         <thead>
                             <tr>
-                                <th>Rank</th>
+                                <th className={styles.rank}>Rank</th>
                                 <th>User</th>
                                 <th>WPM</th>
                                 <th>Accuracy</th>
                                 <th>Time</th>
-                                <th>Taken</th>
+                                <th className={styles.taken}>Taken</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
                                 data?.leaderboard.leaderBoard.map((test, index) => <tr key={index}>
-                                    <td>{test.rank}</td>
+                                    <td className={styles.rank}>{test.rank}</td>
                                     <td>{test.user}</td>
                                     <td>{test.wpm}</td>
                                     <td>{test.accuracy}</td>
                                     <td>{secondsToTime(parseInt(test.time))}</td>
-                                    <td>{test.testTaken}</td>
+                                    <td className={styles.taken}>{test.testTaken}</td>
                                 </tr>)
                             }
                         </tbody>
                     </table>
+                    </div>
+                    
                 </div>
             </>
         )}
