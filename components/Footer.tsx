@@ -3,7 +3,7 @@ import Result from "./Result"
 const Footer = () => {
     return (
         <div className="Footer" style={{
-            marginTop: "4.5rem",
+            marginTop: "0.2rem",
             marginBottom: "5.1rem"
         }}>
             <Result />

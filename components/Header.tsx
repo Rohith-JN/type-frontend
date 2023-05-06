@@ -63,8 +63,8 @@ export const Header = () => {
                         }}
                     />
                 ))}
-                <div className={styles.Divider}></div>
-                <h1 className={styles.NavText} style={{ color: 'var(--main-color)' }} onClick={() => dispatch(setPallet(true))
+                <div className={`${styles.Divider} ${styles.theme}`}></div>
+                <h1 className={`${styles.NavText} ${styles.theme}`} style={{ color: 'var(--main-color)' }} onClick={() => dispatch(setPallet(true))
                 }>{theme}</h1>
             </div>
             <Palette open={palette} />

@@ -55,6 +55,12 @@ h1.NavText:hover {
         display: none;
     }
     .NavBar {
-        width: 20rem;
+        width: 15rem;
+    }
+}
+
+@media screen and (max-width: 590px) {
+    .NavBar h1.theme, .theme {
+        display: none;
     }
 }

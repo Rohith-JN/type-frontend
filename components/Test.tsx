@@ -36,7 +36,7 @@ const Test = () => {
     }, [dispatch]);
 
     return (
-        <div style={{ display: "flex", width: "100", justifyContent: "center", marginTop: "5.5rem" }}>
+        <div style={{ display: "flex", width: "100", justifyContent: "center" }}>
             <div className="test">
                 <div className="stats">
                     <div className="timer">{timer}</div>
