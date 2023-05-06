@@ -1,13 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
-import styles from "../styles/Palette.module.css";
+import styles from "../../styles/Palette.module.css";
 import { useDispatch } from "react-redux";
 import {
     FaSearch,
 } from "react-icons/fa";
-import { setPallet, setTheme } from "../store/actions";
-import useOnClickOutside from "../hooks/useOnClickOutside";
+import { setPallet, setTheme } from "../../store/actions";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { useCookies } from "react-cookie"
-import { Options } from "../utils/utils";
+import { Options } from "../../utils/utils";
 
 const filter = (options: typeof Options, query: string) => {
     if (!query) return options;

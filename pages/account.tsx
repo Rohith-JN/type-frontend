@@ -1,16 +1,16 @@
 import { useAuth } from '../firebase/auth';
-import Login from '../components/Login';
-import Signup from '../components/Signup';
+import Login from '../components/account/Login';
+import Signup from '../components/account/Signup';
 import { useCallback, useEffect, useState } from 'react';
-import Loader from '../components/Loader';
+import Loader from '../components/other/Loader';
 import cookie from "cookie";
 import { useGetStatsQuery, useTestsQuery } from '../generated/graphql';
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
 import { secondsToTime } from '../utils/utils';
 import styles from '../styles/Account.module.css';
-import CustomError from '../components/Error';
-import Chart from '../components/Chart';
+import CustomError from '../components/other/Error';
+import Chart from '../components/account/Chart';
 import firebase from 'firebase/compat/app';
 import { gql, useClient } from 'urql';
 
@@ -55,7 +55,7 @@ const Account = ({ themeData }: {
     graphqlClient
       .query(paginatedTestQuery, { uid, first: 10, after: endCursor })
       .toPromise()
-      .then((nextResult) => { 
+      .then((nextResult) => {
         const { tests: newTests, pageInfo } = nextResult.data.paginatedTests;
         setTests((oldTests) => [...oldTests, ...newTests]);
         setEndCursor(pageInfo.endCursor);

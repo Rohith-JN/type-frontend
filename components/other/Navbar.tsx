@@ -1,15 +1,15 @@
-import styles from '../styles/Navbar.module.css';
+import styles from '../../styles/Navbar.module.css';
 import React, { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { MdLogout } from 'react-icons/md'
-import { useAuth } from '../firebase/auth';
+import { useAuth } from '../../firebase/auth';
 import { ToastContainer, toast } from 'react-toastify';
-import { toastOptions } from '../utils/utils';
-import { State } from '../store/reducer';
+import { toastOptions } from '../../utils/utils';
+import { State } from '../../store/reducer';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setResult } from '../store/actions';
+import { setResult } from '../../store/actions';
 import { MdLeaderboard } from 'react-icons/md';
 import { BsKeyboardFill } from 'react-icons/bs';
 import { RiAccountCircleFill } from 'react-icons/ri';

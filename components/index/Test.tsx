@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setRef, setCaretRef } from "../store/actions";
-import { State } from "../store/reducer";
+import { setRef, setCaretRef } from "../../store/actions";
+import { State } from "../../store/reducer";
 import { FiRefreshCcw } from 'react-icons/fi';
-import { resetTest } from "../utils/test";
+import { resetTest } from "../../utils/test";
 
 const Test = () => {
     const {

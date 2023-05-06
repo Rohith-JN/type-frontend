@@ -1,12 +1,12 @@
-import { Header } from '../components/Header';
-import Test from '../components/Test';
+import { Header } from '../components/index/Header';
+import Test from '../components/index/Test';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../store/reducer";
 import { setTimerId } from "../store/actions";
 import { recordTest } from "../utils/test";
-import Footer from '../components/Footer';
-import Loader from '../components/Loader';
+import Footer from '../components/index/Footer';
+import Loader from '../components/other/Loader';
 import cookie from "cookie";
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';

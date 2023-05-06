@@ -1,7 +1,7 @@
-import styles from '../styles/Header.module.css'
+import styles from '../../styles/Header.module.css'
 import { useMemo } from 'react';
-import Option from './Option';
-import { resetTest } from "../utils/test";
+import Option from '../other/Option';
+import { resetTest } from "../../utils/test";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,10 +9,10 @@ import {
     setTime,
     setWordList,
     timerSet,
-} from "../store/actions";
-import { State } from "../store/reducer";
-import useLocalStorage from '../hooks/useLocalStorage';
-import Palette from './Palette';
+} from "../../store/actions";
+import { State } from "../../store/reducer";
+import useLocalStorage from '../../hooks/useLocalStorage';
+import Palette from '../other/Palette';
 
 export const Header = () => {
     const wordOptions = useMemo(() => [
@@ -33,7 +33,7 @@ export const Header = () => {
     // initial setup of time property
     // get time from localStorage and set it to timer and time
     useEffect(() => {
-        import(`../data/english.json`).then((words) =>
+        import(`../../data/english.json`).then((words) =>
             dispatch(setWordList(words))
         );
         dispatch(timerSet(option));
@@ -46,7 +46,7 @@ export const Header = () => {
         dispatch(setTime(option))
         dispatch(timerSet(option));
     }, [dispatch, option])
- 
+
     return (
         <div className={styles.Container}>
             <div className={styles.NavBar}>

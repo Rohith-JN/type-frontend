@@ -1,10 +1,10 @@
-import styles from '../styles/Result.module.css';
+import styles from '../../styles/Result.module.css';
 import { useSelector } from "react-redux";
-import { State } from "../store/reducer";
+import { State } from "../../store/reducer";
 import { useEffect, useState } from 'react';
-import { useCreateTestMutation } from '../generated/graphql';
+import { useCreateTestMutation } from '../../generated/graphql';
 import firebase from 'firebase/compat/app';
-import { secondsToTime } from '../utils/utils';
+import { secondsToTime } from '../../utils/utils';
 
 const Result = () => {
     const {

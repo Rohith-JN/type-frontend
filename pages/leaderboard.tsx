@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import Loader from "../components/Loader";
-import Option from '../components/Option';
+import Loader from "../components/other/Loader";
+import Option from '../components/other/Option';
 import cookie from "cookie";
 import { withUrqlClient } from "next-urql";
 import { createUrqlClient } from "../utils/createUrqlClient";
@@ -56,13 +56,13 @@ const Leaderboard = ({ themeData }: {
             <>
                 <div className={styles.leaderboard}>
                     <p className={styles.info}>All-time Leaderboard</p>
-                    <div style={{display: "flex", flexDirection: "row", justifyContent: "space-around", width: "19rem"}}>
+                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around", width: "19rem" }}>
                         {wordOptions.map((option) => (
                             <Option
                                 key={option.id}
                                 optionText={option.optionText}
                                 isSelected={option.id === selectedOption}
-                                onClick={() => { 
+                                onClick={() => {
                                     setSelectedOption(option.id);
                                     setOption(option.optionText);
                                 }}
@@ -70,32 +70,32 @@ const Leaderboard = ({ themeData }: {
                         ))}
                     </div>
                     <div className={styles.leaderboards}>
-                    <table style={{ paddingTop: "1rem" }}>
-                        <thead>
-                            <tr>
-                                <th className={styles.rank}>Rank</th>
-                                <th>User</th>
-                                <th>WPM</th>
-                                <th>Accuracy</th>
-                                <th>Time</th>
-                                <th className={styles.taken}>Taken</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                data?.leaderboard.leaderBoard.map((test, index) => <tr key={index}>
-                                    <td className={styles.rank}>{test.rank}</td>
-                                    <td>{test.user}</td>
-                                    <td>{test.wpm}</td>
-                                    <td>{test.accuracy}</td>
-                                    <td>{secondsToTime(parseInt(test.time))}</td>
-                                    <td className={styles.taken}>{test.testTaken}</td>
-                                </tr>)
-                            }
-                        </tbody>
-                    </table>
+                        <table style={{ paddingTop: "1rem" }}>
+                            <thead>
+                                <tr>
+                                    <th className={styles.rank}>Rank</th>
+                                    <th>User</th>
+                                    <th>WPM</th>
+                                    <th>Accuracy</th>
+                                    <th>Time</th>
+                                    <th className={styles.taken}>Taken</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    data?.leaderboard.leaderBoard.map((test, index) => <tr key={index}>
+                                        <td className={styles.rank}>{test.rank}</td>
+                                        <td>{test.user}</td>
+                                        <td>{test.wpm}</td>
+                                        <td>{test.accuracy}</td>
+                                        <td>{secondsToTime(parseInt(test.time))}</td>
+                                        <td className={styles.taken}>{test.testTaken}</td>
+                                    </tr>)
+                                }
+                            </tbody>
+                        </table>
                     </div>
-                    
+
                 </div>
             </>
         )}

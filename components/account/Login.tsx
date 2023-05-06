@@ -1,66 +1,58 @@
-import styles from '../styles/Signup.module.css';
 import React, { useState } from 'react';
-import firebase from 'firebase/compat/app';
+import styles from '../../styles/Login.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useRegisterMutation, useValidateMutation } from '../generated/graphql';
-import { toastOptions } from '../utils/utils';
+import { useLoginMutation } from '../../generated/graphql';
+import { toastOptions } from '../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { setResult } from '../store/actions';
-import { State } from '../store/reducer';
+import { setResult } from '../../store/actions';
+import { useAuth } from '../../firebase/auth';
+import { State } from '../../store/reducer';
 
-const Signup = (props: { onClick: VoidFunction }) => {
+export default function Login(props: { onClick: VoidFunction }) {
     const {
         result: { results }
     } = useSelector((state: State) => state);
     const dispatch = useDispatch();
-    const [, register] = useRegisterMutation();
-    const [, validate] = useValidateMutation();
+    const { signInWithEmailAndPassword } = useAuth()
+    const [, login] = useLoginMutation();
     const [user, setUser] = useState({
-        username: '',
         email: '',
         password: '',
     });
 
     const onSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        const validation = await validate({
-            username: user.username,
+        const validation = await login({
             email: user.email,
             password: user.password
-        });
-
-        if (validation.data?.validate.field === null && validation.data?.validate.message === null) {
-            await firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then(function () {
+        })
+        if (validation.data?.login.field === null && validation.data?.login.message === null) {
+            await signInWithEmailAndPassword(user.email, user.password).then(function () {
                 dispatch(setResult([results[0]]));
-                toast.success("Signed Up!", toastOptions)
+                toast.success("Logged in!", toastOptions)
             }).catch(function (error) {
                 const message = error.message.replace("Firebase:", "");
                 toast.error(message.replace(/\([^)]*\)\.?/g, ""), toastOptions);
             })
-            if (firebase.auth().currentUser !== null) {
-                const uid = firebase.auth().currentUser!.uid
-                await register({ username: user.username, email: user.email, password: user.password, uid: uid });
-            }
         }
         else {
-            toast.error(validation.data?.validate.message, toastOptions);
+            toast.error(validation.data?.login.message, toastOptions);
         }
     }
 
     return (
         <>
-            <div className={styles.Signup}>
-                <h1>Sign Up</h1>
+            <div className={styles.Login}>
+                <h1>Log In</h1>
                 <form role='form' onSubmit={onSubmit}>
-                    <input autoComplete="off" spellCheck='false' type="text" placeholder='Name' required onChange={(event) => setUser({ ...user, username: event.target.value })} value={user.username}></input>
                     <input autoComplete="off" spellCheck='false' type="email" placeholder='Email' value={user.email}
                         onChange={(event) => setUser({ ...user, email: event.target.value })} required></input>
                     <input autoComplete="off" spellCheck='false' type="password" placeholder='Password' value={user.password}
                         onChange={(event) => setUser({ ...user, password: event.target.value })} required></input>
-                    <button type="submit" value="Submit" className={styles.slide}>Sign up</button>
+                    <button type="submit" value="Submit" className={styles.slide}>Log in</button>
                 </form>
-                <p>Already have an account? <span onClick={props.onClick}>Log In</span></p>
+                <p>Don&apos;t have an account? <span onClick={props.onClick}>Sign Up</span></p>
             </div>
             <ToastContainer
                 position="top-right"
@@ -75,4 +67,3 @@ const Signup = (props: { onClick: VoidFunction }) => {
         </>
     );
 }
-export default Signup

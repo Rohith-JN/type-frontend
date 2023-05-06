@@ -1,4 +1,4 @@
-import styles from '../styles/Header.module.css';
+import styles from '../../styles/Header.module.css';
 
 const Option = (props: { optionText: number, isSelected: boolean, onClick: () => void }) => {
     const { optionText, isSelected, onClick } = props;

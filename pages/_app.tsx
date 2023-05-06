@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import Layout from '../components/Layout'
+import Layout from '../components/other/Layout'
 import type { AppProps } from 'next/app'
 import { AuthUserProvider } from '../firebase/auth';
 import { store } from "../store/store";
@@ -10,13 +10,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
     return (
         <AuthUserProvider>
-                <ReduxProvider store={store}>
-                    <CookiesProvider>
-                        <Layout>
-                            <Component {...pageProps} />
-                        </Layout>
-                    </CookiesProvider>
-                </ReduxProvider>
+            <ReduxProvider store={store}>
+                <CookiesProvider>
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+                </CookiesProvider>
+            </ReduxProvider>
         </AuthUserProvider>
     );
 }
