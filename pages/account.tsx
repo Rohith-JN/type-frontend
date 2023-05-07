@@ -106,12 +106,12 @@ const Account = ({ themeData }: {
   }, [contentLoaded]);
 
   if (authUser) {
-    if (loading) {
+    if (loading || userStatsFetching || testsFetching) {
       return <Loader />
     }
-    if (!testsFetching && !userStatsFetching && !testsData && !userStats && !loading) {
+    if (!testsData || !userStats) {
       return <div>
-        <CustomError statusCode={null} statusMessage={'Oops something went wrong'} />
+        <CustomError statusCode={null} statusMessage={'Oops something went wrong!'} />
       </div>
     }
     else {
@@ -122,7 +122,7 @@ const Account = ({ themeData }: {
       });
       return (
         <>
-          {!testsData && !userStats && testsFetching && userStatsFetching || loading ? (
+          {(!testsData && !userStats && testsFetching && userStatsFetching) || loading ? (
             <Loader />
           ) : (
             <div className={styles.account}>
