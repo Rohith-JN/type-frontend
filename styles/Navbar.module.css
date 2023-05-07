@@ -41,8 +41,6 @@ h1.heading {
     flex-direction: row; 
     justify-content: space-between; 
     align-items: center; 
-    max-width: 23rem; 
-    width: 23rem; 
     height: 3rem; 
 }
 .NavItems .IconOptions {
@@ -51,8 +49,6 @@ h1.heading {
     flex-direction: row; 
     justify-content: space-between; 
     align-items: center; 
-    max-width: 10rem; 
-    width: 10rem; 
 }
 
 .NavText {
@@ -74,12 +70,7 @@ h1.NavText:hover {
         font-size: 2.5rem;
     }
 }
-@media screen and (max-width: 650px){
-    .NavItems .NavOptions {
-        width: 20rem;
-    }
-}
-@media screen and (max-width: 570px){
+@media screen and (max-width: 550px){
     .NavItems .NavOptions {
         display: none;
     }
@@ -91,7 +82,7 @@ h1.NavText:hover {
     h1.heading {
         font-size: 2rem;
     }
-    .NavItems .IconOptions {
-        margin-top: 0.7rem; 
+    .IconOptions {
+        margin-top: 0.7rem;
     }
 }

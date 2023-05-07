@@ -34,7 +34,6 @@ const Navbar = () => {
     const options = useMemo(() => [
         { id: 1, optionText: 'type', route: '/', optionIcon: <BsKeyboardFill size={25} /> },
         { id: 2, optionText: 'account', route: '/account', optionIcon: <RiAccountCircleFill size={25} /> },
-        { id: 3, optionText: 'leaderboard', route: '/leaderboard', optionIcon: <MdLeaderboard size={25} /> },
     ], []);
     let currentId = 1;
     options.map((option) => {
@@ -60,7 +59,7 @@ const Navbar = () => {
                 <div className={styles.Nav}>
                     <h1 className={styles.heading}>Type<span>.io</span></h1>
                     <div className={styles.NavItems}>
-                        <div className={styles.NavOptions}>
+                        <div className={styles.NavOptions} style={{ width: (authUser) ? "15rem" : "10rem", maxWidth: (authUser) ? "15rem" : "10rem" }}>
                             {options.map((option) => (
                                 <NavOption
                                     key={option.id}
@@ -77,7 +76,7 @@ const Navbar = () => {
                                 })
                             }} /> : null}
                         </div>
-                        <div className={styles.IconOptions}>
+                        <div className={styles.IconOptions} style={{ width: (authUser) ? "10rem" : "5rem", maxWidth: (authUser) ? "10rem" : "5rem" }}>
                             {options.map((option) => (
                                 <NavOption
                                     key={option.id}

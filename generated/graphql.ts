@@ -140,7 +140,6 @@ export type Tests = {
   accuracyData: Array<Scalars['Float']>;
   labels: Array<Scalars['Float']>;
   testTaken: Array<Scalars['String']>;
-  tests: Array<Test>;
   wpmData: Array<Scalars['Float']>;
 };
 
@@ -214,13 +213,6 @@ export type ValidateMutationVariables = Exact<{
 
 
 export type ValidateMutation = { __typename?: 'Mutation', validate: { __typename?: 'FieldError', field?: string | null, message?: string | null } };
-
-export type LeaderboardQueryVariables = Exact<{
-  time: Scalars['String'];
-}>;
-
-
-export type LeaderboardQuery = { __typename?: 'Query', leaderboard: { __typename?: 'LeaderBoard', leaderBoard: Array<{ __typename?: 'LeaderBoardStatFields', rank: number, user: string, wpm: number, accuracy: string, time: string, testTaken: string }> } };
 
 export type PaginatedTestsQueryVariables = Exact<{
   uid: Scalars['String'];
@@ -312,24 +304,6 @@ export const ValidateDocument = gql`
 
 export function useValidateMutation() {
   return Urql.useMutation<ValidateMutation, ValidateMutationVariables>(ValidateDocument);
-};
-export const LeaderboardDocument = gql`
-    query Leaderboard($time: String!) {
-  leaderboard(time: $time) {
-    leaderBoard {
-      rank
-      user
-      wpm
-      accuracy
-      time
-      testTaken
-    }
-  }
-}
-    `;
-
-export function useLeaderboardQuery(options: Omit<Urql.UseQueryArgs<LeaderboardQueryVariables>, 'query'>) {
-  return Urql.useQuery<LeaderboardQuery, LeaderboardQueryVariables>({ query: LeaderboardDocument, ...options });
 };
 export const PaginatedTestsDocument = gql`
     query paginatedTests($uid: String!, $first: Int!, $after: String) {

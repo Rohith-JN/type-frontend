@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setRef, setCaretRef } from "../../store/actions";
 import { State } from "../../store/reducer";
@@ -9,14 +9,12 @@ const Test = () => {
     const {
         time: { timer },
         word: { currWord, wordList, typedHistory, typedWord },
-        preferences: { time },
     } = useSelector((state: State) => state);
 
     const dispatch = useDispatch();
     const extraLetters = typedWord.slice(currWord.length).split("");
     const activeWord = useRef<HTMLDivElement>(null);
     const caretRef = useRef<HTMLSpanElement>(null);
-    const spaces = wordList.indexOf(currWord);
     let correctChars = 0;
     const result = typedHistory.map(
         (typedWord, idx) => typedWord === wordList[idx]
@@ -24,24 +22,23 @@ const Test = () => {
     result.forEach((r, idx) => {
         if (r) correctChars += wordList[idx].length;
     });
-    const wpm = ((correctChars + spaces) * 60) / time / 5;
     const correctWords = result.filter((x) => x).length;
     const incorrectWords = result.filter((x) => !x).length;
     const totalWords = correctWords + incorrectWords;
-    const accuracy = (correctWords / totalWords) * 100 ? (correctWords / totalWords) * 100 : 0
 
     useEffect(() => {
         dispatch(setRef(activeWord));
         dispatch(setCaretRef(caretRef));
     }, [dispatch]);
 
+    // record time taken to type each word and append it to an array
+    // record no of wrong characters for each word and append it to an array
+
     return (
         <div style={{ display: "flex", width: "100", justifyContent: "center" }}>
             <div className="test">
                 <div className="stats">
                     <div className="timer">{timer}</div>
-                    <div className="wpm">wpm: {Math.round(wpm)}</div>
-                    <div className="accuracy">acc: {Math.round(accuracy)}%</div>
                 </div>
                 <div className="box">
                     {wordList.map((word, idx) => {
