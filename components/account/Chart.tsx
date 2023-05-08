@@ -151,7 +151,7 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
             },
             y: {
                 min: 0,
-                max: Math.max(...wpmData) > 150 ? 290 : 200,
+                max: Math.max(...wpmData) > 150 ? 300 : 200,
                 position: 'left',
                 title: {
                     display: true,

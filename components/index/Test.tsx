@@ -15,16 +15,6 @@ const Test = () => {
     const extraLetters = typedWord.slice(currWord.length).split("");
     const activeWord = useRef<HTMLDivElement>(null);
     const caretRef = useRef<HTMLSpanElement>(null);
-    let correctChars = 0;
-    const result = typedHistory.map(
-        (typedWord, idx) => typedWord === wordList[idx]
-    );
-    result.forEach((r, idx) => {
-        if (r) correctChars += wordList[idx].length;
-    });
-    const correctWords = result.filter((x) => x).length;
-    const incorrectWords = result.filter((x) => !x).length;
-    const totalWords = correctWords + incorrectWords;
 
     useEffect(() => {
         dispatch(setRef(activeWord));
