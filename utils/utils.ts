@@ -58,3 +58,8 @@ export function formatDate(timestamp: number): string {
         year: "numeric",
     });
 }
+
+export function round(value: number, precision: any): number {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+}

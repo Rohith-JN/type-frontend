@@ -1,0 +1,20 @@
+query Leaderboard($uid: String!) {
+  leaderboard(uid: $uid) {
+    leaderBoard {
+      rank
+      user
+      wpm
+      accuracy
+      time
+      testTaken
+    }
+    user {
+      rank
+      user
+      wpm
+      accuracy
+      time
+      testTaken
+    }
+  }
+}

@@ -70,7 +70,7 @@ h1.NavText:hover {
         font-size: 2.5rem;
     }
 }
-@media screen and (max-width: 550px){
+@media screen and (max-width: 650px){
     .NavItems .NavOptions {
         display: none;
     }
@@ -82,7 +82,7 @@ h1.NavText:hover {
     h1.heading {
         font-size: 2rem;
     }
-    .IconOptions {
+    .NavItems .IconOptions {
         margin-top: 0.7rem;
     }
 }

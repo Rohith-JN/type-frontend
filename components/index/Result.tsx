@@ -4,7 +4,7 @@ import { State } from "../../store/reducer";
 import { useEffect, useState } from 'react';
 import { useCreateTestMutation } from '../../generated/graphql';
 import firebase from 'firebase/compat/app';
-import { secondsToTime } from '../../utils/utils';
+import { round, secondsToTime } from '../../utils/utils';
 
 const Result = () => {
     const {
@@ -45,10 +45,11 @@ const Result = () => {
     useEffect(() => {
         async function test() {
             if (firebase.auth().currentUser && !timer && timerId) {
+                // use decimal point to 1 for wpm and accuracy
                 await createTest({
                     chars: `${correctWords} / ${incorrectWords}`,
                     wpm: Math.round(wpm),
-                    accuracy: `${Math.round(accuracy)}%`,
+                    accuracy: `${round(accuracy, 1)}%`,
                     time: `${time}`,
                     uid: `${firebase.auth().currentUser!.uid}`,
                     testTaken: testTaken
@@ -87,7 +88,7 @@ const Result = () => {
                                 <tr key={index}>
                                     <td className={styles.sno}>{index}</td>
                                     <td>{Math.round(object.wpm)}</td>
-                                    <td>{Math.round(object.accuracy)}%</td>
+                                    <td>{round(object.accuracy, 1)}%</td>
                                     <td>{object.correctWords}{' '}/{' '}{object.incorrectWords}</td>
                                     <td>{secondsToTime(object.time)}</td>
                                     <td className={styles.testTaken}>{object.testTaken}</td>

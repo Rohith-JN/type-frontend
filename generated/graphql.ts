@@ -26,6 +26,7 @@ export type FieldError = {
 export type LeaderBoard = {
   __typename?: 'LeaderBoard';
   leaderBoard: Array<LeaderBoardStatFields>;
+  user: LeaderBoardStatFields;
 };
 
 export type LeaderBoardStatFields = {
@@ -108,7 +109,7 @@ export type QueryGetStatsArgs = {
 
 
 export type QueryLeaderboardArgs = {
-  time: Scalars['String'];
+  uid: Scalars['String'];
 };
 
 
@@ -214,6 +215,13 @@ export type ValidateMutationVariables = Exact<{
 
 export type ValidateMutation = { __typename?: 'Mutation', validate: { __typename?: 'FieldError', field?: string | null, message?: string | null } };
 
+export type LeaderboardQueryVariables = Exact<{
+  uid: Scalars['String'];
+}>;
+
+
+export type LeaderboardQuery = { __typename?: 'Query', leaderboard: { __typename?: 'LeaderBoard', leaderBoard: Array<{ __typename?: 'LeaderBoardStatFields', rank: number, user: string, wpm: number, accuracy: string, time: string, testTaken: string }>, user: { __typename?: 'LeaderBoardStatFields', rank: number, user: string, wpm: number, accuracy: string, time: string, testTaken: string } } };
+
 export type PaginatedTestsQueryVariables = Exact<{
   uid: Scalars['String'];
   first: Scalars['Int'];
@@ -304,6 +312,32 @@ export const ValidateDocument = gql`
 
 export function useValidateMutation() {
   return Urql.useMutation<ValidateMutation, ValidateMutationVariables>(ValidateDocument);
+};
+export const LeaderboardDocument = gql`
+    query Leaderboard($uid: String!) {
+  leaderboard(uid: $uid) {
+    leaderBoard {
+      rank
+      user
+      wpm
+      accuracy
+      time
+      testTaken
+    }
+    user {
+      rank
+      user
+      wpm
+      accuracy
+      time
+      testTaken
+    }
+  }
+}
+    `;
+
+export function useLeaderboardQuery(options: Omit<Urql.UseQueryArgs<LeaderboardQueryVariables>, 'query'>) {
+  return Urql.useQuery<LeaderboardQuery, LeaderboardQueryVariables>({ query: LeaderboardDocument, ...options });
 };
 export const PaginatedTestsDocument = gql`
     query paginatedTests($uid: String!, $first: Int!, $after: String) {
