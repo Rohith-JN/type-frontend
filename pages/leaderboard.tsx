@@ -6,7 +6,6 @@ import { withUrqlClient } from "next-urql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import styles from '../styles/Leaderboard.module.css'
 import { useLeaderboardQuery } from "../generated/graphql";
-import { secondsToTime } from "../utils/utils";
 import { useAuth } from "../firebase/auth";
 
 const Leaderboard = ({ themeData }: {
@@ -68,8 +67,8 @@ const Leaderboard = ({ themeData }: {
                                         <td className={styles.rank}>{test.rank}</td>
                                         <td>{test.user}</td>
                                         <td>{test.wpm}</td>
-                                        <td>{test.accuracy}</td>
-                                        <td>{secondsToTime(parseInt(test.time))}</td>
+                                        <td>{test.accuracy}%</td>
+                                        <td>1:00</td>
                                         <td className={styles.taken}>{test.testTaken}</td>
                                     </tr>)
                                 }
@@ -81,8 +80,8 @@ const Leaderboard = ({ themeData }: {
                                         <td className={styles.rank}>{data?.leaderboard.user.rank}</td>
                                         <td>{data?.leaderboard.user.user}</td>
                                         <td>{data?.leaderboard.user.wpm}</td>
-                                        <td>{data?.leaderboard.user.accuracy}</td>
-                                        <td>{secondsToTime(parseInt(data?.leaderboard.user.time!))}</td>
+                                        <td>{data?.leaderboard.user.accuracy}%</td>
+                                        <td>1:00</td>
                                         <td className={styles.taken}>{data?.leaderboard.user.testTaken}</td>
                                     </tr>
                                     : null}

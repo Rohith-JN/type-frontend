@@ -31,10 +31,9 @@ export type LeaderBoard = {
 
 export type LeaderBoardStatFields = {
   __typename?: 'LeaderBoardStatFields';
-  accuracy: Scalars['String'];
+  accuracy: Scalars['Float'];
   rank: Scalars['Float'];
   testTaken: Scalars['String'];
-  time: Scalars['String'];
   user: Scalars['String'];
   wpm: Scalars['Float'];
 };
@@ -49,7 +48,7 @@ export type Mutation = {
 
 
 export type MutationCreateTestArgs = {
-  accuracy: Scalars['String'];
+  accuracy: Scalars['Float'];
   chars: Scalars['String'];
   testTaken: Scalars['String'];
   time: Scalars['String'];
@@ -126,7 +125,7 @@ export type QueryTestsArgs = {
 
 export type Test = {
   __typename?: 'Test';
-  accuracy: Scalars['String'];
+  accuracy: Scalars['Float'];
   chars: Scalars['String'];
   createdAt: Scalars['String'];
   creatorId: Scalars['String'];
@@ -179,14 +178,14 @@ export type UserStats = {
 export type CreateTestMutationVariables = Exact<{
   chars: Scalars['String'];
   wpm: Scalars['Float'];
-  accuracy: Scalars['String'];
+  accuracy: Scalars['Float'];
   time: Scalars['String'];
   uid: Scalars['String'];
   testTaken: Scalars['String'];
 }>;
 
 
-export type CreateTestMutation = { __typename?: 'Mutation', createTest: { __typename?: 'Test', time: string, accuracy: string, wpm: number, chars: string, testTaken: string } };
+export type CreateTestMutation = { __typename?: 'Mutation', createTest: { __typename?: 'Test', time: string, accuracy: number, wpm: number, chars: string, testTaken: string } };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -220,7 +219,7 @@ export type LeaderboardQueryVariables = Exact<{
 }>;
 
 
-export type LeaderboardQuery = { __typename?: 'Query', leaderboard: { __typename?: 'LeaderBoard', leaderBoard: Array<{ __typename?: 'LeaderBoardStatFields', rank: number, user: string, wpm: number, accuracy: string, time: string, testTaken: string }>, user: { __typename?: 'LeaderBoardStatFields', rank: number, user: string, wpm: number, accuracy: string, time: string, testTaken: string } } };
+export type LeaderboardQuery = { __typename?: 'Query', leaderboard: { __typename?: 'LeaderBoard', leaderBoard: Array<{ __typename?: 'LeaderBoardStatFields', rank: number, user: string, wpm: number, accuracy: number, testTaken: string }>, user: { __typename?: 'LeaderBoardStatFields', rank: number, user: string, wpm: number, accuracy: number, testTaken: string } } };
 
 export type PaginatedTestsQueryVariables = Exact<{
   uid: Scalars['String'];
@@ -229,7 +228,7 @@ export type PaginatedTestsQueryVariables = Exact<{
 }>;
 
 
-export type PaginatedTestsQuery = { __typename?: 'Query', paginatedTests: { __typename?: 'PaginatedTests', tests: Array<{ __typename?: 'Test', time: string, accuracy: string, wpm: number, chars: string, createdAt: string, testTaken: string }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor: string } } };
+export type PaginatedTestsQuery = { __typename?: 'Query', paginatedTests: { __typename?: 'PaginatedTests', tests: Array<{ __typename?: 'Test', time: string, accuracy: number, wpm: number, chars: string, createdAt: string, testTaken: string }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor: string } } };
 
 export type TestsQueryVariables = Exact<{
   uid: Scalars['String'];
@@ -247,7 +246,7 @@ export type GetStatsQuery = { __typename?: 'Query', getStats: { __typename?: 'Us
 
 
 export const CreateTestDocument = gql`
-    mutation createTest($chars: String!, $wpm: Float!, $accuracy: String!, $time: String!, $uid: String!, $testTaken: String!) {
+    mutation createTest($chars: String!, $wpm: Float!, $accuracy: Float!, $time: String!, $uid: String!, $testTaken: String!) {
   createTest(
     chars: $chars
     wpm: $wpm
@@ -321,7 +320,6 @@ export const LeaderboardDocument = gql`
       user
       wpm
       accuracy
-      time
       testTaken
     }
     user {
@@ -329,7 +327,6 @@ export const LeaderboardDocument = gql`
       user
       wpm
       accuracy
-      time
       testTaken
     }
   }

@@ -174,7 +174,7 @@ const Account = ({ themeData }: {
                       tests.map((test: any, index: number) => <tr key={index + 1}>
                         <td className={styles.sno}>{index + 1}</td>
                         <td>{test.wpm}</td>
-                        <td>{test.accuracy}</td>
+                        <td>{test.accuracy}%</td>
                         <td>{test.chars}</td>
                         <td>{secondsToTime(parseInt(test.time))}</td>
                         <td className={styles.taken}>{test.testTaken}</td>

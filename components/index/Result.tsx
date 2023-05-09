@@ -45,11 +45,10 @@ const Result = () => {
     useEffect(() => {
         async function test() {
             if (firebase.auth().currentUser && !timer && timerId) {
-                // use decimal point to 1 for wpm and accuracy
                 await createTest({
                     chars: `${correctWords} / ${incorrectWords}`,
                     wpm: Math.round(wpm),
-                    accuracy: `${round(accuracy, 1)}%`,
+                    accuracy: round(accuracy, 1),
                     time: `${time}`,
                     uid: `${firebase.auth().currentUser!.uid}`,
                     testTaken: testTaken

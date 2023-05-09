@@ -5,7 +5,6 @@ query Leaderboard($uid: String!) {
       user
       wpm
       accuracy
-      time
       testTaken
     }
     user {
@@ -13,7 +12,6 @@ query Leaderboard($uid: String!) {
       user
       wpm
       accuracy
-      time
       testTaken
     }
   }
