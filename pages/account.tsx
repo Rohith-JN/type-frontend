@@ -46,6 +46,8 @@ const Account = ({ themeData }: {
 `;
 
   const [tests, setTests] = useState<any[]>([]);
+  const [paginatedTestsError, setpaginatedTestsError] = useState<boolean>(false);
+  const [paginatedTestsFetching, setpaginatedTestsFetching] = useState<boolean>(false);
   const [endCursor, setEndCursor] = useState<string | null>(null);
   const graphqlClient = useClient();
   const handleLoadMore = useCallback(() => {
@@ -56,9 +58,15 @@ const Account = ({ themeData }: {
       .query(paginatedTestQuery, { uid, first: 10, after: endCursor })
       .toPromise()
       .then((nextResult) => {
+        setpaginatedTestsFetching(true)
         const { tests: newTests, pageInfo } = nextResult.data.paginatedTests;
         setTests((oldTests) => [...oldTests, ...newTests]);
         setEndCursor(pageInfo.endCursor);
+        setpaginatedTestsFetching(false)
+        setpaginatedTestsError(false)
+      }).catch((_) => {
+        setpaginatedTestsFetching(false)
+        setpaginatedTestsError(true)
       });
   }, [endCursor, graphqlClient, paginatedTestQuery, uid]);
 
@@ -67,10 +75,16 @@ const Account = ({ themeData }: {
       .query(paginatedTestQuery, { uid, first: 10 })
       .toPromise()
       .then((result) => {
+        setpaginatedTestsFetching(true)
         const { tests: newTests, pageInfo } = result.data.paginatedTests;
         setTests(newTests);
         setEndCursor(pageInfo.endCursor);
-      });
+        setpaginatedTestsFetching(false)
+        setpaginatedTestsError(false)
+      }).catch((_) => {
+        setpaginatedTestsFetching(false)
+        setpaginatedTestsError(true)
+      });;
   }, [graphqlClient, paginatedTestQuery, uid]);
 
   const loginOnClick = () => {
@@ -106,10 +120,10 @@ const Account = ({ themeData }: {
   }, [contentLoaded]);
 
   if (authUser) {
-    if (loading || userStatsFetching || testsFetching) {
+    if (loading || userStatsFetching || testsFetching || paginatedTestsFetching) {
       return <Loader />
     }
-    if (!testsData || !userStats) {
+    if ((!testsData || !userStats || paginatedTestsError) && !loading) {
       return <div>
         <CustomError statusCode={null} statusMessage={'Oops something went wrong!'} />
       </div>
@@ -121,74 +135,68 @@ const Account = ({ themeData }: {
         year: "numeric",
       });
       return (
-        <>
-          {(!testsData && !userStats && testsFetching && userStatsFetching) || loading ? (
-            <Loader />
-          ) : (
-            <div className={styles.account}>
-              <p className={styles.info}>Account created on {userCreationDate.toString()}</p>
-              <div className={styles.stats}>
-                <p style={{ fontFamily: 'lexend', fontWeight: "light", color: "var(--sub-color)", fontSize: "13px" }}>All Time Average / Past 10 Average</p>
-                <table>
-                  <thead>
-                    <tr>
-                      <th className={styles.sno}>S:No</th>
-                      <th>Time</th>
-                      <th>PB</th>
-                      <th>WPM</th>
-                      <th>Accuracy</th>
-                      <th className={styles.testsTaken}>Tests taken</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      userStats?.getStats.userStats.map((stat, index) => <tr key={index + 1}>
-                        <td className={styles.sno}>{index + 1}</td>
-                        <td>{secondsToTime(parseInt(stat.time))}</td>
-                        <td>{stat.pb}</td>
-                        <td>
-                          {stat.wpm.toString()} / {stat.recentWpm.toString()}</td>
-                        <td>
-                          {stat.accuracy.toString()} / {stat.recentAccuracy.toString()}</td>
-                        <td className={styles.testsTaken}>{stat.testsTaken}</td>
-                      </tr>)
-                    }
-                  </tbody>
-                </table>
-              </div>
-              {(authUser) ? <div className={styles.graph}><Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} takenData={testsData?.tests.testTaken!} /></div> : null}
-              {(tests.length != 0) ? <div className={styles.tests}>
-                <table>
-                  <thead>
-                    <tr>
-                      <th className={styles.sno}>S:No</th>
-                      <th>WPM</th>
-                      <th>Accuracy</th>
-                      <th>Words</th>
-                      <th>Time</th>
-                      <th className={styles.taken}>Taken</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      tests.map((test: any, index: number) => <tr key={index + 1}>
-                        <td className={styles.sno}>{index + 1}</td>
-                        <td>{test.wpm}</td>
-                        <td>{test.accuracy}%</td>
-                        <td>{test.chars}</td>
-                        <td>{secondsToTime(parseInt(test.time))}</td>
-                        <td className={styles.taken}>{test.testTaken}</td>
-                      </tr>)
-                    }
-                  </tbody>
-                </table>
-                <button onClick={handleLoadMore} disabled={tests.length % 10 !== 0}>
-                  {tests.length % 10 === 0 ? "Load more" : "No more tests"}
-                </button>
-              </div> : null}
-            </div>
-          )}
-        </>
+        <div className={styles.account}>
+          <p className={styles.info}>Account created on {userCreationDate.toString()}</p>
+          <div className={styles.stats}>
+            <p style={{ fontFamily: 'lexend', fontWeight: "light", color: "var(--sub-color)", fontSize: "13px" }}>All Time Average / Past 10 Average</p>
+            <table>
+              <thead>
+                <tr>
+                  <th className={styles.sno}>S:No</th>
+                  <th>Time</th>
+                  <th>PB</th>
+                  <th>WPM</th>
+                  <th>Accuracy</th>
+                  <th className={styles.testsTaken}>Tests taken</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  userStats?.getStats.userStats.map((stat, index) => <tr key={index + 1}>
+                    <td className={styles.sno}>{index + 1}</td>
+                    <td>{secondsToTime(parseInt(stat.time))}</td>
+                    <td>{stat.pb}</td>
+                    <td>
+                      {stat.wpm.toString()} / {stat.recentWpm.toString()}</td>
+                    <td>
+                      {stat.accuracy.toString()} / {stat.recentAccuracy.toString()}</td>
+                    <td className={styles.testsTaken}>{stat.testsTaken}</td>
+                  </tr>)
+                }
+              </tbody>
+            </table>
+          </div>
+          {(authUser) ? <div className={styles.graph}><Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} takenData={testsData?.tests.testTaken!} /></div> : null}
+          {(tests.length != 0) ? <div className={styles.tests}>
+            <table>
+              <thead>
+                <tr>
+                  <th className={styles.sno}>S:No</th>
+                  <th>WPM</th>
+                  <th>Accuracy</th>
+                  <th>Words</th>
+                  <th>Time</th>
+                  <th className={styles.taken}>Taken</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  tests.map((test: any, index: number) => <tr key={index + 1}>
+                    <td className={styles.sno}>{index + 1}</td>
+                    <td>{test.wpm}</td>
+                    <td>{test.accuracy}%</td>
+                    <td>{test.chars}</td>
+                    <td>{secondsToTime(parseInt(test.time))}</td>
+                    <td className={styles.taken}>{test.testTaken}</td>
+                  </tr>)
+                }
+              </tbody>
+            </table>
+            <button onClick={handleLoadMore} disabled={tests.length % 10 !== 0}>
+              {tests.length % 10 === 0 ? "Load more" : "No more tests"}
+            </button>
+          </div> : null}
+        </div>
       )
     }
   }
