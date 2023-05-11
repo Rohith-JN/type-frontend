@@ -26,7 +26,7 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
     const rootStyles = getComputedStyle(document.documentElement);
     const mainColor = rootStyles.getPropertyValue('--main-color');
     const subColor = rootStyles.getPropertyValue('--sub-color');
-    
+
     const data = {
         labels: [] as number[],
         datasets: [
@@ -218,7 +218,7 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
         },
         elements: {
             point: {
-                radius: 1.5,
+                radius: 1,
             },
         },
     };
