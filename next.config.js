@@ -2,9 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  css: [
-    'styles/Test.css'
-  ]
 }
 
 module.exports = nextConfig

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -170,7 +170,6 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
                         family: 'lexend, sans-serif',
                     },
                     color: subColor,
-
                 },
                 grid: {
                     color: (context: any) => {

@@ -14,18 +14,18 @@ export default function App({ Component, pageProps }: AppProps) {
         <AuthUserProvider>
             <ReduxProvider store={store}>
                 <CookiesProvider>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={true}
+                        closeOnClick
+                        rtl={false}
+                        draggable
+                        theme="colored"
+                        icon={false}
+                    />
                     <Layout>
-                        <ToastContainer
-                            position="top-right"
-                            autoClose={5000}
-                            hideProgressBar={false}
-                            newestOnTop={true}
-                            closeOnClick
-                            rtl={false}
-                            draggable
-                            theme="colored"
-                            icon={false}
-                        />
                         <Component {...pageProps} />
                     </Layout>
                 </CookiesProvider>

@@ -8,6 +8,7 @@ import { setResult } from '../../context/actions';
 import { useAuth } from '../../firebase/auth';
 import { State } from '../../context/reducer';
 import { customToast } from '../../utils/customToast';
+import { ToastContainer } from 'react-toastify';
 
 export default function Login(props: { onClick: VoidFunction }) {
     const {
@@ -54,6 +55,17 @@ export default function Login(props: { onClick: VoidFunction }) {
                 </form>
                 <p>Don&apos;t have an account? <span onClick={props.onClick}>Sign Up</span></p>
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={true}
+                closeOnClick
+                rtl={false}
+                draggable
+                theme="colored"
+                icon={false}
+            />
         </>
     );
 }

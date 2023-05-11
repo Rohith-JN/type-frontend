@@ -1,7 +1,6 @@
 import styles from '../../styles/Navbar.module.css';
 import React, { useEffect, useState, useMemo } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import router, { useRouter } from 'next/router';
 import { MdLogout } from 'react-icons/md'
 import { useAuth } from '../../firebase/auth';
 import { toastOptions } from '../../utils/customToast';
@@ -63,8 +62,10 @@ const Navbar = () => {
                             ))}
                             {(authUser) ? <MdLogout size={20} color='var(--main-color)' style={{ cursor: "pointer" }} onClick={async () => {
                                 await signOut().then(() => {
-                                    customToast.success("Signed Out!", toastOptions);
-                                    dispatch(setResult([results[0]]));
+                                    router.push("/account").then(() => {
+                                        customToast.success("Signed Out!", toastOptions);
+                                        dispatch(setResult([results[0]]));
+                                    });
                                 })
                             }} /> : null}
                         </div>
@@ -80,12 +81,13 @@ const Navbar = () => {
                             ))}
                             {(authUser) ? <MdLogout size={20} color='var(--main-color)' style={{ cursor: "pointer", marginBottom: "0.4rem" }} onClick={async () => {
                                 await signOut().then(() => {
-                                    customToast.success("Signed Out!", toastOptions);
-                                    dispatch(setResult([results[0]]));
+                                    router.push("/account").then(() => {
+                                        customToast.success("Signed Out!", toastOptions);
+                                        dispatch(setResult([results[0]]));
+                                    });
                                 })
                             }} /> : null}
                         </div>
-
                     </div>
                 </div>
             </div>
