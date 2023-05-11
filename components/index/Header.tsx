@@ -1,6 +1,6 @@
 import styles from '../../styles/Header.module.css'
 import { useMemo } from 'react';
-import Option from '../other/Option';
+import Option from './Option';
 import { resetTest } from "../../utils/test";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +9,8 @@ import {
     setTime,
     setWordList,
     timerSet,
-} from "../../store/actions";
-import { State } from "../../store/reducer";
+} from "../../context/actions";
+import { State } from "../../context/reducer";
 import useLocalStorage from '../../hooks/useLocalStorage';
 import Palette from '../other/Palette';
 

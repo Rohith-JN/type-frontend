@@ -1,8 +1,6 @@
 import { RefObject } from "react";
 import { AnyAction, combineReducers } from "redux";
 import {
-    SET_CHAR,
-    SET_WORD,
     TIMER_DECREMENT,
     TIMERID_SET,
     TIMER_SET,
@@ -16,6 +14,7 @@ import {
     SET_PALLET,
     SET_THEME,
     SET_TEST_TAKEN,
+    SET_WORD,
 } from "./actions";
 
 export interface State {
@@ -35,7 +34,7 @@ export interface State {
     time: {
         timer: number; // represents remaining time for a timer
         timerId: NodeJS.Timeout | null; // used to clear timer interval when test is reset or completed
-        testTaken: string
+        testTaken: string;
     };
     result: {
         results: [
@@ -68,7 +67,7 @@ export const initialState: State = {
     time: {
         timer: 1,
         timerId: null,
-        testTaken: ""
+        testTaken: "",
     },
     result: {
         results: [
@@ -98,7 +97,7 @@ const timerReducer = (
         case SET_TEST_TAKEN:
             return {
                 ...state,
-                testTaken: payload
+                testTaken: payload,
             };
         default:
             return state;
@@ -110,23 +109,21 @@ const wordReducer = (
     { type, payload }: AnyAction
 ) => {
     switch (type) {
-        case SET_CHAR:
-            return { ...state, typedWord: payload };
         case SET_WORD:
-            return { ...state, typedHistory: [...state.typedHistory, payload] };
+            return { ...state, typedWord: payload }; // set typed word
         case APPEND_TYPED_HISTORY:
             const nextIdx = state.typedHistory.length + 1;
             return {
                 ...state,
-                typedWord: "",
-                currWord: state.wordList[nextIdx],
+                typedWord: "", // sets the typedWord to ""
+                currWord: state.wordList[nextIdx], // sets the next word to be typed
                 typedHistory: [...state.typedHistory, state.typedWord],
-            };
+            }; // after used finishes typing a word, it updates typedHistory with the typed word
         case PREV_WORD:
-            const prevIdx = state.typedHistory.length - 1;
+            const prevIdx = state.typedHistory.length - 1; // index of the previous word
             return {
                 ...state,
-                currWord: state.wordList[prevIdx],
+                currWord: state.wordList[prevIdx], // set the word to be typed as the previous word
                 typedWord: !payload ? state.typedHistory[prevIdx] : "",
                 typedHistory: state.typedHistory.splice(0, prevIdx),
             };
@@ -142,22 +139,15 @@ const wordReducer = (
             };
         case SET_WORDLIST:
             if (Array.isArray(payload)) {
-                const areNotWords = payload.some((word: string) =>
-                    word.includes(" ")
-                );
                 var shuffledWordList: string[] = payload.sort(
                     () => Math.random() - 0.5
                 );
-                if (areNotWords)
-                    shuffledWordList = payload.flatMap((token: string) =>
-                        token.split(" ")
-                    );
                 return {
                     ...state,
-                    typedWord: "",
-                    typedHistory: [],
-                    currWord: shuffledWordList[0],
-                    wordList: shuffledWordList,
+                    typedWord: "", // set typedWord empty as the wordList has been initialised
+                    typedHistory: [], // set typedHistory to [] as the wordList has been initialised
+                    currWord: shuffledWordList[0], // set word to be typed as the first word in wordList
+                    wordList: shuffledWordList, // set new wordList
                 };
             }
 

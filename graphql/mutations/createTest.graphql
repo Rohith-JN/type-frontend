@@ -1,9 +1,9 @@
-mutation createTest($chars: String!, $wpm: Float!, $accuracy: Float!, $time: String!, $uid: String!, $testTaken: String!) {
-  createTest(chars: $chars, wpm: $wpm, accuracy: $accuracy, time: $time, uid: $uid, testTaken: $testTaken) {
+mutation createTest($words: String!, $wpm: Float!, $accuracy: Float!, $time: String!, $uid: String!, $testTaken: String!) {
+  createTest(words: $words, wpm: $wpm, accuracy: $accuracy, time: $time, uid: $uid, testTaken: $testTaken) {
     time
     accuracy
     wpm
-    chars
+    words
     testTaken
   }
 }

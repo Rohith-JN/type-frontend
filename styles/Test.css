@@ -1,0 +1,90 @@
+
+.test {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 62vh;
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: 58rem;
+    width: 58rem;
+}
+.stats {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding-bottom: 10px;
+}
+.stats .timer, .wpm, .accuracy {
+  font-size: 21pt;
+  margin: 5px;
+  color: var(--sub-color);
+}
+.box {
+  font-size: 1.5rem;
+  overflow: hidden;
+  height: 149px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  user-select: none;
+}
+.box .word {
+  position: relative;
+  margin: 0 5px 2px;
+}
+.box .word span {
+color: var(--sub-color);
+line-height: 2em;
+font-weight: 100;
+}
+.box .word.wrong {
+  text-decoration: 2px underline var(--error-color);
+  animation: shake 0.1s ease;
+}
+@keyframes shake {
+  0% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.box .typedWord {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.box span.right {
+  color: var(--text-color);
+}
+.box #active {
+  position: relative;
+  width: max-content;
+}
+.box span.wrong {
+  color: var(--error-color) !important;
+}
+.box .extra {
+  opacity: 0.6;
+}
+.box #caret {
+  transition: left 0.1s ease;
+  position: absolute;
+  color: var(--main-color);
+  margin-left: -7.29165px;
+}
+.box #caret.blink {
+  animation: blink 1.5s infinite 1s;
+}
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

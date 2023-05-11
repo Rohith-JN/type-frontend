@@ -1,33 +1,21 @@
 import styles from '../../styles/Result.module.css';
 import { useSelector } from "react-redux";
-import { State } from "../../store/reducer";
+import { State } from "../../context/reducer";
 import { useEffect, useState } from 'react';
 import { useCreateTestMutation } from '../../generated/graphql';
 import firebase from 'firebase/compat/app';
 import { round, secondsToTime } from '../../utils/utils';
+import { calculateStats } from '../../utils/calculateStats';
 
 const Result = () => {
     const {
         time: { timerId, timer, testTaken },
-        word: { currWord, wordList, typedHistory },
         preferences: { time },
         result: { results }
     } = useSelector((state: State) => state);
     const [showResult, setShowResult] = useState(false);
     const [, createTest] = useCreateTestMutation();
-    const spaces = wordList.indexOf(currWord);
-    let correctChars = 0;
-    const result = typedHistory.map(
-        (typedWord, idx) => typedWord === wordList[idx]
-    );
-    result.forEach((r, idx) => {
-        if (r) correctChars += wordList[idx].length;
-    });
-    const wpm = ((correctChars + spaces) * 60) / time / 5;
-    const correctWords = result.filter((x) => x).length;
-    const incorrectWords = result.filter((x) => !x).length;
-    const totalWords = correctWords + incorrectWords;
-    const accuracy = (correctWords / totalWords) * 100 ? (correctWords / totalWords) * 100 : 0
+    const { wpm, accuracy, correctWords, incorrectWords } = calculateStats()
 
     useEffect(() => {
         if (!timer && timerId) {
@@ -46,7 +34,7 @@ const Result = () => {
         async function test() {
             if (firebase.auth().currentUser && !timer && timerId) {
                 await createTest({
-                    chars: `${correctWords} / ${incorrectWords}`,
+                    words: `${correctWords} / ${incorrectWords}`,
                     wpm: Math.round(wpm),
                     accuracy: round(accuracy, 1),
                     time: `${time}`,

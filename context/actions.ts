@@ -1,7 +1,6 @@
 import { RefObject } from "react";
 
 export const SET_WORD = "SETWORD";
-export const SET_CHAR = "SETCHAR";
 export const TIMER_DECREMENT = "TIMERDECREMENT";
 export const APPEND_TYPED_HISTORY = "APPENDTYPEDHISTORY";
 export const TIMER_SET = "TIMERSET";
@@ -26,12 +25,10 @@ export const setTimerId = (payload: NodeJS.Timer | null) => ({
 export const setTestTaken = (payload: string) => ({
     type: SET_TEST_TAKEN,
     payload
-})
+});
 
 // Word Actions
-export const setWord = (payload: string) => ({ type: SET_WORD, payload });
-export const setChar = (payload: string) => ({ type: SET_CHAR, payload });
-export const setTypedWord = (payload: string) => ({ type: SET_CHAR, payload });
+export const setTypedWord = (payload: string) => ({ type: SET_WORD, payload });
 export const appendTypedHistory = () => ({
     type: APPEND_TYPED_HISTORY,
 });

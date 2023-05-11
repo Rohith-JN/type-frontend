@@ -2,14 +2,16 @@ import { Header } from '../components/index/Header';
 import Test from '../components/index/Test';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { State } from "../store/reducer";
-import { setTimerId } from "../store/actions";
+import { State } from "../context/reducer";
+import { setTimerId } from "../context/actions";
 import { recordTest } from "../utils/test";
 import Footer from '../components/index/Footer';
 import Loader from '../components/other/Loader';
 import cookie from "cookie";
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
+import { getTheme } from '../utils/getTheme';
+import { NextPageContext } from 'next';
 
 const Home = ({ themeData }: {
   themeData: {
@@ -103,15 +105,6 @@ const Home = ({ themeData }: {
 
 export default withUrqlClient(createUrqlClient)(Home)
 
-export async function getServerSideProps(context: { req: { headers: { cookie: any; }; }; res: { writeHead: (arg0: number, arg1: { Location: string; }) => void; end: () => void; }; }) {
-  const data = cookie.parse(context.req ? context.req.headers.cookie || "" : document.cookie)
-
-  if (context.res) {
-    if (Object.keys(data).length === 0 && data.constructor === Object) {
-      context.res.writeHead(301, { Location: "/" })
-      context.res.end()
-    }
-  }
-
-  return { props: { themeData: data && data } }
+export async function getServerSideProps(context: NextPageContext) {
+  return await getTheme(context);
 }

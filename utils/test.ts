@@ -1,15 +1,14 @@
 import {
     appendTypedHistory,
     backtrackWord,
-    setChar,
     setTypedWord,
     setTimerId,
     setWordList,
     timerSet,
     timerDecrement,
     setTestTaken,
-} from "../store/actions";
-import { store } from "../store/store";
+} from "../context/actions";
+import { store } from "../context/store";
 
 const handleBackspace = (ctrlKey: boolean) => {
     const { dispatch, getState } = store;
@@ -44,9 +43,8 @@ const handleBackspace = (ctrlKey: boolean) => {
 export const recordTest = (key: string, ctrlKey: boolean) => {
     const { dispatch, getState } = store;
     const {
-        time: { timer, timerId, testTaken },
+        time: { timer, timerId },
         word: { typedWord, currWord, activeWordRef, caretRef },
-        preferences: { time },
     } = getState();
     if (!timer) {
         return;
@@ -60,11 +58,6 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
     caret.classList.remove("blink");
     setTimeout(() => caret.classList.add("blink"), 500);
     switch (key) {
-        case "Tab":
-            if (timer !== time || timerId) {
-                resetTest();
-            }
-            break;
         case " ":
             if (typedWord === "") return;
             currWordEl.classList.add(
@@ -76,7 +69,7 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
             handleBackspace(ctrlKey);
             break;
         default:
-            dispatch(setChar(typedWord + key));
+            dispatch(setTypedWord(typedWord + key));
             break;
     }
 };
@@ -115,7 +108,6 @@ export const startTimer = () => {
         minute: "2-digit",
         hour12: false,
     });
-    console.log(formattedDate);
     dispatch(setTestTaken(formattedDate));
     const timerId = setInterval(() => {
         dispatch(timerDecrement());

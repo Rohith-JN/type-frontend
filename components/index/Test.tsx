@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setRef, setCaretRef } from "../../store/actions";
-import { State } from "../../store/reducer";
+import { setRef, setCaretRef } from "../../context/actions";
+import { State } from "../../context/reducer";
 import { FiRefreshCcw } from 'react-icons/fi';
 import { resetTest } from "../../utils/test";
 
@@ -15,6 +15,10 @@ const Test = () => {
     const extraLetters = typedWord.slice(currWord.length).split("");
     const activeWord = useRef<HTMLDivElement>(null);
     const caretRef = useRef<HTMLSpanElement>(null);
+
+    // currWord is the word thats supposed to be typed
+    // typedWWord is the word thats typed by the user
+    // extraLetters extracted part of the typedWord that comes after currWord into an array of letters
 
     useEffect(() => {
         dispatch(setRef(activeWord));
@@ -33,7 +37,7 @@ const Test = () => {
                 <div className="box">
                     {wordList.map((word, idx) => {
                         const isActive =
-                            currWord === word && typedHistory.length === idx;
+                            currWord === word && typedHistory.length === idx; // if currentWord = word from wordlist && typed words length = index of current word
                         return (
                             <div
                                 key={word + idx}
@@ -50,7 +54,7 @@ const Test = () => {
                                         |
                                     </span>
                                 ) : null}
-                                {word.split("").map((char, charId) => {
+                                {word.split("").map((char, charId) => { // wordList for the type test
                                     return <span key={char + charId}>{char}</span>;
                                 })}
                                 {isActive
@@ -63,7 +67,7 @@ const Test = () => {
                                             </span>
                                         );
                                     })
-                                    : typedHistory[idx]
+                                    : typedHistory[idx] // words typed by the user already
                                         ? typedHistory[idx]
                                             .slice(wordList[idx].length)
                                             .split("")

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styles from '../../styles/Login.module.css';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLoginMutation } from '../../generated/graphql';
-import { toastOptions } from '../../utils/utils';
+import { toastOptions } from '../../utils/customToast';
 import { useDispatch, useSelector } from 'react-redux';
-import { setResult } from '../../store/actions';
+import { setResult } from '../../context/actions';
 import { useAuth } from '../../firebase/auth';
-import { State } from '../../store/reducer';
+import { State } from '../../context/reducer';
+import { customToast } from '../../utils/customToast';
 
 export default function Login(props: { onClick: VoidFunction }) {
     const {
@@ -30,14 +30,14 @@ export default function Login(props: { onClick: VoidFunction }) {
         if (validation.data?.login.field === null && validation.data?.login.message === null) {
             await signInWithEmailAndPassword(user.email, user.password).then(function () {
                 dispatch(setResult([results[0]]));
-                toast.success("Logged in!", toastOptions)
+                customToast.success("Logged in!", toastOptions)
             }).catch(function (error) {
                 const message = error.message.replace("Firebase:", "");
-                toast.error(message.replace(/\([^)]*\)\.?/g, ""), toastOptions);
+                customToast.error(message.replace(/\([^)]*\)\.?/g, ""), toastOptions);
             })
         }
         else {
-            toast.error(validation.data?.login.message, toastOptions);
+            customToast.error(validation.data?.login.message!, toastOptions);
         }
     }
 
@@ -54,16 +54,6 @@ export default function Login(props: { onClick: VoidFunction }) {
                 </form>
                 <p>Don&apos;t have an account? <span onClick={props.onClick}>Sign Up</span></p>
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                draggable
-                theme="dark"
-            />
         </>
     );
 }

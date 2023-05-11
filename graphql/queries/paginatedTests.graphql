@@ -4,7 +4,7 @@ query paginatedTests($uid: String!, $first: Int!, $after: String) {
        time
         accuracy
         wpm
-        chars
+        words
         createdAt
         testTaken
     }

@@ -26,7 +26,7 @@
 }
 
 h1.heading {
-    font-size: 3rem;
+    font-size: 2.7rem;
     line-height: 1; 
     font-family: 'lexend';
     color: var(--text-color);
@@ -37,7 +37,7 @@ h1.heading {
 }
 .NavItems .NavOptions {
     display: flex; 
-    margin-top: 0.5rem; 
+    margin-top: 0.3rem; 
     flex-direction: row; 
     justify-content: space-between; 
     align-items: center; 
@@ -80,9 +80,9 @@ h1.NavText:hover {
 }   
 @media screen and (max-width: 400px){
     h1.heading {
-        font-size: 2rem;
+        font-size: 2.4rem;
     }
     .NavItems .IconOptions {
-        margin-top: 0.7rem;
+        margin-top: 1rem;
     }
 }

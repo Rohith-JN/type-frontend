@@ -3,7 +3,6 @@ import Login from '../components/account/Login';
 import Signup from '../components/account/Signup';
 import { useCallback, useEffect, useState } from 'react';
 import Loader from '../components/other/Loader';
-import cookie from "cookie";
 import { useGetStatsQuery, useTestsQuery } from '../generated/graphql';
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
@@ -13,6 +12,8 @@ import CustomError from '../components/other/Error';
 import Chart from '../components/account/Chart';
 import firebase from 'firebase/compat/app';
 import { gql, useClient } from 'urql';
+import { getTheme } from '../utils/getTheme';
+import { NextPageContext } from 'next';
 
 const Account = ({ themeData }: {
   themeData: {
@@ -33,7 +34,7 @@ const Account = ({ themeData }: {
         time
         accuracy
         wpm
-        chars
+        words
         createdAt
         testTaken
       }
@@ -185,7 +186,7 @@ const Account = ({ themeData }: {
                     <td className={styles.sno}>{index + 1}</td>
                     <td>{test.wpm}</td>
                     <td>{test.accuracy}%</td>
-                    <td>{test.chars}</td>
+                    <td>{test.words}</td>
                     <td>{secondsToTime(parseInt(test.time))}</td>
                     <td className={styles.taken}>{test.testTaken}</td>
                   </tr>)
@@ -223,15 +224,6 @@ const Account = ({ themeData }: {
 
 export default withUrqlClient(createUrqlClient)(Account);
 
-export async function getServerSideProps(context: { req: { headers: { cookie: any; }; }; res: { writeHead: (arg0: number, arg1: { Location: string; }) => void; end: () => void; }; }) {
-  const data = cookie.parse(context.req ? context.req.headers.cookie || "" : document.cookie)
-
-  if (context.res) {
-    if (Object.keys(data).length === 0 && data.constructor === Object) {
-      context.res.writeHead(301, { Location: "/" })
-      context.res.end()
-    }
-  }
-
-  return { props: { themeData: data && data } }
+export async function getServerSideProps(context: NextPageContext) {
+  return await getTheme(context);
 }

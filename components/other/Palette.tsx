@@ -4,10 +4,37 @@ import { useDispatch } from "react-redux";
 import {
     FaSearch,
 } from "react-icons/fa";
-import { setPallet, setTheme } from "../../store/actions";
+import { setPallet, setTheme } from "../../context/actions";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { useCookies } from "react-cookie"
-import { Options } from "../../utils/utils";
+
+const Options: string[] = [
+    "superuser",
+    "pink",
+    "aether",
+    "alduin",
+    "arch",
+    "aurora",
+    "bushido",
+    "carbon",
+    "dark",
+    "dev",
+    "drowning",
+    "gruvbox",
+    "matrix",
+    "metaverse",
+    "miami",
+    "mountain",
+    "nord",
+    "paper",
+    "pulse",
+    "scalene",
+    "shadow",
+    "stealth",
+    "viridescent",
+    "vscode",
+    "weird",
+].sort();
 
 const filter = (options: typeof Options, query: string) => {
     if (!query) return options;

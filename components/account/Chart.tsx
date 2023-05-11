@@ -26,6 +26,7 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
     const rootStyles = getComputedStyle(document.documentElement);
     const mainColor = rootStyles.getPropertyValue('--main-color');
     const subColor = rootStyles.getPropertyValue('--sub-color');
+    
     const data = {
         labels: [] as number[],
         datasets: [
@@ -35,6 +36,7 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
                 fill: true,
                 backgroundColor: mainColor,
                 borderColor: mainColor,
+                borderWidth: 3,
                 lineTension: 0.4,
                 yAxisID: 'y',
             },
@@ -44,6 +46,7 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
                 fill: true,
                 backgroundColor: subColor,
                 borderColor: subColor,
+                borderWidth: 3,
                 lineTension: 0.4,
                 yAxisID: 'y1',
             },
@@ -216,7 +219,7 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
         },
         elements: {
             point: {
-                radius: 2,
+                radius: 1.5,
             },
         },
     };

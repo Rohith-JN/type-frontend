@@ -4,10 +4,11 @@ import firebase from 'firebase/compat/app';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRegisterMutation, useValidateMutation } from '../../generated/graphql';
-import { toastOptions } from '../../utils/utils';
+import { toastOptions } from '../../utils/customToast';
 import { useDispatch, useSelector } from 'react-redux';
-import { setResult } from '../../store/actions';
-import { State } from '../../store/reducer';
+import { setResult } from '../../context/actions';
+import { State } from '../../context/reducer';
+import { customToast } from '../../utils/customToast';
 
 const Signup = (props: { onClick: VoidFunction }) => {
     const {
@@ -33,10 +34,10 @@ const Signup = (props: { onClick: VoidFunction }) => {
         if (validation.data?.validate.field === null && validation.data?.validate.message === null) {
             await firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then(function () {
                 dispatch(setResult([results[0]]));
-                toast.success("Signed Up!", toastOptions)
+                customToast.success("Signed Up!", toastOptions)
             }).catch(function (error) {
                 const message = error.message.replace("Firebase:", "");
-                toast.error(message.replace(/\([^)]*\)\.?/g, ""), toastOptions);
+                customToast.error(message.replace(/\([^)]*\)\.?/g, ""), toastOptions);
             })
             if (firebase.auth().currentUser !== null) {
                 const uid = firebase.auth().currentUser!.uid
@@ -44,7 +45,7 @@ const Signup = (props: { onClick: VoidFunction }) => {
             }
         }
         else {
-            toast.error(validation.data?.validate.message, toastOptions);
+            customToast.error(validation.data?.validate.message!, toastOptions);
         }
     }
 
