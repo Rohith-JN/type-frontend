@@ -167,7 +167,7 @@ const Account = ({ themeData }: {
               </tbody>
             </table>
           </div>
-          {(authUser) ? <div className={styles.graph}><Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} takenData={testsData?.tests.testTaken!} /></div> : null}
+          {(authUser) ? <div className={styles.graph}><Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2]} takenData={testsData?.tests.testTaken!} /></div> : null}
           {(tests.length != 0) ? <div className={styles.tests}>
             <table>
               <thead>

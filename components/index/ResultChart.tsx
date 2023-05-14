@@ -21,7 +21,7 @@ ChartJS.register(
     Legend
 );
 
-const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels: Array<number>, wpmData: Array<number>, accuracyData: Array<number>, takenData: Array<string> }) => {
+const ResultChart = ({ chartLabels, wpmData, typedWords }: { chartLabels: Array<number>, wpmData: Array<number>, typedWords: Array<String> }) => {
 
     const rootStyles = getComputedStyle(document.documentElement);
     const mainColor = rootStyles.getPropertyValue('--main-color');
@@ -40,24 +40,14 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
                 lineTension: 0.4,
                 yAxisID: 'y',
             },
-            {
-                label: 'Accuracy',
-                data: [] as number[],
-                fill: true,
-                backgroundColor: subColor,
-                borderColor: subColor,
-                borderWidth: 3,
-                lineTension: 0.4,
-                yAxisID: 'y1',
-            },
         ],
     };
 
     const footer = (tooltipItems: any[]) => {
         if (tooltipItems.length > 0) {
             const dataIndex = tooltipItems[0].dataIndex;
-            const testTaken = takenData[dataIndex];
-            return testTaken;
+            const typedWord = typedWords[dataIndex];
+            return `Word: '${typedWord}'`;
         }
         return '';
     };
@@ -101,10 +91,7 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
                     color: subColor,
                 },
                 callbacks: {
-                    footer: footer,
-                    title: (tooltipItems: any[]) => {
-                        return `Test: ${tooltipItems[0].label}`;
-                    }
+                    title: footer,
                 }
             },
             legend: {
@@ -126,7 +113,7 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
             x: {
                 title: {
                     display: true,
-                    text: 'Test',
+                    text: 'Word Number',
                     color: subColor,
                     font: {
                         size: 16,
@@ -150,7 +137,7 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
             },
             y: {
                 min: 0,
-                max: Math.max(...wpmData) > 150 ? 300 : 200,
+                max: Math.max(...wpmData) > 170 ? 300 : 200,
                 position: 'left',
                 title: {
                     display: true,
@@ -181,42 +168,7 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
                     color: subColor + "15"
                 },
                 border: {
-                    color: subColor
-                }
-            },
-            y1: {
-                position: 'right',
-                max: 120,
-                min: 0,
-                title: {
-                    display: true,
-                    text: 'Accuracy',
                     color: subColor,
-                    font: {
-                        size: 16,
-                        family: 'lexend, sans-serif',
-                    },
-                },
-                ticks: {
-                    font: {
-                        family: 'lexend, sans-serif',
-                    },
-                    color: subColor,
-                    callback: function (value: any, index: number, values: string | any[]) {
-                        if (accuracyData.length !== 0) {
-                            return value;
-                        } else {
-                            if (index === values.length - 1) return 1;
-                            else if (index === 0) return 0;
-                            else return '';
-                        }
-                    }
-                },
-                grid: {
-                    color: "transparent"
-                },
-                border: {
-                    color: subColor
                 }
             },
         },
@@ -229,9 +181,8 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
 
     data.labels = chartLabels;
     data.datasets[0].data = wpmData;
-    data.datasets[1].data = accuracyData;
 
     return (<Line options={options} data={data} />);
 }
 
-export default Chart;
+export default ResultChart;

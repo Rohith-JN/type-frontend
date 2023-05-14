@@ -6,7 +6,7 @@
 ![Screenshot (187)](https://github.com/Rohith-JN/type.io/assets/78314165/eb2650cb-1965-4d9c-8e0c-1147f8f7819f)
 
 
-## Technologies Used**
+## Technologies Used
 Type.io is built using a range of modern web technologies, including:
 
 ## Frontend
