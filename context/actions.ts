@@ -1,10 +1,14 @@
 import { RefObject } from "react";
 
-export const SET_WORD = "SETWORD";
+export const SET_START_TIME = "SETSTARTTIME";
 export const TIMER_DECREMENT = "TIMERDECREMENT";
 export const APPEND_TYPED_HISTORY = "APPENDTYPEDHISTORY";
+export const SET_WORD_DURATION = "SETWORDDURATION";
+export const PREV_WORD_DURATION = "PREVWORDDURATION";
+export const APPEND_TYPED_DURATION = "APPENDTYPEDDURATION";
 export const TIMER_SET = "TIMERSET";
 export const TIMERID_SET = "TIMERIDSET";
+export const SET_WORD = "SETWORD";
 export const PREV_WORD = "PREVWORD";
 export const SET_WORDLIST = "SETWORDLIST";
 export const SET_TIME = "SETTIME";
@@ -24,16 +28,31 @@ export const setTimerId = (payload: NodeJS.Timer | null) => ({
 });
 export const setTestTaken = (payload: string) => ({
     type: SET_TEST_TAKEN,
-    payload
+    payload,
 });
 
 // Word Actions
 export const setTypedWord = (payload: string) => ({ type: SET_WORD, payload });
+export const setTypedWordDuration = (payload: string) => ({
+    type: SET_WORD_DURATION,
+    payload,
+});
+export const setStartTime = (payload: number) => ({
+    type: SET_START_TIME,
+    payload,
+});
 export const appendTypedHistory = () => ({
     type: APPEND_TYPED_HISTORY,
 });
+export const appendTypedDuration = () => ({
+    type: APPEND_TYPED_DURATION,
+});
 export const backtrackWord = (payload: boolean) => ({
     type: PREV_WORD,
+    payload,
+});
+export const backtrackDuration = (payload: boolean) => ({
+    type: PREV_WORD_DURATION,
     payload,
 });
 export const setWordList = (payload: string[]) => ({

@@ -11,11 +11,10 @@ const Result = () => {
     const {
         time: { timerId, timer, testTaken },
         preferences: { time },
-        result: { results }
+        result: { results },
     } = useSelector((state: State) => state);
-    const [showResult, setShowResult] = useState(false);
     const [, createTest] = useCreateTestMutation();
-    const { wpm, accuracy, correctWords, incorrectWords } = calculateStats()
+    const { wpm, accuracy, correctWords, incorrectWords } = calculateStats();
 
     useEffect(() => {
         if (!timer && timerId) {
@@ -46,12 +45,8 @@ const Result = () => {
         test()
     }, [timer, timerId]);
 
-    useEffect(() => {
-        results.length > 1 ? setShowResult(true) : setShowResult(false)
-    }, [results.length])
-
     return (
-        <div className={styles.result} style={{ display: showResult ? "flex" : "none" }}>
+        <div className={styles.result}>
             <table>
                 <thead>
                     <tr>
@@ -66,9 +61,7 @@ const Result = () => {
                 <tbody>
                     {results.map((object, index) => {
                         if (index == 0) {
-                            return (
-                                <></>
-                            );
+                            return null
                         }
                         else {
                             return (

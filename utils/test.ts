@@ -7,18 +7,30 @@ import {
     timerSet,
     timerDecrement,
     setTestTaken,
+    setTypedWordDuration,
+    appendTypedDuration,
+    setStartTime,
+    backtrackDuration,
 } from "../context/actions";
 import { store } from "../context/store";
 
 const handleBackspace = (ctrlKey: boolean) => {
     const { dispatch, getState } = store;
     const {
-        word: { typedWord, activeWordRef, typedHistory, wordList },
+        word: {
+            typedWord,
+            activeWordRef,
+            typedHistory,
+            wordList,
+            startTime,
+            currWord,
+        },
     } = getState();
     const currIdx = typedHistory.length - 1;
     const currWordEl = activeWordRef?.current!;
     if (!typedWord && typedHistory[currIdx] !== wordList[currIdx]) {
         dispatch(backtrackWord(ctrlKey));
+        dispatch(backtrackDuration(ctrlKey));
         currWordEl.previousElementSibling!.classList.remove("right", "wrong");
         if (ctrlKey) {
             currWordEl.previousElementSibling!.childNodes.forEach(
@@ -35,6 +47,11 @@ const handleBackspace = (ctrlKey: boolean) => {
             });
         } else {
             const newTypedWord = typedWord.slice(0, typedWord.length - 1);
+            if (newTypedWord === currWord) {
+                const endTime = new Date().getTime();
+                const elapsedTime = endTime - startTime!;
+                dispatch(setTypedWordDuration(elapsedTime.toString()));
+            }
             dispatch(setTypedWord(newTypedWord));
         }
     }
@@ -44,7 +61,7 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
     const { dispatch, getState } = store;
     const {
         time: { timer, timerId },
-        word: { typedWord, currWord, activeWordRef, caretRef },
+        word: { typedWord, currWord, activeWordRef, caretRef, startTime },
     } = getState();
     if (!timer) {
         return;
@@ -57,18 +74,32 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
     const caret = caretRef?.current!;
     caret.classList.remove("blink");
     setTimeout(() => caret.classList.add("blink"), 500);
+    if (typedWord === currWord) {
+        var endTime = new Date().getTime();
+        var elapsedTime = endTime - startTime!;
+        dispatch(setTypedWordDuration(elapsedTime.toString()));
+    }
     switch (key) {
         case " ":
             if (typedWord === "") return;
             currWordEl.classList.add(
                 typedWord !== currWord ? "wrong" : "right"
             );
+            if (typedWord !== currWord) {
+                var endTime = new Date().getTime();
+                var elapsedTime = endTime - startTime!;
+                dispatch(setTypedWordDuration(elapsedTime.toString()));
+            }
+            dispatch(appendTypedDuration());
             dispatch(appendTypedHistory());
             break;
         case "Backspace":
             handleBackspace(ctrlKey);
             break;
         default:
+            if (typedWord === "" && currWord !== "") {
+                dispatch(setStartTime(new Date().getTime()));
+            }
             dispatch(setTypedWord(typedWord + key));
             break;
     }

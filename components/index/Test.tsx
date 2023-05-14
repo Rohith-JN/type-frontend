@@ -25,9 +25,6 @@ const Test = () => {
         dispatch(setCaretRef(caretRef));
     }, [dispatch]);
 
-    // record time taken to type each word and append it to an array
-    // record no of wrong characters for each word and append it to an array
-
     return (
         <div style={{ display: "flex", width: "100", justifyContent: "center" }}>
             <div className="test">
