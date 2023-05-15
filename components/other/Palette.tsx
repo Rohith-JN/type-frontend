@@ -1,12 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import styles from "../../styles/Palette.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     FaSearch,
 } from "react-icons/fa";
 import { setPallet, setTheme } from "../../context/actions";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { useCookies } from "react-cookie"
+import { State } from "../../context/reducer";
 
 const Options: string[] = [
     "superuser",
@@ -55,9 +56,7 @@ const Palette = ({ open }: { open: boolean }) => {
         e.preventDefault();
         setSearchQuery(e.currentTarget.value);
     };
-
     const filteredResults = filter(Options, searchQuery);
-
     const divRef = useRef<HTMLDivElement>(null);
 
     useOnClickOutside(divRef, () => { setSearchQuery(""); dispatch(setPallet(false)); });
@@ -113,7 +112,7 @@ const Palette = ({ open }: { open: boolean }) => {
                                                 maxAge: 60 * 60 * 60 * 60 * 60,
                                                 sameSite: true,
                                             })
-                                            window.location.reload();
+                                            document.documentElement.setAttribute("data-theme", option);
                                         }}
                                         draggable="false"
                                     >
