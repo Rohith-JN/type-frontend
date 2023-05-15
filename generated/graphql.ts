@@ -49,10 +49,11 @@ export type Mutation = {
 
 export type MutationCreateTestArgs = {
   accuracy: Scalars['Float'];
+  chars: Scalars['String'];
+  rawWpm: Scalars['Float'];
   testTaken: Scalars['String'];
   time: Scalars['String'];
   uid: Scalars['String'];
-  words: Scalars['String'];
   wpm: Scalars['Float'];
 };
 
@@ -126,12 +127,13 @@ export type QueryTestsArgs = {
 export type Test = {
   __typename?: 'Test';
   accuracy: Scalars['Float'];
+  chars: Scalars['String'];
   createdAt: Scalars['String'];
   creatorId: Scalars['String'];
   id: Scalars['Float'];
+  rawWpm: Scalars['Float'];
   testTaken: Scalars['String'];
   time: Scalars['String'];
-  words: Scalars['String'];
   wpm: Scalars['Float'];
 };
 
@@ -176,8 +178,9 @@ export type UserStats = {
 };
 
 export type CreateTestMutationVariables = Exact<{
-  words: Scalars['String'];
+  chars: Scalars['String'];
   wpm: Scalars['Float'];
+  rawWpm: Scalars['Float'];
   accuracy: Scalars['Float'];
   time: Scalars['String'];
   uid: Scalars['String'];
@@ -185,7 +188,7 @@ export type CreateTestMutationVariables = Exact<{
 }>;
 
 
-export type CreateTestMutation = { __typename?: 'Mutation', createTest: { __typename?: 'Test', time: string, accuracy: number, wpm: number, words: string, testTaken: string } };
+export type CreateTestMutation = { __typename?: 'Mutation', createTest: { __typename?: 'Test', time: string, accuracy: number, wpm: number, rawWpm: number, chars: string, testTaken: string } };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -228,7 +231,7 @@ export type PaginatedTestsQueryVariables = Exact<{
 }>;
 
 
-export type PaginatedTestsQuery = { __typename?: 'Query', paginatedTests: { __typename?: 'PaginatedTests', tests: Array<{ __typename?: 'Test', time: string, accuracy: number, wpm: number, words: string, createdAt: string, testTaken: string }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor: string } } };
+export type PaginatedTestsQuery = { __typename?: 'Query', paginatedTests: { __typename?: 'PaginatedTests', tests: Array<{ __typename?: 'Test', time: string, accuracy: number, wpm: number, rawWpm: number, chars: string, createdAt: string, testTaken: string }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor: string } } };
 
 export type TestsQueryVariables = Exact<{
   uid: Scalars['String'];
@@ -246,10 +249,11 @@ export type GetStatsQuery = { __typename?: 'Query', getStats: { __typename?: 'Us
 
 
 export const CreateTestDocument = gql`
-    mutation createTest($words: String!, $wpm: Float!, $accuracy: Float!, $time: String!, $uid: String!, $testTaken: String!) {
+    mutation createTest($chars: String!, $wpm: Float!, $rawWpm: Float!, $accuracy: Float!, $time: String!, $uid: String!, $testTaken: String!) {
   createTest(
-    words: $words
+    chars: $chars
     wpm: $wpm
+    rawWpm: $rawWpm
     accuracy: $accuracy
     time: $time
     uid: $uid
@@ -258,7 +262,8 @@ export const CreateTestDocument = gql`
     time
     accuracy
     wpm
-    words
+    rawWpm
+    chars
     testTaken
   }
 }
@@ -343,7 +348,8 @@ export const PaginatedTestsDocument = gql`
       time
       accuracy
       wpm
-      words
+      rawWpm
+      chars
       createdAt
       testTaken
     }

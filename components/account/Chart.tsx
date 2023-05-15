@@ -76,6 +76,9 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
         maintainAspectRatio: false,
         plugins: {
             tooltip: {
+                titleMarginBottom: 10,
+                bodySpacing: 5,
+                footerMarginTop: 10,
                 padding: {
                     top: 10,
                     bottom: 10,

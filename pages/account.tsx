@@ -34,7 +34,8 @@ const Account = ({ themeData }: {
         time
         accuracy
         wpm
-        words
+        rawWpm
+        chars
         createdAt
         testTaken
       }
@@ -174,8 +175,9 @@ const Account = ({ themeData }: {
                 <tr>
                   <th className={styles.sno}>S:No</th>
                   <th>WPM</th>
+                  <th>Raw WPM</th>
                   <th>Accuracy</th>
-                  <th>Words</th>
+                  <th>Chars</th>
                   <th>Time</th>
                   <th className={styles.taken}>Taken</th>
                 </tr>
@@ -185,8 +187,9 @@ const Account = ({ themeData }: {
                   tests.map((test: any, index: number) => <tr key={index + 1}>
                     <td className={styles.sno}>{index + 1}</td>
                     <td>{test.wpm}</td>
+                    <td>{test.rawWpm}</td>
                     <td>{test.accuracy}%</td>
-                    <td>{test.words}</td>
+                    <td>{test.chars}</td>
                     <td>{secondsToTime(parseInt(test.time))}</td>
                     <td className={styles.taken}>{test.testTaken}</td>
                   </tr>)

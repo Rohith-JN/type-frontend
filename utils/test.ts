@@ -8,9 +8,8 @@ import {
     timerDecrement,
     setTestTaken,
     setTypedWordDuration,
-    appendTypedDuration,
     setStartTime,
-    backtrackDuration,
+    setIncorrectChar,
 } from "../context/actions";
 import { store } from "../context/store";
 
@@ -30,7 +29,7 @@ const handleBackspace = (ctrlKey: boolean) => {
     const currWordEl = activeWordRef?.current!;
     if (!typedWord && typedHistory[currIdx] !== wordList[currIdx]) {
         dispatch(backtrackWord(ctrlKey));
-        dispatch(backtrackDuration(ctrlKey));
+        // dispatch error letter as 0
         currWordEl.previousElementSibling!.classList.remove("right", "wrong");
         if (ctrlKey) {
             currWordEl.previousElementSibling!.childNodes.forEach(
@@ -38,6 +37,7 @@ const handleBackspace = (ctrlKey: boolean) => {
                     char.classList.remove("wrong", "right");
                 }
             );
+            // dispatch error letter as 0
         }
     } else {
         if (ctrlKey) {
@@ -45,12 +45,14 @@ const handleBackspace = (ctrlKey: boolean) => {
             currWordEl.childNodes.forEach((char: HTMLSpanElement) => {
                 char.classList.remove("wrong", "right");
             });
+            // dispatch error letter as 0
         } else {
             const newTypedWord = typedWord.slice(0, typedWord.length - 1);
             if (newTypedWord === currWord) {
                 const endTime = new Date().getTime();
                 const elapsedTime = endTime - startTime!;
                 dispatch(setTypedWordDuration(elapsedTime.toString()));
+                // dispatch error letter as 0
             }
             dispatch(setTypedWord(newTypedWord));
         }
@@ -61,7 +63,14 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
     const { dispatch, getState } = store;
     const {
         time: { timer, timerId },
-        word: { typedWord, currWord, activeWordRef, caretRef, startTime },
+        word: {
+            typedWord,
+            currWord,
+            activeWordRef,
+            caretRef,
+            startTime,
+            wordList,
+        },
     } = getState();
     if (!timer) {
         return;
@@ -78,6 +87,15 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
         var endTime = new Date().getTime();
         var elapsedTime = endTime - startTime!;
         dispatch(setTypedWordDuration(elapsedTime.toString()));
+        dispatch(
+            setIncorrectChar({
+                word: currWord,
+                idx: wordList.indexOf(currWord),
+                incorrectCharacters: 0,
+                totalIncorrectCharacters: 0,
+                extraCharacters: 0,
+            })
+        );
     }
     switch (key) {
         case " ":
@@ -88,9 +106,44 @@ export const recordTest = (key: string, ctrlKey: boolean) => {
             if (typedWord !== currWord) {
                 var endTime = new Date().getTime();
                 var elapsedTime = endTime - startTime!;
+                let diffCount = 0;
+                let typedIndex = 0;
+                const extraLetters: string[] = [];
+
+                for (let i = 0; i < currWord.length; i++) {
+                    if (typedWord[i] !== currWord[i]) {
+                        diffCount++;
+                        if (
+                            typedWord[i] === " " &&
+                            currWord[i] !== typedWord[i]
+                        ) {
+                            diffCount++;
+                        }
+                    }
+                    if (
+                        typedWord[i] !== undefined &&
+                        currWord[i] === undefined
+                    ) {
+                        extraLetters.push(typedWord[i]);
+                    }
+                    typedIndex++;
+                }
+                if (typedIndex < typedWord.length) {
+                    extraLetters.push(...typedWord.slice(typedIndex));
+                }
+                dispatch(
+                    setIncorrectChar({
+                        word: currWord,
+                        idx: wordList.indexOf(currWord),
+                        incorrectCharacters: diffCount,
+                        totalIncorrectCharacters:
+                            diffCount + extraLetters.length,
+                        extraCharacters: extraLetters.length,
+                    })
+                );
+
                 dispatch(setTypedWordDuration(elapsedTime.toString()));
             }
-            dispatch(appendTypedDuration());
             dispatch(appendTypedHistory());
             break;
         case "Backspace":
