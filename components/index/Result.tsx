@@ -1,7 +1,7 @@
 import styles from '../../styles/Result.module.css';
 import { useSelector } from "react-redux";
 import { State } from "../../context/reducer";
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useCreateTestMutation } from '../../generated/graphql';
 import firebase from 'firebase/compat/app';
 import { round, secondsToTime } from '../../utils/utils';
@@ -14,15 +14,16 @@ const Result = () => {
         result: { results },
     } = useSelector((state: State) => state);
     const [, createTest] = useCreateTestMutation();
-    const { wpm, accuracy, correctWords, incorrectWords } = calculateStats();
+    const { wpm, accuracy, incorrectChars, correctChars, rawWpm } = calculateStats();
 
     useEffect(() => {
         if (!timer && timerId) {
             results.splice(1, 0, {
                 wpm: wpm,
+                rawWpm: rawWpm,
                 accuracy: accuracy,
-                correctWords: correctWords,
-                incorrectWords: incorrectWords,
+                correctChars: correctChars,
+                incorrectChars: incorrectChars,
                 time: time,
                 testTaken: testTaken
             });
@@ -33,8 +34,9 @@ const Result = () => {
         async function test() {
             if (firebase.auth().currentUser && !timer && timerId) {
                 await createTest({
-                    words: `${correctWords} / ${incorrectWords}`,
+                    chars: `${correctChars} / ${incorrectChars}`,
                     wpm: Math.round(wpm),
+                    rawWpm: Math.round(rawWpm),
                     accuracy: round(accuracy, 1),
                     time: `${time}`,
                     uid: `${firebase.auth().currentUser!.uid}`,
@@ -52,8 +54,9 @@ const Result = () => {
                     <tr>
                         <th className={styles.sno}>S:No</th>
                         <th>WPM</th>
+                        <th>Raw WPM</th>
                         <th>Accuracy</th>
-                        <th>Words</th>
+                        <th>Chars</th>
                         <th>Time</th>
                         <th className={styles.testTaken}>Taken</th>
                     </tr>
@@ -68,8 +71,9 @@ const Result = () => {
                                 <tr key={index}>
                                     <td className={styles.sno}>{index}</td>
                                     <td>{Math.round(object.wpm)}</td>
+                                    <td>{Math.round(object.rawWpm)}</td>
                                     <td>{round(object.accuracy, 1)}%</td>
-                                    <td>{object.correctWords}{' '}/{' '}{object.incorrectWords}</td>
+                                    <td>{object.correctChars}{' '}/{' '}{object.incorrectChars}</td>
                                     <td>{secondsToTime(object.time)}</td>
                                     <td className={styles.testTaken}>{object.testTaken}</td>
                                 </tr>

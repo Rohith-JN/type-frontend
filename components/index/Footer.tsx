@@ -10,7 +10,7 @@ const Footer = () => {
         result: { results },
     } = useSelector((state: State) => state);
     const [showResult, setShowResult] = useState(false);
-    const { newTypedHistory, xAxisData, wpmData } = calculateChartStats();
+    const { newTypedHistory, xAxisData, wpmData, incorrectChars } = calculateChartStats();
 
     useEffect(() => {
         results.length > 1 ? setShowResult(true) : setShowResult(false)
@@ -34,7 +34,7 @@ const Footer = () => {
                 marginTop: "7rem",
                 paddingLeft: "20px",
                 paddingRight: "20px",
-            }}><ResultChart wpmData={wpmData} chartLabels={(xAxisData.length === 0) ? [1, 2] : xAxisData} typedWords={newTypedHistory} /></div>
+            }}><ResultChart wpmData={wpmData} chartLabels={(xAxisData.length === 0) ? [1, 2] : xAxisData} typedWords={newTypedHistory} incorrectChars={incorrectChars} /></div>
         </div>
     )
 }

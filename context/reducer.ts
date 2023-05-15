@@ -16,9 +16,8 @@ import {
     SET_TEST_TAKEN,
     SET_WORD,
     SET_WORD_DURATION,
-    APPEND_TYPED_DURATION,
-    PREV_WORD_DURATION,
     SET_START_TIME,
+    SET_INCORRECT_CHAR,
 } from "./actions";
 
 export interface State {
@@ -37,6 +36,22 @@ export interface State {
         wordList: string[];
         activeWordRef: RefObject<HTMLDivElement> | null;
         caretRef: RefObject<HTMLSpanElement> | null;
+        incorrectChars: {
+            word: string;
+            idx: number;
+            totalIncorrectCharacters: number;
+            incorrectCharacters: number;
+            extraCharacters: number;
+        };
+        incorrectCharsHistory: [
+            {
+                word: string;
+                idx: number;
+                totalIncorrectCharacters: number;
+                incorrectCharacters: number;
+                extraCharacters: number;
+            }
+        ];
     };
     time: {
         timer: number; // represents remaining time for a timer
@@ -47,9 +62,10 @@ export interface State {
         results: [
             {
                 wpm: number;
+                rawWpm: number;
                 accuracy: number;
-                correctWords: number;
-                incorrectWords: number;
+                correctChars: number;
+                incorrectChars: number;
                 time: number;
                 testTaken: string;
             }
@@ -73,6 +89,22 @@ export const initialState: State = {
         wordList: [],
         activeWordRef: null,
         caretRef: null,
+        incorrectChars: {
+            word: "",
+            idx: 0,
+            totalIncorrectCharacters: 0,
+            incorrectCharacters: 0,
+            extraCharacters: 0,
+        },
+        incorrectCharsHistory: [
+            {
+                word: "",
+                idx: 0,
+                totalIncorrectCharacters: 0,
+                incorrectCharacters: 0,
+                extraCharacters: 0,
+            },
+        ],
     },
     time: {
         timer: 1,
@@ -83,9 +115,10 @@ export const initialState: State = {
         results: [
             {
                 wpm: 0,
+                rawWpm: 0,
                 accuracy: 0,
-                correctWords: 0,
-                incorrectWords: 0,
+                correctChars: 0,
+                incorrectChars: 0,
                 time: 0,
                 testTaken: "",
             },
@@ -132,29 +165,30 @@ const wordReducer = (
                 typedWord: "", // sets the typedWord to ""
                 currWord: state.wordList[nextIdx], // sets the next word to be typed
                 typedHistory: [...state.typedHistory, state.typedWord],
-            }; // after used finishes typing a word, it updates typedHistory with the typed word
-        case APPEND_TYPED_DURATION:
-            return {
-                ...state,
+                incorrectCharsHistory: [
+                    ...state.incorrectCharsHistory,
+                    state.incorrectChars,
+                ],
                 typedDurationHistory: [
                     ...state.typedDurationHistory,
                     state.typedWordDuration,
                 ],
-            };
+            }; // after used finishes typing a word, it updates typedHistory with the typed word
         case PREV_WORD:
+            // initial incorrect chars if reverted to correct chars are counted as correct chars in the end
             var prevIdx = state.typedHistory.length - 1; // index of the previous word
             return {
                 ...state,
                 currWord: state.wordList[prevIdx], // set the word to be typed as the previous word
                 typedWord: !payload ? state.typedHistory[prevIdx] : "",
                 typedHistory: state.typedHistory.splice(0, prevIdx),
-            };
-        case PREV_WORD_DURATION:
-            var prevIdx = state.typedDurationHistory.length - 1; // index of the previous word
-            return {
-                ...state,
                 typedWordDuration: state.typedDurationHistory[prevIdx],
                 typedDurationHistory: state.typedDurationHistory.splice(
+                    0,
+                    prevIdx
+                ),
+                incorrectChars: state.incorrectCharsHistory[prevIdx],
+                incorrectCharsHistory: state.incorrectCharsHistory.splice(
                     0,
                     prevIdx
                 ),
@@ -178,13 +212,25 @@ const wordReducer = (
                     ...state,
                     typedWordDuration: "",
                     typedDurationHistory: [],
+                    incorrectChars: {
+                        word: "",
+                        idx: 0,
+                        totalIncorrectCharacters: 0,
+                        incorrectCharacters: 0,
+                        extraCharacters: 0,
+                    },
+                    incorrectCharsHistory: [],
                     typedWord: "", // set typedWord empty as the wordList has been initialised
                     typedHistory: [], // set typedHistory to [] as the wordList has been initialised
                     currWord: shuffledWordList[0], // set word to be typed as the first word in wordList
                     wordList: shuffledWordList, // set new wordList
                 };
             }
-
+        case SET_INCORRECT_CHAR:
+            return {
+                ...state,
+                incorrectChars: payload,
+            };
         default:
             return state;
     }

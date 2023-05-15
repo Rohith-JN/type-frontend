@@ -3,7 +3,7 @@ import { State } from "../context/reducer";
 
 export const calculateStats = () => {
     const {
-        word: { currWord, wordList, typedHistory },
+        word: { currWord, wordList, typedHistory, incorrectCharsHistory },
         preferences: { time },
     } = useSelector((state: State) => state);
     const spaces = wordList.indexOf(currWord);
@@ -12,15 +12,31 @@ export const calculateStats = () => {
         (typedWord, idx) => typedWord === wordList[idx]
     );
     result.forEach((r, idx) => {
-        if (r) correctChars += wordList[idx].length;
+        const typedWord = typedHistory[idx];
+        const word = wordList[idx];
+        let wordCorrectChars = 0;
+        for (let i = 0; i < typedWord.length; i++) {
+            if (typedWord[i] === word[i]) {
+                wordCorrectChars++;
+            }
+        }
+        correctChars += wordCorrectChars;
+    });
+    let incorrectChars = 0;
+    incorrectCharsHistory.map((object, _) => {
+        incorrectChars += object.totalIncorrectCharacters;
     });
     const wpm = ((correctChars + spaces) * 60) / time / 5;
-    const correctWords = result.filter((x) => x).length;
-    const incorrectWords = result.filter((x) => !x).length;
-    const totalWords = correctWords + incorrectWords;
+    const rawWpm = ((correctChars + incorrectChars + spaces) * 60) / time / 5;
     const accuracy =
-        (correctWords / totalWords) * 100
-            ? (correctWords / totalWords) * 100
+        (correctChars / (correctChars + incorrectChars)) * 100
+            ? (correctChars / (correctChars + incorrectChars)) * 100
             : 0;
-    return { wpm, accuracy, correctWords, incorrectWords };
+    return {
+        wpm,
+        rawWpm,
+        accuracy,
+        incorrectChars,
+        correctChars,
+    };
 };

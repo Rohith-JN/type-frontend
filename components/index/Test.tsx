@@ -8,7 +8,7 @@ import { resetTest } from "../../utils/test";
 const Test = () => {
     const {
         time: { timer },
-        word: { currWord, wordList, typedHistory, typedWord },
+        word: { currWord, wordList, typedHistory, typedWord, incorrectCharsHistory },
     } = useSelector((state: State) => state);
 
     const dispatch = useDispatch();
@@ -56,6 +56,7 @@ const Test = () => {
                                 })}
                                 {isActive
                                     ? extraLetters.map((char, charId) => {
+                                        // dispatch extra letters
                                         return (
                                             <span
                                                 key={char + charId}

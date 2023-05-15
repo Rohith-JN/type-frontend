@@ -21,17 +21,18 @@ ChartJS.register(
     Legend
 );
 
-const ResultChart = ({ chartLabels, wpmData, typedWords }: { chartLabels: Array<number>, wpmData: Array<number>, typedWords: Array<String> }) => {
+const ResultChart = ({ chartLabels, wpmData, incorrectChars, typedWords }: { chartLabels: Array<number>, wpmData: Array<number>, incorrectChars: Array<any>, typedWords: Array<String> }) => {
 
     const rootStyles = getComputedStyle(document.documentElement);
     const mainColor = rootStyles.getPropertyValue('--main-color');
     const subColor = rootStyles.getPropertyValue('--sub-color');
+    const errorColor = rootStyles.getPropertyValue('--error-color');
 
     const data = {
         labels: [] as number[],
         datasets: [
             {
-                label: 'WPM',
+                label: 'Continuous WPM',
                 data: [] as number[],
                 fill: true,
                 backgroundColor: mainColor,
@@ -40,14 +41,41 @@ const ResultChart = ({ chartLabels, wpmData, typedWords }: { chartLabels: Array<
                 lineTension: 0.4,
                 yAxisID: 'y',
             },
+            {
+                label: 'Incorrect Characters',
+                data: [] as number[],
+                fill: true,
+                borderColor: function (context: any) {
+                    const dataPoint = context.dataset.data[context.dataIndex];
+                    if (dataPoint && dataPoint.hasOwnProperty('y') && dataPoint.y === 0) {
+                        return 'transparent';
+                    } else {
+                        return errorColor;
+                    }
+                },
+                backgroundColor: function (context: any) {
+                    const dataPoint = context.dataset.data[context.dataIndex];
+                    if (dataPoint && dataPoint.hasOwnProperty('y') && dataPoint.y === 0) {
+                        return 'transparent';
+                    } else {
+                        return errorColor;
+                    }
+                },
+                borderWidth: 3,
+                pointRadius: 4,
+                pointHoverRadius: 8,
+                showLine: false,
+                yAxisID: 'y1',
+                pointStyle: 'cross'
+            },
         ],
     };
 
-    const footer = (tooltipItems: any[]) => {
+    const title = (tooltipItems: any[]) => {
         if (tooltipItems.length > 0) {
             const dataIndex = tooltipItems[0].dataIndex;
             const typedWord = typedWords[dataIndex];
-            return `Word: '${typedWord}'`;
+            return `'${typedWord}'`;
         }
         return '';
     };
@@ -66,6 +94,9 @@ const ResultChart = ({ chartLabels, wpmData, typedWords }: { chartLabels: Array<
         maintainAspectRatio: false,
         plugins: {
             tooltip: {
+                displayColors: false,
+                titleMarginBottom: 10,
+                bodySpacing: 5,
                 padding: {
                     top: 10,
                     bottom: 10,
@@ -91,8 +122,8 @@ const ResultChart = ({ chartLabels, wpmData, typedWords }: { chartLabels: Array<
                     color: subColor,
                 },
                 callbacks: {
-                    title: footer,
-                }
+                    title: title,
+                },
             },
             legend: {
                 position: 'top',
@@ -171,6 +202,42 @@ const ResultChart = ({ chartLabels, wpmData, typedWords }: { chartLabels: Array<
                     color: subColor,
                 }
             },
+            y1: {
+                position: 'right',
+                title: {
+                    display: true,
+                    text: 'Incorrect Characters',
+                    color: subColor,
+                    font: {
+                        size: 16,
+                        family: 'lexend, sans-serif',
+                    },
+                },
+                ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 5,
+                    precision: 0,
+                    font: {
+                        family: 'lexend, sans-serif',
+                    },
+                    color: subColor,
+                    callback: function (value: any, index: number, values: string | any[]) {
+                        if (incorrectChars.length !== 0) {
+                            return value;
+                        } else {
+                            if (index === values.length - 1) return 1;
+                            else if (index === 0) return 0;
+                            else return '';
+                        }
+                    }
+                },
+                grid: {
+                    color: "transparent"
+                },
+                border: {
+                    color: subColor
+                }
+            },
         },
         elements: {
             point: {
@@ -181,6 +248,7 @@ const ResultChart = ({ chartLabels, wpmData, typedWords }: { chartLabels: Array<
 
     data.labels = chartLabels;
     data.datasets[0].data = wpmData;
+    data.datasets[1].data = incorrectChars;
 
     return (<Line options={options} data={data} />);
 }
