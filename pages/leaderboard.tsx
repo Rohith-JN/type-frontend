@@ -45,7 +45,7 @@ const Leaderboard = ({ themeData }: {
     }, [contentLoaded]);
     if (!data && !loading) {
         return <div>
-            <CustomError statusCode={null} statusMessage={'Oops something went wrong!'} />
+            <CustomError statusCode={500} statusMessage={"Internal Server Error"} />
         </div>
     }
     else if (loading || fetching) {

@@ -17,7 +17,7 @@ const ErrorPage = ({ statusCode, data }: {
     return <CustomError statusCode={404} statusMessage={'Page could not be found'} />;
   }
   if (statusCode === 500) {
-    return <CustomError statusCode={500} statusMessage={'Internal server error'} />;
+    return <CustomError statusCode={500} statusMessage={'Internal Server Error'} />;
   }
   else {
     return <CustomError statusCode={statusCode} statusMessage={'Something went wrong!'} />;

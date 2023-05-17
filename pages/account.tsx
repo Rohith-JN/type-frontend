@@ -9,11 +9,12 @@ import { withUrqlClient } from 'next-urql';
 import { secondsToTime } from '../utils/utils';
 import styles from '../styles/Account.module.css';
 import CustomError from '../components/other/Error';
-import Chart from '../components/account/Chart';
+import AccountChart from '../components/account/AccountChart';
 import firebase from 'firebase/compat/app';
 import { gql, useClient } from 'urql';
 import { getTheme } from '../utils/getTheme';
 import { NextPageContext } from 'next';
+import router from 'next/router';
 
 const Account = ({ themeData }: {
   themeData: {
@@ -29,8 +30,10 @@ const Account = ({ themeData }: {
 
   const paginatedTestQuery = gql`
   query paginatedTests($uid: String!, $first: Int!, $after: String) {
-    paginatedTests(uid: $uid, first: $first, after: $after) {
-      tests {
+  paginatedTests(uid: $uid, first: $first, after: $after) {
+    tests {
+        id
+        creatorId
         time
         accuracy
         wpm
@@ -38,13 +41,17 @@ const Account = ({ themeData }: {
         chars
         createdAt
         testTaken
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
+        typedWordDataset
+        wordNumberLabels
+        wpmDataset
+        incorrectCharsDataset 
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
+} 
 `;
 
   const [tests, setTests] = useState<any[]>([]);
@@ -127,7 +134,7 @@ const Account = ({ themeData }: {
     }
     if ((!testsData || !userStats || paginatedTestsError) && !loading) {
       return <div>
-        <CustomError statusCode={null} statusMessage={'Oops something went wrong!'} />
+        <CustomError statusCode={500} statusMessage={"Internal Server Error"} />
       </div>
     }
     else {
@@ -168,7 +175,7 @@ const Account = ({ themeData }: {
               </tbody>
             </table>
           </div>
-          {(authUser) ? <div className={styles.graph}><Chart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2]} takenData={testsData?.tests.testTaken!} /></div> : null}
+          {(authUser) ? <div className={styles.graph}><AccountChart wpmData={(testsData?.tests.wpmData!.length! > 0 ? testsData?.tests.wpmData! : [])} accuracyData={(testsData?.tests.accuracyData!.length! > 0) ? testsData?.tests.accuracyData! : []} chartLabels={(testsData?.tests.labels!.length! > 1) ? testsData?.tests.labels! : [1, 2]} takenData={testsData?.tests.testTaken!} /></div> : null}
           {(tests.length != 0) ? <div className={styles.tests}>
             <table>
               <thead>
@@ -184,7 +191,7 @@ const Account = ({ themeData }: {
               </thead>
               <tbody>
                 {
-                  tests.map((test: any, index: number) => <tr key={index + 1}>
+                  tests.map((test: any, index: number) => <tr key={index + 1} style={{ cursor: "pointer" }} onClick={() => router.push({ pathname: `/tests/${test.id}` })}>
                     <td className={styles.sno}>{index + 1}</td>
                     <td>{test.wpm}</td>
                     <td>{test.rawWpm}</td>
