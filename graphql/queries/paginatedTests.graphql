@@ -1,17 +1,23 @@
 query paginatedTests($uid: String!, $first: Int!, $after: String) {
   paginatedTests(uid: $uid, first: $first, after: $after) {
     tests {
-       time
+        id
+        creatorId
+        time
         accuracy
         wpm
         rawWpm
         chars
         createdAt
         testTaken
+        typedWordDataset
+        wordNumberLabels
+        wpmDataset
+        incorrectCharsDataset 
     }
     pageInfo {
       hasNextPage
       endCursor
     }
   }
-}
+} 

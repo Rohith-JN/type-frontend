@@ -43,15 +43,13 @@ export interface State {
             incorrectCharacters: number;
             extraCharacters: number;
         };
-        incorrectCharsHistory: [
-            {
-                word: string;
-                idx: number;
-                totalIncorrectCharacters: number;
-                incorrectCharacters: number;
-                extraCharacters: number;
-            }
-        ];
+        incorrectCharsHistory: {
+            word: string;
+            idx: number;
+            totalIncorrectCharacters: number;
+            incorrectCharacters: number;
+            extraCharacters: number;
+        }[];
     };
     time: {
         timer: number; // represents remaining time for a timer
@@ -68,6 +66,10 @@ export interface State {
                 incorrectChars: number;
                 time: number;
                 testTaken: string;
+                typedWordDataset: Array<string>;
+                wordNumberLabels: Array<number>;
+                wpmDataset: Array<number>;
+                incorrectCharsDataset: Array<number>;
             }
         ];
     };
@@ -121,6 +123,10 @@ export const initialState: State = {
                 incorrectChars: 0,
                 time: 0,
                 testTaken: "",
+                typedWordDataset: [],
+                wordNumberLabels: [],
+                wpmDataset: [],
+                incorrectCharsDataset: [],
             },
         ],
     },

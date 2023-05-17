@@ -1,0 +1,17 @@
+query Test($id: Float!, $uid: String!) {
+  test(id: $id, uid: $uid) {
+    id
+    creatorId
+    time
+    accuracy
+    wpm
+    rawWpm
+    chars
+    createdAt
+    testTaken
+    typedWordDataset
+    wordNumberLabels
+    wpmDataset
+    incorrectCharsDataset 
+  }
+}

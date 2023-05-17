@@ -20,8 +20,7 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-
-const ResultChart = ({ chartLabels, wpmData, incorrectChars, typedWords }: { chartLabels: Array<number>, wpmData: Array<number>, incorrectChars: Array<any>, typedWords: Array<String> }) => {
+const ResultChart = ({ wordNumberLables, wpmDataset, incorrectCharsDataset, typedWordDataset }: { wordNumberLables: Array<number>, wpmDataset: Array<number>, incorrectCharsDataset: Array<any>, typedWordDataset: Array<String> }) => {
 
     const rootStyles = getComputedStyle(document.documentElement);
     const mainColor = rootStyles.getPropertyValue('--main-color');
@@ -34,7 +33,6 @@ const ResultChart = ({ chartLabels, wpmData, incorrectChars, typedWords }: { cha
             {
                 label: 'Continuous WPM',
                 data: [] as number[],
-                fill: true,
                 backgroundColor: mainColor,
                 borderColor: mainColor,
                 borderWidth: 3,
@@ -44,10 +42,10 @@ const ResultChart = ({ chartLabels, wpmData, incorrectChars, typedWords }: { cha
             {
                 label: 'Incorrect Characters',
                 data: [] as number[],
-                fill: true,
                 borderColor: function (context: any) {
                     const dataPoint = context.dataset.data[context.dataIndex];
-                    if (dataPoint && dataPoint.hasOwnProperty('y') && dataPoint.y === 0) {
+                    if (dataPoint === 0) {
+                        console.log(dataPoint)
                         return 'transparent';
                     } else {
                         return errorColor;
@@ -55,7 +53,7 @@ const ResultChart = ({ chartLabels, wpmData, incorrectChars, typedWords }: { cha
                 },
                 backgroundColor: function (context: any) {
                     const dataPoint = context.dataset.data[context.dataIndex];
-                    if (dataPoint && dataPoint.hasOwnProperty('y') && dataPoint.y === 0) {
+                    if (dataPoint === 0) {
                         return 'transparent';
                     } else {
                         return errorColor;
@@ -74,7 +72,7 @@ const ResultChart = ({ chartLabels, wpmData, incorrectChars, typedWords }: { cha
     const title = (tooltipItems: any[]) => {
         if (tooltipItems.length > 0) {
             const dataIndex = tooltipItems[0].dataIndex;
-            const typedWord = typedWords[dataIndex];
+            const typedWord = typedWordDataset[dataIndex];
             return `'${typedWord}'`;
         }
         return '';
@@ -168,7 +166,7 @@ const ResultChart = ({ chartLabels, wpmData, incorrectChars, typedWords }: { cha
             },
             y: {
                 min: 0,
-                max: Math.max(...wpmData) > 170 ? 300 : 200,
+                max: Math.max(...wpmDataset) > 170 ? 300 : 200,
                 position: 'left',
                 title: {
                     display: true,
@@ -185,7 +183,7 @@ const ResultChart = ({ chartLabels, wpmData, incorrectChars, typedWords }: { cha
                     },
                     color: subColor,
                     callback: function (value: any, index: number, values: string | any[]) {
-                        if (wpmData.length !== 0) {
+                        if (wpmDataset.length !== 0) {
                             // Show the actual value of each tick if chartData has values
                             return value;
                         } else {
@@ -204,6 +202,7 @@ const ResultChart = ({ chartLabels, wpmData, incorrectChars, typedWords }: { cha
             },
             y1: {
                 position: 'right',
+                min: 0,
                 title: {
                     display: true,
                     text: 'Incorrect Characters',
@@ -222,7 +221,7 @@ const ResultChart = ({ chartLabels, wpmData, incorrectChars, typedWords }: { cha
                     },
                     color: subColor,
                     callback: function (value: any, index: number, values: string | any[]) {
-                        if (incorrectChars.length !== 0) {
+                        if (incorrectCharsDataset.length !== 0) {
                             return value;
                         } else {
                             if (index === values.length - 1) return 1;
@@ -246,9 +245,9 @@ const ResultChart = ({ chartLabels, wpmData, incorrectChars, typedWords }: { cha
         },
     };
 
-    data.labels = chartLabels;
-    data.datasets[0].data = wpmData;
-    data.datasets[1].data = incorrectChars;
+    data.labels = wordNumberLables;
+    data.datasets[0].data = wpmDataset;
+    data.datasets[1].data = incorrectCharsDataset;
 
     return (<Line options={options} data={data} />);
 }
