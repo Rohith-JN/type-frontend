@@ -1,51 +1,12 @@
 import styles from '../../styles/Result.module.css';
 import { useSelector } from "react-redux";
 import { State } from "../../context/reducer";
-import { useEffect } from 'react';
-import { useCreateTestMutation } from '../../generated/graphql';
-import firebase from 'firebase/compat/app';
 import { round, secondsToTime } from '../../utils/utils';
-import { calculateStats } from '../../utils/calculateStats';
 
 const Result = () => {
     const {
-        time: { timerId, timer, testTaken },
-        preferences: { time },
         result: { results },
     } = useSelector((state: State) => state);
-    const [, createTest] = useCreateTestMutation();
-    const { wpm, accuracy, incorrectChars, correctChars, rawWpm } = calculateStats();
-
-    useEffect(() => {
-        if (!timer && timerId) {
-            results.splice(1, 0, {
-                wpm: wpm,
-                rawWpm: rawWpm,
-                accuracy: accuracy,
-                correctChars: correctChars,
-                incorrectChars: incorrectChars,
-                time: time,
-                testTaken: testTaken
-            });
-        }
-    }, [timer, timerId]);
-
-    useEffect(() => {
-        async function test() {
-            if (firebase.auth().currentUser && !timer && timerId) {
-                await createTest({
-                    chars: `${correctChars} / ${incorrectChars}`,
-                    wpm: Math.round(wpm),
-                    rawWpm: Math.round(rawWpm),
-                    accuracy: round(accuracy, 1),
-                    time: `${time}`,
-                    uid: `${firebase.auth().currentUser!.uid}`,
-                    testTaken: testTaken
-                })
-            }
-        }
-        test()
-    }, [timer, timerId]);
 
     return (
         <div className={styles.result}>

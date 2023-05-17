@@ -26,7 +26,7 @@ const Navbar = () => {
         { id: 2, optionText: 'account', route: '/account', optionIcon: <RiAccountCircleFill size={25} /> },
         { id: 3, optionText: 'leaderboard', route: '/leaderboard', optionIcon: <MdLeaderboard size={25} /> },
     ], []);
-    let currentId = 1;
+    let currentId = 0;
     options.map((option) => {
         if (option.route === asPath) {
             currentId = option.id
@@ -35,7 +35,7 @@ const Navbar = () => {
     const [selectedOption, setSelectedOption] = useState(currentId);
 
     useEffect(() => {
-        let currentId = 1;
+        let currentId = 0;
         options.forEach((option) => {
             if (option.route === asPath) {
                 currentId = option.id;

@@ -21,7 +21,7 @@ ChartJS.register(
     Legend
 );
 
-const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels: Array<number>, wpmData: Array<number>, accuracyData: Array<number>, takenData: Array<string> }) => {
+const AccountChart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels: Array<number>, wpmData: Array<number>, accuracyData: Array<number>, takenData: Array<string> }) => {
 
     const rootStyles = getComputedStyle(document.documentElement);
     const mainColor = rootStyles.getPropertyValue('--main-color');
@@ -237,4 +237,4 @@ const Chart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels:
     return (<Line options={options} data={data} />);
 }
 
-export default Chart;
+export default AccountChart;
