@@ -87,7 +87,7 @@ export const Header = () => {
 
     useEffect(() => {
         import(`../../data/english.json`).then((words) =>
-            dispatch(setWordList(words.default))
+            dispatch(setWordList(words))
         );
         dispatch(timerSet(option));
         dispatch(setTime(option));
