@@ -1,11 +1,12 @@
 import styles from '../../styles/Header.module.css'
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import Option from './Option';
 import { resetTest } from "../../utils/test";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setPallet,
+    setTheme,
     setTime,
     setWordList,
     timerSet,
@@ -13,9 +14,38 @@ import {
 import { State } from "../../context/reducer";
 import useLocalStorage from '../../hooks/useLocalStorage';
 import Palette from '../other/Palette';
+import { useCookies } from 'react-cookie';
+
+const themeOptions: string[] = [
+    "superuser",
+    "pink",
+    "aether",
+    "alduin",
+    "arch",
+    "aurora",
+    "bushido",
+    "carbon",
+    "dark",
+    "dev",
+    "drowning",
+    "gruvbox",
+    "matrix",
+    "metaverse",
+    "miami",
+    "mountain",
+    "nord",
+    "paper",
+    "pulse",
+    "scalene",
+    "shadow",
+    "stealth",
+    "viridescent",
+    "vscode",
+    "weird",
+].sort();
 
 export const Header = () => {
-    const wordOptions = useMemo(() => [
+    const timeOptions = useMemo(() => [
         { id: 1, optionText: 15 },
         { id: 2, optionText: 30 },
         { id: 3, optionText: 45 },
@@ -27,18 +57,41 @@ export const Header = () => {
         preferences: { time, palette, theme },
     } = useSelector((state: State) => state);
     const dispatch = useDispatch();
-    const [selectedOption, setSelectedOption] = useLocalStorage("selectedOption", wordOptions.find(opt => opt.optionText === time)?.id || 4);
+    const [selectedOption, setSelectedOption] = useLocalStorage("selectedOption", timeOptions.find(opt => opt.optionText === time)?.id || 4);
     const [option, setOption] = useLocalStorage("time", time || 60);
+    const [cookies, setCookie] = useCookies(["theme", "language"])
 
-    // initial setup of time property
-    // get time from localStorage and set it to timer and time
+    useEffect(() => {
+        if (!cookies.theme) {
+            setCookie("theme", "superuser", {
+                path: "/",
+                maxAge: 60 * 60 * 60 * 60 * 60,
+                sameSite: true,
+            })
+        }
+    }, [cookies.theme, dispatch, setCookie])
+
+    useEffect(() => {
+        dispatch(setTheme(cookies.theme))
+        document.documentElement.setAttribute("data-theme", cookies.theme);
+    }, [cookies.theme, dispatch]);
+
+    const onThemeClick = (option: string) => {
+        dispatch(setTheme(option));
+        setCookie("theme", option, {
+            path: "/",
+            maxAge: 60 * 60 * 60 * 60 * 60,
+            sameSite: true,
+        })
+    }
+
     useEffect(() => {
         import(`../../data/english.json`).then((words) =>
-            dispatch(setWordList(words))
+            dispatch(setWordList(words.default))
         );
         dispatch(timerSet(option));
         dispatch(setTime(option));
-        setSelectedOption(wordOptions.find(opt => opt.optionText === option)?.id || 4);
+        setSelectedOption(timeOptions.find(opt => opt.optionText === option)?.id || 4);
     }, [dispatch, option]);
 
     useEffect(() => {
@@ -50,9 +103,9 @@ export const Header = () => {
     return (
         <div className={styles.Container}>
             <div className={styles.NavBar}>
-                <h1 className={`${styles.NavText} ${styles.firstOption}`} style={{ color: 'var(--main-color)' }}>words</h1>
-                <div className={`${styles.Divider} ${styles.firstOption}`}></div>
-                {wordOptions.map((option) => (
+                <h1 className={`${styles.NavText}`} style={{ color: 'var(--sub-color)' }}>english</h1>
+                <div className={`${styles.Divider}`}></div>
+                {timeOptions.map((option) => (
                     <Option
                         key={option.id}
                         optionText={option.optionText}
@@ -64,10 +117,18 @@ export const Header = () => {
                     />
                 ))}
                 <div className={`${styles.Divider} ${styles.theme}`}></div>
-                <h1 className={`${styles.NavText} ${styles.theme}`} style={{ color: 'var(--main-color)' }} onClick={() => dispatch(setPallet(true))
+                <h1 className={`${styles.NavText} ${styles.theme}`} style={{ color: 'var(--sub-color)' }} onClick={() => {
+                    dispatch(setPallet(true))
+                }
                 }>{theme}</h1>
             </div>
-            <Palette open={palette} />
+            <Palette
+                open={palette}
+                callback={function (option: string): void {
+                    onThemeClick(option);
+                }}
+                options={themeOptions}
+            />
         </div>
     );
 }

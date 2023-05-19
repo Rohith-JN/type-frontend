@@ -15,7 +15,7 @@
     background-color: var(--sub-alt-color);
     padding-left: 10px;
     padding-right: 10px;
-    max-width: 35rem;
+    max-width:35rem;
     width: 35rem;
 }
 h1.Paragraph {
@@ -33,6 +33,7 @@ h1.NavText {
     cursor: pointer;
     color: var(--sub-color);
     font-weight: normal;
+    transition: 0.3s;
 }
 
 h1.NavText:hover {
@@ -48,14 +49,6 @@ h1.NavText:hover {
 @media screen and (max-width: 750px){
     .NavBar {
         width: 25rem;
-    }
-}
-@media screen and (max-width: 470px){
-    .NavBar h1.firstOption, .firstOption {
-        display: none;
-    }
-    .NavBar {
-        width: 15rem;
     }
 }
 

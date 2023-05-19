@@ -191,7 +191,7 @@ const Account = ({ themeData }: {
               </thead>
               <tbody>
                 {
-                  tests.map((test: any, index: number) => <tr key={index + 1} style={{ cursor: "pointer" }} onClick={() => router.push({ pathname: `/tests/${test.id}` })}>
+                  tests.map((test: any, index: number) => <tr key={index + 1} style={{ cursor: "pointer" }} onClick={() => router.push({ pathname: `/test/${test.id}` })}>
                     <td className={styles.sno}>{index + 1}</td>
                     <td>{test.wpm}</td>
                     <td>{test.rawWpm}</td>

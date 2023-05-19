@@ -4,40 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     FaSearch,
 } from "react-icons/fa";
-import { setPallet, setTheme } from "../../context/actions";
+import { setPallet } from "../../context/actions";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
-import { useCookies } from "react-cookie"
-import { State } from "../../context/reducer";
 
-const Options: string[] = [
-    "superuser",
-    "pink",
-    "aether",
-    "alduin",
-    "arch",
-    "aurora",
-    "bushido",
-    "carbon",
-    "dark",
-    "dev",
-    "drowning",
-    "gruvbox",
-    "matrix",
-    "metaverse",
-    "miami",
-    "mountain",
-    "nord",
-    "paper",
-    "pulse",
-    "scalene",
-    "shadow",
-    "stealth",
-    "viridescent",
-    "vscode",
-    "weird",
-].sort();
-
-const filter = (options: typeof Options, query: string) => {
+const filter = (options: string[], query: string) => {
     if (!query) return options;
 
     return options.filter((option) => {
@@ -46,34 +16,19 @@ const filter = (options: typeof Options, query: string) => {
     });
 };
 
-const Palette = ({ open }: { open: boolean }) => {
+const Palette = ({ open, callback, options }: { open: boolean, callback: (option: string) => void, options: string[] }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [searchQuery, setSearchQuery] = useState("");
     const dispatch = useDispatch();
-    const [cookies, setCookie] = useCookies(["theme"])
 
     const changeHandler = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
         setSearchQuery(e.currentTarget.value);
     };
-    const filteredResults = filter(Options, searchQuery);
+    const filteredResults = filter(options, searchQuery);
     const divRef = useRef<HTMLDivElement>(null);
 
     useOnClickOutside(divRef, () => { setSearchQuery(""); dispatch(setPallet(false)); });
-
-    useEffect(() => {
-        if (!cookies.theme) {
-            setCookie("theme", "superuser", {
-                path: "/",
-                maxAge: 60 * 60 * 60 * 60 * 60,
-                sameSite: true,
-            })
-        }
-    }, [cookies.theme, dispatch, setCookie])
-
-    useEffect(() => {
-        dispatch(setTheme(cookies.theme))
-    }, [cookies.theme, dispatch]);
 
     useEffect(
         () => document.addEventListener("keydown", (e) => e.key === " " && setSearchQuery("")), []
@@ -105,15 +60,7 @@ const Palette = ({ open }: { open: boolean }) => {
                                     <p
                                         className={styles.option}
                                         key={index}
-                                        onClick={() => {
-                                            dispatch(setTheme(option));
-                                            setCookie("theme", option, {
-                                                path: "/",
-                                                maxAge: 60 * 60 * 60 * 60 * 60,
-                                                sameSite: true,
-                                            })
-                                            document.documentElement.setAttribute("data-theme", option);
-                                        }}
+                                        onClick={() => callback(option)}
                                         draggable="false"
                                     >
                                         {option}

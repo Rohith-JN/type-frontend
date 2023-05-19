@@ -59,9 +59,10 @@ h1.heading {
     color: var(--sub-color);
     font-weight:normal;
     text-decoration: none;
+    transition: 0.3s;
 }
 
-h1.NavText:hover {
+.NavText:hover {
     color: var(--text-color);
 }
 

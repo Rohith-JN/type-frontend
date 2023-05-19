@@ -45,7 +45,6 @@ const ResultChart = ({ wordNumberLables, wpmDataset, incorrectCharsDataset, type
                 borderColor: function (context: any) {
                     const dataPoint = context.dataset.data[context.dataIndex];
                     if (dataPoint === 0) {
-                        console.log(dataPoint)
                         return 'transparent';
                     } else {
                         return errorColor;

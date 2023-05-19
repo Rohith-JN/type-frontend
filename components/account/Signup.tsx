@@ -63,16 +63,6 @@ const Signup = (props: { onClick: VoidFunction }) => {
                 </form>
                 <p>Already have an account? <span onClick={props.onClick}>Log In</span></p>
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                draggable
-                theme="dark"
-            />
         </>
     );
 }

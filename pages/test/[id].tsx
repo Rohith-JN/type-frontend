@@ -82,7 +82,7 @@ const Test = ({ themeData }: {
                     </div>
                     <div className={styles.row2}>
                         <div className={styles.subCol}>
-                            <h2>type</h2>
+                            <h2>language</h2>
                             <h1>English</h1>
                         </div>
                         <div className={styles.subCol}>
