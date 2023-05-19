@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import { calculateChartStats } from "../../utils/calculateChartStats";
-import Result from "./Result"
+import { round, secondsToTime } from '../../utils/utils';
 import ResultChart from "./ResultChart"
 import { State } from "../../context/reducer";
 import { useEffect, useState } from "react";
 import { calculateStats } from "../../utils/calculateStats";
 import firebase from 'firebase/compat/app';
 import { useCreateTestMutation } from "../../generated/graphql";
-import { round } from "../../utils/utils";
+import styles from '../../styles/Footer.module.css';
 
 const Footer = () => {
     const {
@@ -69,24 +69,41 @@ const Footer = () => {
     }, [results.length])
 
     return (
-        <div className="Footer" style={{
-            marginTop: "2.5rem",
-            marginBottom: "5.1rem",
-            display: showResult ? "flex" : "none",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            boxSizing: "border-box"
-        }}>
-            <Result />
-            <div style={{
-                width: "69rem",
-                maxWidth: "69rem",
-                height: "400px",
-                marginTop: "7rem",
-                paddingLeft: "20px",
-                paddingRight: "20px",
-            }}>
+        <div className={styles.footer} style={{ display: showResult ? "flex" : "none" }}>
+            <table>
+                <thead>
+                    <tr>
+                        <th className={styles.sno}>S:No</th>
+                        <th className={styles.wpm}>WPM</th>
+                        <th className={styles.raw}>Raw WPM</th>
+                        <th className={styles.acc}>Accuracy</th>
+                        <th className={styles.chars}>Chars</th>
+                        <th className={styles.time}>Time</th>
+                        <th className={styles.testTaken}>Taken</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {results.map((object, index) => {
+                        if (index == 0) {
+                            return null
+                        }
+                        else {
+                            return (
+                                <tr key={index}>
+                                    <td className={styles.sno}>{index}</td>
+                                    <td className={styles.wpm}>{Math.round(object.wpm)}</td>
+                                    <td className={styles.raw}>{Math.round(object.rawWpm)}</td>
+                                    <td className={styles.acc}>{round(object.accuracy, 1)}%</td>
+                                    <td className={styles.chars}>{object.correctChars}{' '}/{' '}{object.incorrectChars}</td>
+                                    <td className={styles.time}>{secondsToTime(object.time)}</td>
+                                    <td className={styles.testTaken}>{object.testTaken}</td>
+                                </tr>
+                            );
+                        }
+                    })}
+                </tbody>
+            </table>
+            <div className={styles.chart}>
                 {results.map((object, index) => {
                     if (index == 1) {
                         return (

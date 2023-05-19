@@ -152,10 +152,10 @@ const Account = ({ themeData }: {
               <thead>
                 <tr>
                   <th className={styles.sno}>S:No</th>
-                  <th>Time</th>
-                  <th>PB</th>
-                  <th>WPM</th>
-                  <th>Accuracy</th>
+                  <th className={styles.time}>Time</th>
+                  <th className={styles.pb}>PB</th>
+                  <th className={styles.wpm}>WPM</th>
+                  <th className={styles.acc}>Accuracy</th>
                   <th className={styles.testsTaken}>Tests taken</th>
                 </tr>
               </thead>
@@ -163,11 +163,11 @@ const Account = ({ themeData }: {
                 {
                   userStats?.getStats.userStats.map((stat, index) => <tr key={index + 1}>
                     <td className={styles.sno}>{index + 1}</td>
-                    <td>{secondsToTime(parseInt(stat.time))}</td>
-                    <td>{stat.pb}</td>
-                    <td>
+                    <td className={styles.time}>{secondsToTime(parseInt(stat.time))}</td>
+                    <td className={styles.pb}>{stat.pb}</td>
+                    <td className={styles.wpm}>
                       {stat.wpm.toString()} / {stat.recentWpm.toString()}</td>
-                    <td>
+                    <td className={styles.acc}>
                       {stat.accuracy.toString()} / {stat.recentAccuracy.toString()}</td>
                     <td className={styles.testsTaken}>{stat.testsTaken}</td>
                   </tr>)
@@ -181,11 +181,11 @@ const Account = ({ themeData }: {
               <thead>
                 <tr>
                   <th className={styles.sno}>S:No</th>
-                  <th>WPM</th>
-                  <th>Raw WPM</th>
-                  <th>Accuracy</th>
-                  <th>Chars</th>
-                  <th>Time</th>
+                  <th className={styles.wpm}>WPM</th>
+                  <th className={styles.raw}>Raw WPM</th>
+                  <th className={styles.acc}>Accuracy</th>
+                  <th className={styles.chars}>Chars</th>
+                  <th className={styles.time}>Time</th>
                   <th className={styles.taken}>Taken</th>
                 </tr>
               </thead>
@@ -193,11 +193,11 @@ const Account = ({ themeData }: {
                 {
                   tests.map((test: any, index: number) => <tr key={index + 1} style={{ cursor: "pointer" }} onClick={() => router.push({ pathname: `/test/${test.id}` })}>
                     <td className={styles.sno}>{index + 1}</td>
-                    <td>{test.wpm}</td>
-                    <td>{test.rawWpm}</td>
-                    <td>{test.accuracy}%</td>
-                    <td>{test.chars}</td>
-                    <td>{secondsToTime(parseInt(test.time))}</td>
+                    <td className={styles.wpm}>{test.wpm}</td>
+                    <td className={styles.raw}>{test.rawWpm}</td>
+                    <td className={styles.acc}>{test.accuracy}%</td>
+                    <td className={styles.chars}>{test.chars}</td>
+                    <td className={styles.time}>{secondsToTime(parseInt(test.time))}</td>
                     <td className={styles.taken}>{test.testTaken}</td>
                   </tr>)
                 }

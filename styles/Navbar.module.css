@@ -13,7 +13,6 @@
     max-width: 57rem;
     width: 57rem; 
     height: 4rem; 
-    border-radius: 0.25rem; 
 }
 
 .Nav {
@@ -79,11 +78,19 @@ h1.heading {
         display: flex;
     }
 }   
-@media screen and (max-width: 400px){
+@media screen and (max-width: 500px){
     h1.heading {
         font-size: 2.4rem;
     }
     .NavItems .IconOptions {
         margin-top: 1rem;
+    }
+}
+@media screen and (max-width: 400px){
+    h1.heading {
+        font-size: 2rem;
+    }
+    .NavItems .IconOptions {
+        margin-top: 0.7rem;
     }
 }

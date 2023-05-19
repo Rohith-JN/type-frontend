@@ -81,11 +81,19 @@ const Test = ({ themeData }: {
                         </div>
                     </div>
                     <div className={styles.row2}>
-                        <div className={styles.subCol}>
+                        <div className={`${styles.subCol} ${styles.wpm}`}>
+                            <h2>wpm</h2>
+                            <h1>{data!.test.wpm}</h1>
+                        </div>
+                        <div className={`${styles.subCol} ${styles.accuracy}`}>
+                            <h2>acc</h2>
+                            <h1>{data?.test.accuracy}</h1>
+                        </div>
+                        <div className={`${styles.subCol} ${styles.language}`}>
                             <h2>language</h2>
                             <h1>English</h1>
                         </div>
-                        <div className={styles.subCol}>
+                        <div className={`${styles.subCol} ${styles.raw}`}>
                             <h2>raw</h2>
                             <h1>{data!.test.rawWpm}</h1>
                         </div>
@@ -97,7 +105,7 @@ const Test = ({ themeData }: {
                             <h2>time</h2>
                             <h1>{secondsToTime(parseInt(data!.test.time))}s</h1>
                         </div>
-                        <div className={styles.subCol}>
+                        <div className={`${styles.subCol} ${styles.testTaken}`}>
                             <h2>test taken</h2>
                             <h1>{data!.test.testTaken}</h1>
                         </div>

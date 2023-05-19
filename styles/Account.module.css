@@ -83,7 +83,6 @@ p.info {
     font-size: 1rem;
     border-radius: 7px;
     cursor: pointer;
-    
 }
 
 @media only screen and (max-width: 68rem) {
@@ -112,16 +111,24 @@ p.info {
     }
   }
 
-  @media only screen and (max-width: 500px) {
+  @media only screen and (max-width: 550px) {
     table th.taken { display: none; }
     table td.taken { display: none; }
-    .account table tbody td:nth-child(5), .account table thead th:nth-child(5) {
+    .account table tbody td:nth-child(6), .account table thead th:nth-child(6) {
         border-bottom-right-radius: 6px; 
         border-top-right-radius: 6px; 
     }
+  }
+  @media only screen and (max-width: 430px) {
+    table th.raw { display: none; }
+    table td.raw { display: none; }
   }
 
   @media only screen and (max-width: 400px) {
     table th.testsTaken { display: none; }
     table td.testsTaken { display: none; }
+    .account .stats table tbody td:nth-child(5), .account .stats table thead th:nth-child(5) {
+        border-bottom-right-radius: 6px; 
+        border-top-right-radius: 6px; 
+    }
   }
