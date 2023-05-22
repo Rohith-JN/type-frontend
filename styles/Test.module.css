@@ -42,7 +42,7 @@
 .col2 {
     max-width: 50rem; 
     height: 300px;
-    width: 85%;
+    width: 84%;
 }
 .testContainer .subContainer .row2 .subCol.wpm, .testContainer .subContainer .row2 .subCol.accuracy {
     display: none;

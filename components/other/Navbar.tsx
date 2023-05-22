@@ -48,7 +48,7 @@ const Navbar = () => {
         <div className={styles.Navbar}>
             <div className={styles.NavContainer}>
                 <div className={styles.Nav}>
-                    <h1 className={styles.heading}>Type<span>.io</span></h1>
+                    <h1 className={styles.heading}>Type</h1>
                     <div className={styles.NavItems}>
                         <div className={styles.NavOptions} style={{ width: (authUser) ? "23rem" : "18rem", maxWidth: (authUser) ? "23rem" : "18rem" }}>
                             {options.map((option) => (

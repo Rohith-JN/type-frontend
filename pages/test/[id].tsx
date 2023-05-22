@@ -87,7 +87,7 @@ const Test = ({ themeData }: {
                         </div>
                         <div className={`${styles.subCol} ${styles.accuracy}`}>
                             <h2>acc</h2>
-                            <h1>{data?.test.accuracy}</h1>
+                            <h1>{data?.test.accuracy}%</h1>
                         </div>
                         <div className={`${styles.subCol} ${styles.language}`}>
                             <h2>language</h2>
