@@ -2,6 +2,8 @@
 
 **Type** is a full-stack web application for testing your typing speed and accuracy. With an intuitive and minimalistic interface, Type. offers a natural typing experience, providing real-time feedback on your typing speed and accuracy. The application includes an account system for saving your typing speed history and user-configurable features such as themes.
 
+### Note: This repo contains code for the frontend of the site, [backend](https://github.com/Rohith-JN/type-backend)
+
 ## Technologies Used
 Type is built using a range of modern web technologies, including:
 
