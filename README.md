@@ -23,6 +23,7 @@ Type is built using a range of modern web technologies, including:
 4) URQL
 5) TypeORM
 6) PostgreSQL
+7) Docker
 
 ## Contributing
 
