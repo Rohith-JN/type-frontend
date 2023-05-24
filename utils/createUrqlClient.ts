@@ -1,6 +1,7 @@
 import { cacheExchange, Cache } from "@urql/exchange-graphcache";
 import { dedupExchange, fetchExchange } from "urql";
 import { relayPagination } from "@urql/exchange-graphcache/extras";
+import { __prod__ } from "./constants";
 
 function invalidateQuery(cache: Cache, field: string) {
     const allFields = cache.inspectFields("Query");
@@ -11,7 +12,9 @@ function invalidateQuery(cache: Cache, field: string) {
 }
 
 export const createUrqlClient = (ssrExchange: any) => ({
-    url: "http://localhost:4000/graphql",
+    url: __prod__
+        ? process.env.NEXT_PUBLIC_BACKEND_URL
+        : "http://localhost:4000/graphql",
     exchanges: [
         ssrExchange,
         dedupExchange,
