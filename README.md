@@ -4,6 +4,13 @@
 
 ### Note: This repo contains code for the frontend of the site, [backend](https://github.com/Rohith-JN/type-backend)
 
+![Web 1920 – 1](https://github.com/Rohith-JN/type/assets/78314165/3b85bfb1-6bb2-4b0a-be96-27698f9eaa1e)
+
+Demo
+
+https://github.com/Rohith-JN/type/assets/78314165/8b94f862-58ae-4a37-93cd-f850470bd70a
+
+
 ## Technologies Used
 Type is built using a range of modern web technologies, including:
 
