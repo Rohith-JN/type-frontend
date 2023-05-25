@@ -189,7 +189,7 @@ const Account = ({ themeData }: {
               </thead>
               <tbody>
                 {
-                  tests.map((test: any, index: number) => <tr key={index + 1} style={{ cursor: "pointer" }} onClick={() => router.push({ pathname: `/test/${test.id}` })}>
+                  tests.map((test: any, index: number) => <tr key={index + 1} style={{ cursor: "pointer" }} onClick={() => window.innerWidth > 400 ? router.push({ pathname: `/test/${test.id}` }) : null}>
                     <td className={styles.sno}>{index + 1}</td>
                     <td className={styles.wpm}>{test.wpm}</td>
                     <td className={styles.raw}>{test.rawWpm}</td>

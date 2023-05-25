@@ -98,3 +98,19 @@
       width: 100%;
     }
   }
+
+  @media screen and (max-width: 350px) {
+    .footer table th, .footer table td {
+        padding: 10px 10px 10px 20px;
+        font-size: 12px;
+        font-family: 'lexend';
+    }
+}
+@media screen and (max-width: 320px) {
+    table th.chars { display: none; }
+    table td.chars { display: none; }
+    .footer table tbody td:nth-child(6), .footer table thead th:nth-child(6) {
+        border-bottom-right-radius: 6px; 
+        border-top-right-radius: 6px; 
+    }
+}

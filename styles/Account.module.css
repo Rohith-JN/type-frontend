@@ -131,4 +131,16 @@ p.info {
         border-bottom-right-radius: 6px; 
         border-top-right-radius: 6px; 
     }
+    p.info {
+        font-size: 1rem;
+    }
   }
+
+  @media screen and (max-width: 350px) {
+    .account table th, .account table td {
+        padding: 10px 10px 10px 20px;
+        font-size: 12px;
+        font-family: 'lexend';
+    }
+  
+}

@@ -69,3 +69,11 @@ h1.NavText:hover {
         width: 16rem; 
     }
 }
+@media screen and (max-width: 350px) {
+    h1.NavText {
+        font-size: 0.8rem;
+    }
+    .NavBar {
+        width: 14rem;
+    }
+}

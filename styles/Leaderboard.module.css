@@ -83,3 +83,14 @@ p.info {
         border-top-right-radius: 6px; 
     }
 }
+
+@media screen and (max-width: 350px) {
+    .leaderboard table th, .leaderboard table td {
+        padding: 10px 10px 10px 20px;
+        font-size: 12px;
+        font-family: 'lexend';
+    }
+    p.info {
+    font-size: 1rem;
+    }
+}
