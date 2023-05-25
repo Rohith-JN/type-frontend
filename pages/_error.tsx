@@ -28,6 +28,7 @@ const ErrorPage = ({ statusCode, data }: {
       };
     }
   }, [contentLoaded]);
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", data.theme || "");
   }, [data.theme]);

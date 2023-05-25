@@ -7,9 +7,6 @@ import { setTimerId } from "../context/actions";
 import { recordTest } from "../utils/test";
 import Footer from '../components/index/Footer';
 import Loader from '../components/other/Loader';
-import cookie from "cookie";
-import { createUrqlClient } from '../utils/createUrqlClient';
-import { withUrqlClient } from 'next-urql';
 import { getTheme } from '../utils/getTheme';
 import { NextPageContext } from 'next';
 
@@ -103,7 +100,7 @@ const Home = ({ themeData }: {
   )
 }
 
-export default withUrqlClient(createUrqlClient)(Home)
+export default Home
 
 export async function getServerSideProps(context: NextPageContext) {
   return await getTheme(context);

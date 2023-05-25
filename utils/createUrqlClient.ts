@@ -1,5 +1,5 @@
 import { cacheExchange, Cache } from "@urql/exchange-graphcache";
-import { dedupExchange, fetchExchange } from "urql";
+import { dedupExchange, fetchExchange, createClient, Client } from "urql";
 import { relayPagination } from "@urql/exchange-graphcache/extras";
 import { __prod__ } from "./constants";
 
@@ -11,12 +11,11 @@ function invalidateQuery(cache: Cache, field: string) {
     });
 }
 
-export const createUrqlClient = (ssrExchange: any) => ({
+export const urqlClient: Client = createClient({
     url: __prod__
-        ? process.env.NEXT_PUBLIC_BACKEND_URL
+        ? process.env.NEXT_PUBLIC_BACKEND_URL!
         : "http://localhost:4000/graphql",
     exchanges: [
-        ssrExchange,
         dedupExchange,
         fetchExchange,
         cacheExchange({
@@ -27,12 +26,12 @@ export const createUrqlClient = (ssrExchange: any) => ({
             },
             updates: {
                 Mutation: {
-                    createTest: (_result, args, cache, info) => {
+                    createTest: (_result, _args, cache, _info) => {
                         invalidateQuery(cache, "tests");
                         invalidateQuery(cache, "paginatedTests");
                         invalidateQuery(cache, "leaderboard");
                     },
-                    login: (_result, args, cache, info) => {
+                    login: (_result, _args, cache, _info) => {
                         invalidateQuery(cache, "tests");
                         invalidateQuery(cache, "paginatedTests");
                         invalidateQuery(cache, "leaderboard");

@@ -4,8 +4,6 @@ import Signup from '../components/account/Signup';
 import { useCallback, useEffect, useState } from 'react';
 import Loader from '../components/other/Loader';
 import { useGetStatsQuery, useTestsQuery } from '../generated/graphql';
-import { createUrqlClient } from '../utils/createUrqlClient';
-import { withUrqlClient } from 'next-urql';
 import { secondsToTime } from '../utils/utils';
 import styles from '../styles/Account.module.css';
 import CustomError from '../components/other/Error';
@@ -232,7 +230,7 @@ const Account = ({ themeData }: {
   }
 };
 
-export default withUrqlClient(createUrqlClient)(Account);
+export default Account;
 
 export async function getServerSideProps(context: NextPageContext) {
   return await getTheme(context);

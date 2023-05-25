@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import Loader from "../components/other/Loader";
-import { withUrqlClient } from "next-urql";
-import { createUrqlClient } from "../utils/createUrqlClient";
 import styles from '../styles/Leaderboard.module.css'
 import { useLeaderboardQuery } from "../generated/graphql";
 import { useAuth } from "../firebase/auth";
@@ -100,7 +98,7 @@ const Leaderboard = ({ themeData }: {
 
 }
 
-export default withUrqlClient(createUrqlClient)(Leaderboard)
+export default Leaderboard
 
 export async function getServerSideProps(context: NextPageContext) {
     return await getTheme(context);

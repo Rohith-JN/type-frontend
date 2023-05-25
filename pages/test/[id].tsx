@@ -1,6 +1,4 @@
-import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router'
-import { createUrqlClient } from '../../utils/createUrqlClient';
 import { getTheme } from '../../utils/getTheme';
 import { NextPageContext } from 'next';
 import { useEffect, useState } from 'react';
@@ -116,7 +114,7 @@ const Test = ({ themeData }: {
     }
 }
 
-export default withUrqlClient(createUrqlClient)(Test)
+export default Test
 export async function getServerSideProps(context: NextPageContext) {
     return await getTheme(context);
 }

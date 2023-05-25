@@ -11,7 +11,7 @@ export const calculateStats = () => {
     const result = typedHistory.map(
         (typedWord, idx) => typedWord === wordList[idx]
     );
-    result.forEach((r, idx) => {
+    result.forEach((_, idx) => {
         const typedWord = typedHistory[idx];
         const word = wordList[idx];
         let wordCorrectChars = 0;
