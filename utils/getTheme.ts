@@ -6,12 +6,5 @@ export async function getTheme(context: NextPageContext) {
         context.req ? context.req.headers.cookie || "" : document.cookie
     );
 
-    if (context.res) {
-        if (Object.keys(data).length === 0 && data.constructor === Object) {
-            context.res.end();
-            return { props: {} };
-        }
-    }
-
     return { props: { themeData: data } };
 }

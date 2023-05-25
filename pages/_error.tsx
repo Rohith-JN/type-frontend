@@ -51,14 +51,6 @@ ErrorPage.getInitialProps = async ({ res, err, req }: NextPageContext) => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
   const data = cookie.parse(req ? req.headers.cookie || "" : document.cookie);
 
-  if (Object.keys(data).length === 0 && data.constructor === Object) {
-    if (res) {
-      res.end();
-    } else {
-      document.location.pathname = "/";
-    }
-  }
-
   return { statusCode, data: data };
 };
 
