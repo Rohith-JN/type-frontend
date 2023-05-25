@@ -14,7 +14,7 @@
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
     "@types/react-redux": "^7.1.25",
-    "@urql/exchange-graphcache": "^6.0.1",
+    "@urql/exchange-graphcache": "^6.0.4",
     "chart.js": "^4.2.1",
     "cookie": "^0.5.0",
     "eslint": "8.28.0",
@@ -23,7 +23,7 @@
     "graphql": "^16.6.0",
     "lodash": "^4.17.21",
     "next": "13.0.5",
-    "next-urql": "^4.0.3",
+    "next-urql": "5.0.1",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-cookie": "^4.1.1",
@@ -33,7 +33,7 @@
     "react-toastify": "^9.1.1",
     "redux": "^4.2.1",
     "typescript": "4.9.3",
-    "urql": "^3.0.4"
+    "urql": "4.0.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "3.2.2",

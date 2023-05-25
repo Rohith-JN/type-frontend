@@ -1,5 +1,5 @@
 import { cacheExchange, Cache } from "@urql/exchange-graphcache";
-import { dedupExchange, fetchExchange, createClient, Client } from "urql";
+import { fetchExchange, createClient, Client } from "urql";
 import { relayPagination } from "@urql/exchange-graphcache/extras";
 import { __prod__ } from "./constants";
 
@@ -16,7 +16,6 @@ export const urqlClient: Client = createClient({
         ? process.env.NEXT_PUBLIC_BACKEND_URL!
         : "http://localhost:4000/graphql",
     exchanges: [
-        dedupExchange,
         fetchExchange,
         cacheExchange({
             resolvers: {
