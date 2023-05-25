@@ -53,7 +53,6 @@ ErrorPage.getInitialProps = async ({ res, err, req }: NextPageContext) => {
 
   if (Object.keys(data).length === 0 && data.constructor === Object) {
     if (res) {
-      res.writeHead(301, { Location: "/" });
       res.end();
     } else {
       document.location.pathname = "/";
