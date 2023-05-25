@@ -1,7 +1,6 @@
 import styles from '../../styles/Signup.module.css';
 import React, { useState } from 'react';
 import firebase from 'firebase/compat/app';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRegisterMutation, useValidateMutation } from '../../generated/graphql';
 import { toastOptions } from '../../utils/customToast';

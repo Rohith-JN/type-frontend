@@ -8,7 +8,7 @@ import { resetTest } from "../../utils/test";
 const Test = () => {
     const {
         time: { timer },
-        word: { currWord, wordList, typedHistory, typedWord, incorrectCharsHistory },
+        word: { currWord, wordList, typedHistory, typedWord },
     } = useSelector((state: State) => state);
 
     const dispatch = useDispatch();

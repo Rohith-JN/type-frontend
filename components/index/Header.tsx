@@ -1,5 +1,5 @@
 import styles from '../../styles/Header.module.css'
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import Option from './Option';
 import { resetTest } from "../../utils/test";
 import { useEffect } from "react";

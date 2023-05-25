@@ -8,7 +8,6 @@ import { setResult } from '../../context/actions';
 import { useAuth } from '../../firebase/auth';
 import { State } from '../../context/reducer';
 import { customToast } from '../../utils/customToast';
-import { ToastContainer } from 'react-toastify';
 
 export default function Login(props: { onClick: VoidFunction }) {
     const {
