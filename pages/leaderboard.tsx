@@ -52,7 +52,7 @@ const Leaderboard = ({ themeData }: {
     else {
         return <>
             <div className={styles.leaderboard}>
-                <p className={styles.info}>All-time Leaderboard | 1:00</p>
+                <p className={styles.info}>All-Time Leaderboard</p>
                 <div className={styles.leaderboards}>
                     <table style={{ paddingTop: "1rem" }}>
                         <thead>
@@ -61,8 +61,8 @@ const Leaderboard = ({ themeData }: {
                                 <th>User</th>
                                 <th>WPM</th>
                                 <th className={styles.rawWpm}>Raw</th>
-                                <th>Time</th>
                                 <th>Acc</th>
+                                <th>Time</th>
                                 <th className={styles.taken}>Taken</th>
                             </tr>
                         </thead>
@@ -73,8 +73,8 @@ const Leaderboard = ({ themeData }: {
                                     <td>{test.user}</td>
                                     <td className={styles.wpm}>{test.wpm}</td>
                                     <td className={styles.rawWpm}>{test.rawWpm}</td>
-                                    <td>1:00</td>
                                     <td>{test.accuracy}%</td>
+                                    <td>1:00</td>
                                     <td className={styles.taken}>{test.testTaken}</td>
                                 </tr>)
                             }
