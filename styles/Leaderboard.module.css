@@ -60,13 +60,13 @@ p.info {
 }
 
 
-@media only screen and (max-width: 54rem) {
+@media only screen and (max-width: 56rem) {
     .leaderboard .leaderboards {
       width: 100%;
     }
   }
 
-  @media screen and (max-width: 530px) {
+  @media screen and (max-width: 600px) {
     table th.rank { display: none; }
     table td.rank { display: none; }
     .leaderboard table tbody td:nth-child(2), .leaderboard table thead th:nth-child(2) {
@@ -75,22 +75,34 @@ p.info {
     }
 }
 
-@media screen and (max-width: 470px) {
+@media screen and (max-width: 550px) {
     table th.taken { display: none; }
     table td.taken { display: none; }
-    .leaderboard table tbody td:nth-child(5), .leaderboard table thead th:nth-child(5) {
+    .leaderboard table tbody td:nth-child(6), .leaderboard table thead th:nth-child(6) {
+        border-bottom-right-radius: 6px; 
+        border-top-right-radius: 6px; 
+    }
+    p.info {
+        font-size: 1.1rem;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    table th.rawWpm { display: none; }
+    table td.rawWpm { display: none; }
+    .leaderboard table tbody td:nth-child(6), .leaderboard table thead th:nth-child(6) {
         border-bottom-right-radius: 6px; 
         border-top-right-radius: 6px; 
     }
 }
 
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 370px) {
     .leaderboard table th, .leaderboard table td {
         padding: 10px 10px 10px 20px;
         font-size: 12px;
         font-family: 'lexend';
     }
     p.info {
-    font-size: 1rem;
+        font-size: 1rem;
     }
 }

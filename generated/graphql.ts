@@ -38,6 +38,7 @@ export type LeaderBoardStatFields = {
     __typename?: "LeaderBoardStatFields";
     accuracy: Scalars["Float"];
     rank: Scalars["Float"];
+    rawWpm: Scalars["Float"];
     testTaken: Scalars["String"];
     user: Scalars["String"];
     wpm: Scalars["Float"];
@@ -293,6 +294,7 @@ export type LeaderboardQuery = {
             rank: number;
             user: string;
             wpm: number;
+            rawWpm: number;
             accuracy: number;
             testTaken: string;
         }>;
@@ -301,6 +303,7 @@ export type LeaderboardQuery = {
             rank: number;
             user: string;
             wpm: number;
+            rawWpm: number;
             accuracy: number;
             testTaken: string;
         };
@@ -521,6 +524,7 @@ export const LeaderboardDocument = gql`
                 rank
                 user
                 wpm
+                rawWpm
                 accuracy
                 testTaken
             }
@@ -528,6 +532,7 @@ export const LeaderboardDocument = gql`
                 rank
                 user
                 wpm
+                rawWpm
                 accuracy
                 testTaken
             }

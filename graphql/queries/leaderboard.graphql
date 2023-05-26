@@ -4,6 +4,7 @@ query Leaderboard($uid: String!) {
       rank
       user
       wpm
+      rawWpm
       accuracy
       testTaken
     }
@@ -11,6 +12,7 @@ query Leaderboard($uid: String!) {
       rank
       user
       wpm
+      rawWpm
       accuracy
       testTaken
     }

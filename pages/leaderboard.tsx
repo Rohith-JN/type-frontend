@@ -52,7 +52,7 @@ const Leaderboard = ({ themeData }: {
     else {
         return <>
             <div className={styles.leaderboard}>
-                <p className={styles.info}>All-time Leaderboard</p>
+                <p className={styles.info}>All-time Leaderboard | 1:00</p>
                 <div className={styles.leaderboards}>
                     <table style={{ paddingTop: "1rem" }}>
                         <thead>
@@ -60,8 +60,9 @@ const Leaderboard = ({ themeData }: {
                                 <th className={styles.rank}>Rank</th>
                                 <th>User</th>
                                 <th>WPM</th>
-                                <th>Accuracy</th>
+                                <th className={styles.rawWpm}>Raw</th>
                                 <th>Time</th>
+                                <th>Acc</th>
                                 <th className={styles.taken}>Taken</th>
                             </tr>
                         </thead>
@@ -70,9 +71,10 @@ const Leaderboard = ({ themeData }: {
                                 data?.leaderboard.leaderBoard.map((test, index) => <tr key={index}>
                                     <td className={styles.rank}>{test.rank}</td>
                                     <td>{test.user}</td>
-                                    <td>{test.wpm}</td>
-                                    <td>{test.accuracy}%</td>
+                                    <td className={styles.wpm}>{test.wpm}</td>
+                                    <td className={styles.rawWpm}>{test.rawWpm}</td>
                                     <td>1:00</td>
+                                    <td>{test.accuracy}%</td>
                                     <td className={styles.taken}>{test.testTaken}</td>
                                 </tr>)
                             }
@@ -83,7 +85,8 @@ const Leaderboard = ({ themeData }: {
                                 <tr style={{ backgroundColor: "var(--sub-alt-color)" }}>
                                     <td className={styles.rank}>{data?.leaderboard.user.rank}</td>
                                     <td>{data?.leaderboard.user.user}</td>
-                                    <td>{data?.leaderboard.user.wpm}</td>
+                                    <td className={styles.wpm}>{data?.leaderboard.user.wpm}</td>
+                                    <td className={styles.rawWpm}>{data?.leaderboard.user.rawWpm}</td>
                                     <td>{data?.leaderboard.user.accuracy}%</td>
                                     <td>1:00</td>
                                     <td className={styles.taken}>{data?.leaderboard.user.testTaken}</td>
