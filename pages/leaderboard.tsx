@@ -41,15 +41,7 @@ const Leaderboard = ({ themeData }: {
             };
         }
     }, [contentLoaded]);
-    if (!data && !loading) {
-        return <div>
-            <CustomError statusCode={500} statusMessage={"Internal Server Error"} />
-        </div>
-    }
-    else if (loading || fetching) {
-        return <Loader />
-    }
-    else {
+    if (data && !loading) {
         return <>
             <div className={styles.leaderboard}>
                 <p className={styles.info}>All-Time Leaderboard</p>
@@ -98,7 +90,14 @@ const Leaderboard = ({ themeData }: {
             </div>
         </>
     }
-
+    else if (!data && !loading && !fetching) {
+        return <div>
+            <CustomError statusCode={500} statusMessage={"Internal Server Error"} />
+        </div>
+    }
+    else if (loading || fetching) {
+        return <Loader />
+    }
 }
 
 export default Leaderboard
