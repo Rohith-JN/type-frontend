@@ -70,7 +70,7 @@ const Leaderboard = ({ themeData }: {
                                     <td className={styles.taken}>{test.testTaken}</td>
                                 </tr>)
                             }
-                            {(data?.leaderboard.user.rank! > 50) ? <div style={{ marginTop: "2rem" }}>
+                            {(authUser) ? <div style={{ marginTop: "2rem" }}>
                             </div> : null}
 
                             {(authUser) ?
