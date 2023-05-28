@@ -73,7 +73,7 @@ const Leaderboard = ({ themeData }: {
                             {(data?.leaderboard.user.rank! > 50) ? <div style={{ marginTop: "2rem" }}>
                             </div> : null}
 
-                            {(data?.leaderboard.user.rank! > 50) ?
+                            {(authUser) ?
                                 <tr style={{ backgroundColor: "var(--sub-alt-color)" }}>
                                     <td className={styles.rank}>{data?.leaderboard.user.rank}</td>
                                     <td>{data?.leaderboard.user.user}</td>
