@@ -47,18 +47,12 @@ export type LeaderBoardStatFields = {
 export type Mutation = {
     __typename?: "Mutation";
     createTest: Test;
-    login: FieldError;
     register: UserResponse;
     validate: FieldError;
 };
 
 export type MutationCreateTestArgs = {
     testOptions: TestOptions;
-};
-
-export type MutationLoginArgs = {
-    email: Scalars["String"];
-    password: Scalars["String"];
 };
 
 export type MutationRegisterArgs = {
@@ -73,7 +67,6 @@ export type MutationValidateArgs = {
 
 export type Options = {
     email: Scalars["String"];
-    password: Scalars["String"];
     uid: Scalars["String"];
     username: Scalars["String"];
 };
@@ -227,24 +220,9 @@ export type CreateTestMutation = {
     };
 };
 
-export type LoginMutationVariables = Exact<{
-    email: Scalars["String"];
-    password: Scalars["String"];
-}>;
-
-export type LoginMutation = {
-    __typename?: "Mutation";
-    login: {
-        __typename?: "FieldError";
-        field?: string | null;
-        message?: string | null;
-    };
-};
-
 export type RegisterMutationVariables = Exact<{
     username: Scalars["String"];
     email: Scalars["String"];
-    password: Scalars["String"];
     uid: Scalars["String"];
 }>;
 
@@ -456,35 +434,9 @@ export function useCreateTestMutation() {
         CreateTestDocument
     );
 }
-export const LoginDocument = gql`
-    mutation Login($email: String!, $password: String!) {
-        login(email: $email, password: $password) {
-            field
-            message
-        }
-    }
-`;
-
-export function useLoginMutation() {
-    return Urql.useMutation<LoginMutation, LoginMutationVariables>(
-        LoginDocument
-    );
-}
 export const RegisterDocument = gql`
-    mutation Register(
-        $username: String!
-        $email: String!
-        $password: String!
-        $uid: String!
-    ) {
-        register(
-            options: {
-                username: $username
-                email: $email
-                password: $password
-                uid: $uid
-            }
-        ) {
+    mutation Register($username: String!, $email: String!, $uid: String!) {
+        register(options: { username: $username, email: $email, uid: $uid }) {
             error {
                 field
                 message

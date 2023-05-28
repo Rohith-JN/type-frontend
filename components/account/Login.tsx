@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../../styles/Login.module.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { useLoginMutation } from '../../generated/graphql';
 import { toastOptions } from '../../utils/customToast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setResult } from '../../context/actions';
@@ -15,7 +14,6 @@ export default function Login(props: { onClick: VoidFunction }) {
     } = useSelector((state: State) => state);
     const dispatch = useDispatch();
     const { signInWithEmailAndPassword } = useAuth()
-    const [, login] = useLoginMutation();
     const [user, setUser] = useState({
         email: '',
         password: '',
@@ -23,22 +21,13 @@ export default function Login(props: { onClick: VoidFunction }) {
 
     const onSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        const validation = await login({
-            email: user.email,
-            password: user.password
+        await signInWithEmailAndPassword(user.email, user.password).then(function () {
+            dispatch(setResult([results[0]]));
+            customToast.success("Logged in!", toastOptions)
+        }).catch(function (error) {
+            const message = error.message.replace("Firebase:", "");
+            customToast.error(message.replace(/\([^)]*\)\.?/g, ""), toastOptions);
         })
-        if (validation.data?.login.field === null && validation.data?.login.message === null) {
-            await signInWithEmailAndPassword(user.email, user.password).then(function () {
-                dispatch(setResult([results[0]]));
-                customToast.success("Logged in!", toastOptions)
-            }).catch(function (error) {
-                const message = error.message.replace("Firebase:", "");
-                customToast.error(message.replace(/\([^)]*\)\.?/g, ""), toastOptions);
-            })
-        }
-        else {
-            customToast.error(validation.data?.login.message!, toastOptions);
-        }
     }
 
     return (
