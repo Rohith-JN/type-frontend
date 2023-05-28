@@ -40,7 +40,7 @@ const Signup = (props: { onClick: VoidFunction }) => {
             })
             if (firebase.auth().currentUser !== null) {
                 const uid = firebase.auth().currentUser!.uid
-                await register({ username: user.username, email: user.email, password: user.password, uid: uid });
+                await register({ username: user.username, email: user.email, uid: uid });
             }
         }
         else {
