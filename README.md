@@ -6,34 +6,9 @@
 
 ![Web 1920 – 1](https://github.com/Rohith-JN/type/assets/78314165/3b85bfb1-6bb2-4b0a-be96-27698f9eaa1e)
 
-Demo
-
-https://github.com/Rohith-JN/type/assets/78314165/8b94f862-58ae-4a37-93cd-f850470bd70a
-
-
-## Technologies Used
-Type is built using a range of modern web technologies, including:
-
-## Frontend
-
-1) React.js
-2) Next.js
-3) TypeScript
-4) Redux
-5) Firebase
-  
-## Backend
-
-1) Node.js
-2) Express.js
-3) GraphQL
-4) URQL
-5) TypeORM
-6) PostgreSQL
-7) Docker
-
 ## Project Structure
 
+```
 components
    |-- account
    |   |-- AccountChart.tsx
@@ -127,6 +102,7 @@ next.config.js
 package-lock.json
 package.json
 README.md
+```
 
 ## Setup Project Locally
 
@@ -158,6 +134,27 @@ If you want to test the site locally follow these steps:
 8) Run *npm run migration:run*; this will setup the tables in postgres
 9) Run *npm install*
 10) You have successfully setup the Backend
+
+## Technologies Used
+Type is built using a range of modern web technologies, including:
+
+## Frontend
+
+1) React.js
+2) Next.js
+3) TypeScript
+4) Redux
+5) Firebase
+  
+## Backend
+
+1) Node.js
+2) Express.js
+3) GraphQL
+4) URQL
+5) TypeORM
+6) PostgreSQL
+7) Docker
 
 ## Contributing
 
