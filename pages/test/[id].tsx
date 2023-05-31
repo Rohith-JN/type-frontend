@@ -9,6 +9,7 @@ import ResultChart from '../../components/index/ResultChart';
 import styles from '../../styles/Test.module.css';
 import { secondsToTime } from '../../utils/utils';
 import CustomError from '../../components/other/Error';
+import Head from 'next/head';
 
 const Test = ({ themeData }: {
     themeData: {
@@ -52,7 +53,9 @@ const Test = ({ themeData }: {
         return <CustomError statusCode={401} statusMessage={"Unauthenticated Request"} />
     }
     else if (loading || fetching) {
-        return <Loader />
+        return <><Head>
+            <title>Type / test</title>
+        </Head><Loader /></>
     }
     else if (error) {
         return <CustomError statusCode={500} statusMessage={"Internal Server Error"} />
@@ -60,6 +63,9 @@ const Test = ({ themeData }: {
     else {
         return (
             <div className={styles.testContainer}>
+                <Head>
+                    <title>Type / test</title>
+                </Head>
                 <div className={styles.subContainer}>
                     <div className={styles.row1}>
                         <div className={styles.col}>

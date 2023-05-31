@@ -103,8 +103,8 @@ export const Header = () => {
     return (
         <div className={styles.Container}>
             <div className={styles.NavBar}>
-                <h1 className={`${styles.NavText}`} style={{ color: 'var(--sub-color)' }}>english</h1>
-                <div className={`${styles.Divider}`}></div>
+                <h1 className={`${styles.NavText} ${styles.language}`} style={{ color: 'var(--sub-color)' }}>english</h1>
+                <div className={`${styles.Divider} ${styles.language}`}></div>
                 {timeOptions.map((option) => (
                     <Option
                         key={option.id}

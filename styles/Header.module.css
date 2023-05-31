@@ -68,6 +68,9 @@ h1.NavText:hover {
     .NavBar {
         width: 16rem; 
     }
+    .NavBar h1.language, .language   {
+        display: none;
+    }
 }
 @media screen and (max-width: 350px) {
     h1.NavText {

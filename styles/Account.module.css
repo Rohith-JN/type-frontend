@@ -136,11 +136,13 @@ p.info {
     }
   }
 
-  @media screen and (max-width: 350px) {
+  @media screen and (max-width: 370px) {
     .account table th, .account table td {
         padding: 10px 10px 10px 20px;
-        font-size: 12px;
+        font-size: 11px;
         font-family: 'lexend';
     }
-  
+    p.info {
+        font-size: 0.9rem;
+    }
 }

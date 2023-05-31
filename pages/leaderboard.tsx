@@ -6,6 +6,7 @@ import { useAuth } from "../firebase/auth";
 import CustomError from "../components/other/Error";
 import { getTheme } from "../utils/getTheme";
 import { NextPageContext } from "next";
+import Head from "next/head";
 
 const Leaderboard = ({ themeData }: {
     themeData: {
@@ -43,6 +44,9 @@ const Leaderboard = ({ themeData }: {
     }, [contentLoaded]);
     if (data && !loading) {
         return <>
+            <Head>
+                <title>Type / Leaderboard</title>
+            </Head>
             <div className={styles.leaderboard}>
                 <p className={styles.info}>All-Time Leaderboard</p>
                 <div className={styles.leaderboards}>
@@ -96,7 +100,9 @@ const Leaderboard = ({ themeData }: {
         </div>
     }
     else if (loading || fetching) {
-        return <Loader />
+        return <><Head>
+            <title>Type / Leaderboard</title>
+        </Head><Loader /></>
     }
 }
 

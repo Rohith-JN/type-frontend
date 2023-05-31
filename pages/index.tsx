@@ -9,6 +9,7 @@ import Footer from '../components/index/Footer';
 import Loader from '../components/other/Loader';
 import { getTheme } from '../utils/getTheme';
 import { NextPageContext } from 'next';
+import Head from 'next/head';
 
 const Home = ({ themeData }: {
   themeData: {
@@ -88,9 +89,14 @@ const Home = ({ themeData }: {
   return (
     <>
       {loading ? (
-        <Loader />
+        <><Head>
+          <title>Type</title>
+        </Head><Loader /></>
       ) : (
         <div>
+          <Head>
+            <title>Type</title>
+          </Head>
           <Header />
           <Test />
           <Footer />

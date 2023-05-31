@@ -13,6 +13,7 @@ import { gql, useClient } from 'urql';
 import { getTheme } from '../utils/getTheme';
 import { NextPageContext } from 'next';
 import router from 'next/router';
+import Head from 'next/head';
 
 const Account = ({ themeData }: {
   themeData: {
@@ -128,7 +129,9 @@ const Account = ({ themeData }: {
 
   if (authUser) {
     if (loading || userStatsFetching || testsFetching || paginatedTestsFetching) {
-      return <Loader />
+      return <><Head>
+        <title>Type / Account</title>
+      </Head><Loader /></>
     }
     if ((!testsData || !userStats || paginatedTestsError) && !loading) {
       return <div>
@@ -143,6 +146,9 @@ const Account = ({ themeData }: {
       });
       return (
         <div className={styles.account}>
+          <Head>
+            <title>Type / Account</title>
+          </Head>
           <p className={styles.info}>Account created on {userCreationDate.toString()}</p>
           <div className={styles.stats}>
             <p style={{ fontFamily: 'lexend', fontWeight: "light", color: "var(--sub-color)", fontSize: "13px" }}>All Time Average / Past 10 Average</p>
@@ -180,7 +186,7 @@ const Account = ({ themeData }: {
                 <tr>
                   <th className={styles.sno}>S:No</th>
                   <th className={styles.wpm}>WPM</th>
-                  <th className={styles.raw}>Raw WPM</th>
+                  <th className={styles.raw}>Raw</th>
                   <th className={styles.acc}>Accuracy</th>
                   <th className={styles.chars}>Chars</th>
                   <th className={styles.time}>Time</th>
@@ -213,9 +219,14 @@ const Account = ({ themeData }: {
     return (
       <>
         {loading ? (
-          <Loader />
+          <><Head>
+            <title>Type / Account</title>
+          </Head><Loader /></>
         ) : (
           <>
+            <Head>
+              <title>Type / Account</title>
+            </Head>
             <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
               <div style={{ display: loginVisible }}>
                 <Login onClick={loginOnClick} />
