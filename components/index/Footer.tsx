@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import { calculateChartStats } from "../../utils/calculateChartStats";
+import { useCalculateChartStats } from "../../hooks/useCalculateChartStats";
 import { round, secondsToTime } from '../../utils/utils';
 import ResultChart from "./ResultChart"
 import { State } from "../../context/reducer";
 import { useEffect, useState } from "react";
-import { calculateStats } from "../../utils/calculateStats";
+import { useCalculateStats } from "../../hooks/useCalculateStats";
 import firebase from 'firebase/compat/app';
 import { useCreateTestMutation } from "../../generated/graphql";
 import styles from '../../styles/Footer.module.css';
@@ -17,13 +17,13 @@ const Footer = () => {
     } = useSelector((state: State) => state);
     const [, createTest] = useCreateTestMutation();
     const [showResult, setShowResult] = useState(false);
-    const { wpm, accuracy, incorrectChars, correctChars, rawWpm } = calculateStats();
+    const { wpm, accuracy, incorrectChars, correctChars, rawWpm } = useCalculateStats();
     const {
         typedWordDataset,
         wordNumberLabels,
         wpmDataset,
         incorrectCharsDataset,
-    } = calculateChartStats();
+    } = useCalculateChartStats();
 
     useEffect(() => {
         if (!timer && timerId) {

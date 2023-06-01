@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { State } from "../context/reducer";
 
-export const calculateStats = () => {
+export const useCalculateStats = () => {
     const {
         word: { currWord, wordList, typedHistory, incorrectCharsHistory },
         preferences: { time },

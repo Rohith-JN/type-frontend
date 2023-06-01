@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setResult } from '../../context/actions';
 import { State } from '../../context/reducer';
 import { customToast } from '../../utils/customToast';
+import { useAuth } from '../../firebase/auth';
 
 const Signup = (props: { onClick: VoidFunction }) => {
     const {
@@ -16,6 +17,7 @@ const Signup = (props: { onClick: VoidFunction }) => {
     const dispatch = useDispatch();
     const [, register] = useRegisterMutation();
     const [, validate] = useValidateMutation();
+    const { createUserWithEmailAndPassword } = useAuth()
     const [user, setUser] = useState({
         username: '',
         email: '',
@@ -31,14 +33,14 @@ const Signup = (props: { onClick: VoidFunction }) => {
         });
 
         if (validation.data?.validate.field === null && validation.data?.validate.message === null) {
-            await firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then(function () {
+            await createUserWithEmailAndPassword(user.email, user.password).then(function () {
                 dispatch(setResult([results[0]]));
                 customToast.success("Signed Up!", toastOptions)
             }).catch(function (error) {
                 const message = error.message.replace("Firebase:", "");
                 customToast.error(message.replace(/\([^)]*\)\.?/g, ""), toastOptions);
             })
-            if (firebase.auth().currentUser !== null) {
+            if (firebase.auth().currentUser) {
                 const uid = firebase.auth().currentUser!.uid
                 await register({ username: user.username, email: user.email, uid: uid });
             }
