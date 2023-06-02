@@ -10,8 +10,8 @@
     "gen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
-    
     "@urql/exchange-graphcache": "^6.0.4",
+    "@vercel/analytics": "^1.0.1",
     "chart.js": "^4.2.1",
     "cookie": "^0.5.0",
     "eslint": "8.28.0",

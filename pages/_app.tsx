@@ -8,6 +8,7 @@ import { urqlClient } from '../utils/createUrqlClient';
 import { Provider as UrqlProvider } from 'urql';
 import { CookiesProvider } from "react-cookie"
 import { ToastContainer } from 'react-toastify';
+import { Analytics } from '@vercel/analytics/react';
 import '../styles/Test.css';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -31,6 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
                         <Layout>
                             <Component {...pageProps} />
                         </Layout>
+                        <Analytics />
                     </CookiesProvider>
                 </ReduxProvider>
             </UrqlProvider>
