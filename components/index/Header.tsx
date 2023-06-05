@@ -11,7 +11,7 @@ import {
     setWordList,
     timerSet,
 } from "../../context/actions";
-import { State } from "../../context/reducer";
+import { State } from "../../context/state";
 import useLocalStorage from '../../hooks/useLocalStorage';
 import Palette from '../other/Palette';
 import { useCookies } from 'react-cookie';
@@ -86,7 +86,7 @@ export const Header = () => {
     }
 
     useEffect(() => {
-        import(`../../data/english.json`).then((words) =>
+        import(`../../public/english.json`).then((words) =>
             dispatch(setWordList(words))
         );
         dispatch(timerSet(option));
@@ -103,8 +103,6 @@ export const Header = () => {
     return (
         <div className={styles.Container}>
             <div className={styles.NavBar}>
-                <h1 className={`${styles.NavText} ${styles.language}`} style={{ color: 'var(--sub-color)' }}>english</h1>
-                <div className={`${styles.Divider} ${styles.language}`}></div>
                 {timeOptions.map((option) => (
                     <Option
                         key={option.id}

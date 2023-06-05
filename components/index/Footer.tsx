@@ -2,12 +2,13 @@ import { useSelector } from "react-redux";
 import { useCalculateChartStats } from "../../hooks/useCalculateChartStats";
 import { round, secondsToTime } from '../../utils/utils';
 import ResultChart from "./ResultChart"
-import { State } from "../../context/reducer";
+import { State } from "../../context/state";
 import { useEffect, useState } from "react";
 import { useCalculateStats } from "../../hooks/useCalculateStats";
 import firebase from 'firebase/compat/app';
 import { useCreateTestMutation } from "../../generated/graphql";
 import styles from '../../styles/Footer.module.css';
+import { customToast, toastOptions } from "../../utils/customToast";
 
 const Footer = () => {
     const {
@@ -54,10 +55,8 @@ const Footer = () => {
                     time: `${time}`,
                     uid: `${firebase.auth().currentUser!.uid}`,
                     testTaken: testTaken,
-                    typedWordDataset: typedWordDataset,
-                    wordNumberLabels: wordNumberLabels,
-                    wpmDataset: wpmDataset,
-                    incorrectCharsDataset: incorrectCharsDataset
+                }).catch((_) => {
+                    customToast.error("Failed to save test", toastOptions)
                 })
             }
         }
