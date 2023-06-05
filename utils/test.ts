@@ -175,7 +175,7 @@ export const resetTest = () => {
         clearInterval(timerId);
         dispatch(setTimerId(null));
     }
-    import(`../data/english.json`).then((words) =>
+    import(`../public/english.json`).then((words) =>
         dispatch(setWordList(words.default))
     );
     dispatch(timerSet(time));
