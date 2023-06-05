@@ -4,7 +4,7 @@ import router, { useRouter } from 'next/router';
 import { MdLogout } from 'react-icons/md'
 import { useAuth } from '../../firebase/auth';
 import { toastOptions } from '../../utils/customToast';
-import { State } from '../../context/reducer';
+import { State } from '../../context/state';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setResult } from '../../context/actions';

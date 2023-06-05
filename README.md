@@ -21,6 +21,7 @@ components
    |   |-- ResultChart.tsx
    |   |-- Test.tsx
    |-- other
+   |   |-- ConditionalRenderer.tsx
    |   |-- Error.tsx
    |   |-- Layout.tsx
    |   |-- Loader.tsx
@@ -31,8 +32,12 @@ context
    |-- actions.ts
    |-- reducer.ts
    |-- store.ts
-data
-   |-- english.json 
+   |-- state.ts
+   reducers
+   |   |-- preferenceReducer.ts
+   |   |-- resultReducer.ts
+   |   |-- timerReducer.ts
+   |   |-- wordReducer.ts
 firebase
    |-- auth.js
    |-- firebaseClient.js
@@ -49,12 +54,14 @@ graphql
    |   |-- validate.graphql
    |-- queries
    |   |-- leaderboard.graphql
-   |   |-- paginatedTests.graphql
    |   |-- test.graphql
    |   |-- tests.graphql
    |   |-- userStats.graphql
 hooks
    |-- useLocalStorage.ts
+   |-- useCalculateChartStats.ts
+   |-- useCalculateStats.ts
+   |-- usePaginatedTestsQuery.ts
    |-- useOnClickOutside.ts
 pages
    |-- _app.tsx
@@ -62,13 +69,12 @@ pages
    |-- account.tsx
    |-- index.tsx
    |-- leaderboard.tsx
-   |-- test
-   |   |-- [id].tsx
 public
    |-- favicon.ico
    |-- fonts
    |   |-- LexendDeca-Regular.ttf
    |-- vercel.svg
+   |-- english.json 
 styles
    |-- Account.module.css
    |-- Footer.module.css
@@ -80,12 +86,9 @@ styles
    |-- Palette.module.css
    |-- Signup.module.css
    |-- Test.css
-   |-- Test.module.css
    |-- globals.css
 tsconfig.json
 utils
-   |-- calculateChartStats.ts
-   |-- calculateStats.ts
    |-- constants.ts
    |-- createUrqlClient.ts
    |-- customToast.ts
