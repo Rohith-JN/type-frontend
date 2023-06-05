@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setRef, setCaretRef } from "../../context/actions";
-import { State } from "../../context/reducer";
+import { State } from "../../context/state";
 import { FiRefreshCcw } from 'react-icons/fi';
 import { resetTest } from "../../utils/test";
 

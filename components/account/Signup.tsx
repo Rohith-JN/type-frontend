@@ -6,7 +6,7 @@ import { useRegisterMutation, useValidateMutation } from '../../generated/graphq
 import { toastOptions } from '../../utils/customToast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setResult } from '../../context/actions';
-import { State } from '../../context/reducer';
+import { State } from '../../context/state';
 import { customToast } from '../../utils/customToast';
 import { useAuth } from '../../firebase/auth';
 

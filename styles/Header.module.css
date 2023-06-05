@@ -18,7 +18,7 @@
     padding-left: 10px;
     padding-right: 10px;
     max-width:35rem;
-    width: 35rem;
+    width: 30rem;
 }
 h1.Paragraph {
     font-family: 'lexend';
@@ -67,9 +67,6 @@ h1.NavText:hover {
 @media screen and (max-width: 400px){
     .NavBar {
         width: 16rem; 
-    }
-    .NavBar h1.language, .language   {
-        display: none;
     }
 }
 @media screen and (max-width: 350px) {

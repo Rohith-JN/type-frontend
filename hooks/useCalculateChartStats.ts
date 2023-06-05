@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { State } from "../context/reducer";
+import { State } from "../context/state";
 
 export const useCalculateChartStats = () => {
     const {

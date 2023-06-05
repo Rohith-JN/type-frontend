@@ -5,7 +5,7 @@ import { toastOptions } from '../../utils/customToast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setResult } from '../../context/actions';
 import { useAuth } from '../../firebase/auth';
-import { State } from '../../context/reducer';
+import { State } from '../../context/state';
 import { customToast } from '../../utils/customToast';
 
 export default function Login(props: { onClick: VoidFunction }) {
