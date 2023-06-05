@@ -9,9 +9,5 @@ query Test($id: Float!, $uid: String!) {
     chars
     createdAt
     testTaken
-    typedWordDataset
-    wordNumberLabels
-    wpmDataset
-    incorrectCharsDataset 
   }
 }

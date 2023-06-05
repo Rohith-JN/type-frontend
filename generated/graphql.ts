@@ -122,28 +122,20 @@ export type Test = {
     createdAt: Scalars["String"];
     creatorId: Scalars["String"];
     id: Scalars["Float"];
-    incorrectCharsDataset: Array<Scalars["Float"]>;
     rawWpm: Scalars["Float"];
     testTaken: Scalars["String"];
     time: Scalars["String"];
-    typedWordDataset: Array<Scalars["String"]>;
-    wordNumberLabels: Array<Scalars["Float"]>;
     wpm: Scalars["Float"];
-    wpmDataset: Array<Scalars["Float"]>;
 };
 
 export type TestOptions = {
     accuracy: Scalars["Float"];
     chars: Scalars["String"];
-    incorrectCharsDataset: Array<Scalars["Float"]>;
     rawWpm: Scalars["Float"];
     testTaken: Scalars["String"];
     time: Scalars["String"];
-    typedWordDataset: Array<Scalars["String"]>;
     uid: Scalars["String"];
-    wordNumberLabels: Array<Scalars["Float"]>;
     wpm: Scalars["Float"];
-    wpmDataset: Array<Scalars["Float"]>;
 };
 
 export type Tests = {
@@ -194,10 +186,6 @@ export type CreateTestMutationVariables = Exact<{
     time: Scalars["String"];
     uid: Scalars["String"];
     testTaken: Scalars["String"];
-    typedWordDataset: Array<Scalars["String"]> | Scalars["String"];
-    wordNumberLabels: Array<Scalars["Float"]> | Scalars["Float"];
-    wpmDataset: Array<Scalars["Float"]> | Scalars["Float"];
-    incorrectCharsDataset: Array<Scalars["Float"]> | Scalars["Float"];
 }>;
 
 export type CreateTestMutation = {
@@ -213,10 +201,6 @@ export type CreateTestMutation = {
         chars: string;
         testTaken: string;
         createdAt: string;
-        typedWordDataset: Array<string>;
-        wordNumberLabels: Array<number>;
-        wpmDataset: Array<number>;
-        incorrectCharsDataset: Array<number>;
     };
 };
 
@@ -288,40 +272,6 @@ export type LeaderboardQuery = {
     };
 };
 
-export type PaginatedTestsQueryVariables = Exact<{
-    uid: Scalars["String"];
-    first: Scalars["Int"];
-    after?: InputMaybe<Scalars["String"]>;
-}>;
-
-export type PaginatedTestsQuery = {
-    __typename?: "Query";
-    paginatedTests: {
-        __typename?: "PaginatedTests";
-        tests: Array<{
-            __typename?: "Test";
-            id: number;
-            creatorId: string;
-            time: string;
-            accuracy: number;
-            wpm: number;
-            rawWpm: number;
-            chars: string;
-            createdAt: string;
-            testTaken: string;
-            typedWordDataset: Array<string>;
-            wordNumberLabels: Array<number>;
-            wpmDataset: Array<number>;
-            incorrectCharsDataset: Array<number>;
-        }>;
-        pageInfo: {
-            __typename?: "PageInfo";
-            hasNextPage: boolean;
-            endCursor: string;
-        };
-    };
-};
-
 export type TestQueryVariables = Exact<{
     id: Scalars["Float"];
     uid: Scalars["String"];
@@ -340,10 +290,6 @@ export type TestQuery = {
         chars: string;
         createdAt: string;
         testTaken: string;
-        typedWordDataset: Array<string>;
-        wordNumberLabels: Array<number>;
-        wpmDataset: Array<number>;
-        incorrectCharsDataset: Array<number>;
     };
 };
 
@@ -392,10 +338,6 @@ export const CreateTestDocument = gql`
         $time: String!
         $uid: String!
         $testTaken: String!
-        $typedWordDataset: [String!]!
-        $wordNumberLabels: [Float!]!
-        $wpmDataset: [Float!]!
-        $incorrectCharsDataset: [Float!]!
     ) {
         createTest(
             testOptions: {
@@ -406,10 +348,6 @@ export const CreateTestDocument = gql`
                 time: $time
                 uid: $uid
                 testTaken: $testTaken
-                typedWordDataset: $typedWordDataset
-                wordNumberLabels: $wordNumberLabels
-                wpmDataset: $wpmDataset
-                incorrectCharsDataset: $incorrectCharsDataset
             }
         ) {
             id
@@ -421,10 +359,6 @@ export const CreateTestDocument = gql`
             chars
             testTaken
             createdAt
-            typedWordDataset
-            wordNumberLabels
-            wpmDataset
-            incorrectCharsDataset
         }
     }
 `;
@@ -500,40 +434,6 @@ export function useLeaderboardQuery(
         ...options,
     });
 }
-export const PaginatedTestsDocument = gql`
-    query paginatedTests($uid: String!, $first: Int!, $after: String) {
-        paginatedTests(uid: $uid, first: $first, after: $after) {
-            tests {
-                id
-                creatorId
-                time
-                accuracy
-                wpm
-                rawWpm
-                chars
-                createdAt
-                testTaken
-                typedWordDataset
-                wordNumberLabels
-                wpmDataset
-                incorrectCharsDataset
-            }
-            pageInfo {
-                hasNextPage
-                endCursor
-            }
-        }
-    }
-`;
-
-export function usePaginatedTestsQuery(
-    options: Omit<Urql.UseQueryArgs<PaginatedTestsQueryVariables>, "query">
-) {
-    return Urql.useQuery<PaginatedTestsQuery, PaginatedTestsQueryVariables>({
-        query: PaginatedTestsDocument,
-        ...options,
-    });
-}
 export const TestDocument = gql`
     query Test($id: Float!, $uid: String!) {
         test(id: $id, uid: $uid) {
@@ -546,10 +446,6 @@ export const TestDocument = gql`
             chars
             createdAt
             testTaken
-            typedWordDataset
-            wordNumberLabels
-            wpmDataset
-            incorrectCharsDataset
         }
     }
 `;

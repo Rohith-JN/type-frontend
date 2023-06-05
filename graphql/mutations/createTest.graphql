@@ -1,5 +1,5 @@
-mutation createTest($chars: String!, $wpm: Float!, $rawWpm: Float!, $accuracy: Float!, $time: String!, $uid: String!, $testTaken: String!, $typedWordDataset: [String!]!, $wordNumberLabels: [Float!]!, $wpmDataset: [Float!]!, $incorrectCharsDataset: [Float!]!) {
-  createTest(testOptions: {chars: $chars, wpm: $wpm, rawWpm: $rawWpm, accuracy: $accuracy, time: $time, uid: $uid, testTaken: $testTaken, typedWordDataset: $typedWordDataset, wordNumberLabels: $wordNumberLabels, wpmDataset: $wpmDataset, incorrectCharsDataset: $incorrectCharsDataset}) {
+mutation createTest($chars: String!, $wpm: Float!, $rawWpm: Float!, $accuracy: Float!, $time: String!, $uid: String!, $testTaken: String!) {
+  createTest(testOptions: {chars: $chars, wpm: $wpm, rawWpm: $rawWpm, accuracy: $accuracy, time: $time, uid: $uid, testTaken: $testTaken}) {
     id
     creatorId
     time
@@ -9,9 +9,5 @@ mutation createTest($chars: String!, $wpm: Float!, $rawWpm: Float!, $accuracy: F
     chars
     testTaken
     createdAt
-    typedWordDataset
-    wordNumberLabels
-    wpmDataset
-    incorrectCharsDataset 
   }
 }
