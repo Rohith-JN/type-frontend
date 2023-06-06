@@ -66,6 +66,31 @@
     font-size: 1.1rem;
     cursor: pointer;
 }
+@media screen and (max-width: 700px) {
+    .Signup h1 {
+        font-size: 2rem;
+    }
+    .Signup input {
+        height: 50px;
+        width: 350px;
+    }
+    .Signup form button {
+        height: 45px;
+        width: 100px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .Signup input {
+        width: 100%;
+    }
+    .Signup p {
+        font-size: 0.9rem;
+    }
+    .Signup span {
+        font-size: 0.9rem;
+    }
+}
 @media screen and (max-width: 400px) {
     .Signup input {
         width: 100%;

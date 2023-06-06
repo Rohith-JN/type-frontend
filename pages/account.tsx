@@ -50,7 +50,7 @@ const Account = ({ themeData }: {
   }
   else {
     return <ConditionalRenderer data={true} fetching={false} title={'Type / Account'}>
-      <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+      <div style={{ display: "flex", width: "100%", justifyContent: "center", height: "80vh", alignItems: "center" }}>
         <div style={{ display: loginVisible }}>
           <Login onClick={loginOnClick} />
         </div>
