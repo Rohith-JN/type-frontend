@@ -20,20 +20,19 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-
-const AccountChart = ({ chartLabels, wpmData, accuracyData, takenData }: { chartLabels: Array<number>, wpmData: Array<number>, accuracyData: Array<number>, takenData: Array<string> }) => {
+const Chart = ({ wordNumberLables, wpmDataset, incorrectCharsDataset, typedWordDataset }: { wordNumberLables: Array<number>, wpmDataset: Array<number>, incorrectCharsDataset: Array<any>, typedWordDataset: Array<String> }) => {
 
     const rootStyles = getComputedStyle(document.documentElement);
     const mainColor = rootStyles.getPropertyValue('--main-color');
     const subColor = rootStyles.getPropertyValue('--sub-color');
+    const errorColor = rootStyles.getPropertyValue('--error-color');
 
     const data = {
         labels: [] as number[],
         datasets: [
             {
-                label: 'WPM',
+                label: 'Continuous WPM',
                 data: [] as number[],
-                fill: true,
                 backgroundColor: mainColor,
                 borderColor: mainColor,
                 borderWidth: 3,
@@ -41,23 +40,39 @@ const AccountChart = ({ chartLabels, wpmData, accuracyData, takenData }: { chart
                 yAxisID: 'y',
             },
             {
-                label: 'Accuracy',
+                label: 'Incorrect Characters',
                 data: [] as number[],
-                fill: true,
-                backgroundColor: subColor,
-                borderColor: subColor,
+                borderColor: function (context: any) {
+                    const dataPoint = context.dataset.data[context.dataIndex];
+                    if (dataPoint === 0) {
+                        return 'transparent';
+                    } else {
+                        return errorColor;
+                    }
+                },
+                backgroundColor: function (context: any) {
+                    const dataPoint = context.dataset.data[context.dataIndex];
+                    if (dataPoint === 0) {
+                        return 'transparent';
+                    } else {
+                        return errorColor;
+                    }
+                },
                 borderWidth: 3,
-                lineTension: 0.4,
+                pointRadius: 4,
+                pointHoverRadius: 8,
+                showLine: false,
                 yAxisID: 'y1',
+                pointStyle: 'cross'
             },
         ],
     };
 
-    const footer = (tooltipItems: any[]) => {
+    const title = (tooltipItems: any[]) => {
         if (tooltipItems.length > 0) {
             const dataIndex = tooltipItems[0].dataIndex;
-            const testTaken = takenData[dataIndex];
-            return testTaken;
+            const typedWord = typedWordDataset[dataIndex];
+            return `'${typedWord}'`;
         }
         return '';
     };
@@ -76,9 +91,9 @@ const AccountChart = ({ chartLabels, wpmData, accuracyData, takenData }: { chart
         maintainAspectRatio: false,
         plugins: {
             tooltip: {
+                displayColors: false,
                 titleMarginBottom: 10,
                 bodySpacing: 5,
-                footerMarginTop: 10,
                 padding: {
                     top: 10,
                     bottom: 10,
@@ -104,11 +119,8 @@ const AccountChart = ({ chartLabels, wpmData, accuracyData, takenData }: { chart
                     color: subColor,
                 },
                 callbacks: {
-                    footer: footer,
-                    title: (tooltipItems: any[]) => {
-                        return `Test: ${tooltipItems[0].label}`;
-                    }
-                }
+                    title: title,
+                },
             },
             legend: {
                 position: 'top',
@@ -129,7 +141,7 @@ const AccountChart = ({ chartLabels, wpmData, accuracyData, takenData }: { chart
             x: {
                 title: {
                     display: true,
-                    text: 'Test',
+                    text: 'Word Number',
                     color: subColor,
                     font: {
                         size: 16,
@@ -153,7 +165,7 @@ const AccountChart = ({ chartLabels, wpmData, accuracyData, takenData }: { chart
             },
             y: {
                 min: 0,
-                max: Math.max(...wpmData) > 150 ? 300 : 200,
+                max: Math.max(...wpmDataset) > 170 ? 300 : 200,
                 position: 'left',
                 title: {
                     display: true,
@@ -170,7 +182,7 @@ const AccountChart = ({ chartLabels, wpmData, accuracyData, takenData }: { chart
                     },
                     color: subColor,
                     callback: function (value: any, index: number, values: string | any[]) {
-                        if (wpmData.length !== 0) {
+                        if (wpmDataset.length !== 0) {
                             // Show the actual value of each tick if chartData has values
                             return value;
                         } else {
@@ -184,16 +196,15 @@ const AccountChart = ({ chartLabels, wpmData, accuracyData, takenData }: { chart
                     color: subColor + "15"
                 },
                 border: {
-                    color: subColor
+                    color: subColor,
                 }
             },
             y1: {
                 position: 'right',
-                max: 120,
                 min: 0,
                 title: {
                     display: true,
-                    text: 'Accuracy',
+                    text: 'Incorrect Characters',
                     color: subColor,
                     font: {
                         size: 16,
@@ -201,12 +212,15 @@ const AccountChart = ({ chartLabels, wpmData, accuracyData, takenData }: { chart
                     },
                 },
                 ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 5,
+                    precision: 0,
                     font: {
                         family: 'lexend, sans-serif',
                     },
                     color: subColor,
                     callback: function (value: any, index: number, values: string | any[]) {
-                        if (accuracyData.length !== 0) {
+                        if (incorrectCharsDataset.length !== 0) {
                             return value;
                         } else {
                             if (index === values.length - 1) return 1;
@@ -230,11 +244,11 @@ const AccountChart = ({ chartLabels, wpmData, accuracyData, takenData }: { chart
         },
     };
 
-    data.labels = chartLabels;
-    data.datasets[0].data = wpmData;
-    data.datasets[1].data = accuracyData;
+    data.labels = wordNumberLables;
+    data.datasets[0].data = wpmDataset;
+    data.datasets[1].data = incorrectCharsDataset;
 
     return (<Line options={options} data={data} />);
 }
 
-export default AccountChart;
+export default Chart

@@ -10,6 +10,9 @@ import {
     Legend
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { TestsQuery } from '../../graphql/generated/graphql';
+import { useAuth } from '../../firebase/auth';
+import styles from '../../styles/Account.module.css';
 
 ChartJS.register(
     CategoryScale,
@@ -20,19 +23,26 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-const ResultChart = ({ wordNumberLables, wpmDataset, incorrectCharsDataset, typedWordDataset }: { wordNumberLables: Array<number>, wpmDataset: Array<number>, incorrectCharsDataset: Array<any>, typedWordDataset: Array<String> }) => {
+
+const Chart = ({ data }: { data: TestsQuery }) => {
+    const { authUser } = useAuth();
 
     const rootStyles = getComputedStyle(document.documentElement);
     const mainColor = rootStyles.getPropertyValue('--main-color');
     const subColor = rootStyles.getPropertyValue('--sub-color');
-    const errorColor = rootStyles.getPropertyValue('--error-color');
 
-    const data = {
-        labels: [] as number[],
+    const wpmData = data?.tests.wpmData!.length! > 0 ? data?.tests.wpmData! : []
+    const accuracyData = (data?.tests.accuracyData!.length! > 0) ? data?.tests.accuracyData! : []
+    const labels = (data?.tests.labels!.length! > 1) ? data?.tests.labels! : [1, 2]
+    const testTaken = data?.tests.testTaken!
+
+    const chartData = {
+        labels: labels,
         datasets: [
             {
-                label: 'Continuous WPM',
-                data: [] as number[],
+                label: 'WPM',
+                data: wpmData,
+                fill: true,
                 backgroundColor: mainColor,
                 borderColor: mainColor,
                 borderWidth: 3,
@@ -40,44 +50,27 @@ const ResultChart = ({ wordNumberLables, wpmDataset, incorrectCharsDataset, type
                 yAxisID: 'y',
             },
             {
-                label: 'Incorrect Characters',
-                data: [] as number[],
-                borderColor: function (context: any) {
-                    const dataPoint = context.dataset.data[context.dataIndex];
-                    if (dataPoint === 0) {
-                        return 'transparent';
-                    } else {
-                        return errorColor;
-                    }
-                },
-                backgroundColor: function (context: any) {
-                    const dataPoint = context.dataset.data[context.dataIndex];
-                    if (dataPoint === 0) {
-                        return 'transparent';
-                    } else {
-                        return errorColor;
-                    }
-                },
+                label: 'Accuracy',
+                data: accuracyData,
+                fill: true,
+                backgroundColor: subColor,
+                borderColor: subColor,
                 borderWidth: 3,
-                pointRadius: 4,
-                pointHoverRadius: 8,
-                showLine: false,
+                lineTension: 0.4,
                 yAxisID: 'y1',
-                pointStyle: 'cross'
             },
         ],
     };
 
-    const title = (tooltipItems: any[]) => {
+    const footer = (tooltipItems: any[]) => {
         if (tooltipItems.length > 0) {
-            const dataIndex = tooltipItems[0].dataIndex;
-            const typedWord = typedWordDataset[dataIndex];
-            return `'${typedWord}'`;
+            const dataIndex = tooltipItems[0].dataIndex;;
+            return testTaken[dataIndex];
         }
         return '';
     };
 
-    const options: any = {
+    const chartOptions: any = {
         tooltips: {
             enabled: true,
             mode: 'label',
@@ -91,9 +84,9 @@ const ResultChart = ({ wordNumberLables, wpmDataset, incorrectCharsDataset, type
         maintainAspectRatio: false,
         plugins: {
             tooltip: {
-                displayColors: false,
                 titleMarginBottom: 10,
                 bodySpacing: 5,
+                footerMarginTop: 10,
                 padding: {
                     top: 10,
                     bottom: 10,
@@ -119,8 +112,11 @@ const ResultChart = ({ wordNumberLables, wpmDataset, incorrectCharsDataset, type
                     color: subColor,
                 },
                 callbacks: {
-                    title: title,
-                },
+                    footer: footer,
+                    title: (tooltipItems: any[]) => {
+                        return `Test: ${tooltipItems[0].label}`;
+                    }
+                }
             },
             legend: {
                 position: 'top',
@@ -141,7 +137,7 @@ const ResultChart = ({ wordNumberLables, wpmDataset, incorrectCharsDataset, type
             x: {
                 title: {
                     display: true,
-                    text: 'Word Number',
+                    text: 'Test',
                     color: subColor,
                     font: {
                         size: 16,
@@ -165,7 +161,7 @@ const ResultChart = ({ wordNumberLables, wpmDataset, incorrectCharsDataset, type
             },
             y: {
                 min: 0,
-                max: Math.max(...wpmDataset) > 170 ? 300 : 200,
+                max: Math.max(...wpmData) > 150 ? 300 : 200,
                 position: 'left',
                 title: {
                     display: true,
@@ -182,7 +178,7 @@ const ResultChart = ({ wordNumberLables, wpmDataset, incorrectCharsDataset, type
                     },
                     color: subColor,
                     callback: function (value: any, index: number, values: string | any[]) {
-                        if (wpmDataset.length !== 0) {
+                        if (wpmData.length !== 0) {
                             // Show the actual value of each tick if chartData has values
                             return value;
                         } else {
@@ -196,15 +192,16 @@ const ResultChart = ({ wordNumberLables, wpmDataset, incorrectCharsDataset, type
                     color: subColor + "15"
                 },
                 border: {
-                    color: subColor,
+                    color: subColor
                 }
             },
             y1: {
                 position: 'right',
+                max: 120,
                 min: 0,
                 title: {
                     display: true,
-                    text: 'Incorrect Characters',
+                    text: 'Accuracy',
                     color: subColor,
                     font: {
                         size: 16,
@@ -212,15 +209,12 @@ const ResultChart = ({ wordNumberLables, wpmDataset, incorrectCharsDataset, type
                     },
                 },
                 ticks: {
-                    autoSkip: true,
-                    maxTicksLimit: 5,
-                    precision: 0,
                     font: {
                         family: 'lexend, sans-serif',
                     },
                     color: subColor,
                     callback: function (value: any, index: number, values: string | any[]) {
-                        if (incorrectCharsDataset.length !== 0) {
+                        if (accuracyData.length !== 0) {
                             return value;
                         } else {
                             if (index === values.length - 1) return 1;
@@ -244,11 +238,11 @@ const ResultChart = ({ wordNumberLables, wpmDataset, incorrectCharsDataset, type
         },
     };
 
-    data.labels = wordNumberLables;
-    data.datasets[0].data = wpmDataset;
-    data.datasets[1].data = incorrectCharsDataset;
-
-    return (<Line options={options} data={data} />);
+    return (authUser) ?
+        <div className={styles.graph}>
+            <Line options={chartOptions} data={chartData} />
+        </div>
+        : null;
 }
 
-export default ResultChart;
+export default Chart

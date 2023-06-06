@@ -8,7 +8,7 @@ const config: CodegenConfig = {
         : "http://localhost:4000/graphql",
     documents: "graphql/**/*.graphql",
     generates: {
-        "generated/": {
+        "graphql/generated/": {
             preset: "client",
             plugins: ["typescript", "typescript-operations", "typescript-urql"],
         },

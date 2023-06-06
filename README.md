@@ -11,14 +11,15 @@
 ```
 components
    |-- account
-   |   |-- AccountChart.tsx
+   |   |-- Chart.tsx
+   |   |-- Stats.tsx
+   |   |-- Tests.tsx
    |   |-- Login.tsx
    |   |-- Signup.tsx
    |-- index
    |   |-- Footer.tsx
    |   |-- Header.tsx
-   |   |-- Option.tsx
-   |   |-- ResultChart.tsx
+   |   |-- Chart.tsx
    |   |-- Test.tsx
    |-- other
    |   |-- ConditionalRenderer.tsx
@@ -28,6 +29,7 @@ components
    |   |-- NavOption.tsx
    |   |-- Navbar.tsx
    |   |-- Palette.tsx
+   |   |-- Option.tsx
 context
    |-- actions.ts
    |-- reducer.ts
@@ -42,12 +44,13 @@ firebase
    |-- auth.js
    |-- firebaseClient.js
    |-- useFirebaseAuth.js
-generated
-   |-- fragment-masking.ts
-   |-- gql.ts
-   |-- graphql.ts
-   |-- index.ts
+
 graphql
+   |-- generated
+   |   |-- fragment-masking.ts
+   |   |-- gql.ts
+   |   |-- graphql.ts
+   |   |-- index.ts
    |-- mutations
    |   |-- createTest.graphql
    |   |-- register.graphql
@@ -147,7 +150,8 @@ Type is built using a range of modern web technologies, including:
 2) Next.js
 3) TypeScript
 4) Redux
-5) Firebase
+5) Apollo-Graphql
+6) Firebase
   
 ## Backend
 

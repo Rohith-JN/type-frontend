@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import { useCalculateChartStats } from "../../hooks/useCalculateChartStats";
 import { round, secondsToTime } from '../../utils/utils';
-import ResultChart from "./ResultChart"
+import Chart from "./Chart"
 import { State } from "../../context/state";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useCalculateStats } from "../../hooks/useCalculateStats";
 import firebase from 'firebase/compat/app';
-import { useCreateTestMutation } from "../../generated/graphql";
+import { useCreateTestMutation } from "../../graphql/generated/graphql";
 import styles from '../../styles/Footer.module.css';
 import { customToast, toastOptions } from "../../utils/customToast";
 
@@ -17,7 +17,6 @@ const Footer = () => {
         result: { results },
     } = useSelector((state: State) => state);
     const [, createTest] = useCreateTestMutation();
-    const [showResult, setShowResult] = useState(false);
     const { wpm, accuracy, incorrectChars, correctChars, rawWpm } = useCalculateStats();
     const {
         typedWordDataset,
@@ -63,18 +62,14 @@ const Footer = () => {
         test()
     }, [timer, timerId]);
 
-    useEffect(() => {
-        results.length > 1 ? setShowResult(true) : setShowResult(false)
-    }, [results.length])
-
     return (
-        <div className={styles.footer} style={{ display: showResult ? "flex" : "none" }}>
+        <div className={styles.footer} style={{ display: "flex" }}>
             <table>
                 <thead>
                     <tr>
                         <th className={styles.sno}>S:No</th>
                         <th className={styles.wpm}>WPM</th>
-                        <th className={styles.raw}>Raw WPM</th>
+                        <th className={styles.raw}>Raw</th>
                         <th className={styles.acc}>Accuracy</th>
                         <th className={styles.chars}>Chars</th>
                         <th className={styles.time}>Time</th>
@@ -82,7 +77,7 @@ const Footer = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {results.map((object, index) => {
+                    {results.length > 1 ? results.map((object, index) => {
                         if (index == 0) {
                             return null
                         }
@@ -99,20 +94,28 @@ const Footer = () => {
                                 </tr>
                             );
                         }
-                    })}
+                    }) : <tr>
+                        <td className={styles.sno}>-</td>
+                        <td className={styles.wpm}>-</td>
+                        <td className={styles.raw}>-</td>
+                        <td className={styles.acc}>-</td>
+                        <td className={styles.chars}>-{' '}/{' '}-</td>
+                        <td className={styles.time}>-</td>
+                        <td className={styles.testTaken}>-</td>
+                    </tr>}
                 </tbody>
             </table>
             <div className={styles.chart}>
-                {results.map((object, index) => {
+                {results.length > 1 ? results.map((object, index) => {
                     if (index == 1) {
                         return (
-                            <ResultChart key={index} wpmDataset={object.wpmDataset} wordNumberLables={((object.wordNumberLabels).length === 0) ? [1, 2] : object.wordNumberLabels} typedWordDataset={object.typedWordDataset} incorrectCharsDataset={object.incorrectCharsDataset} />
+                            <Chart key={index} wpmDataset={object.wpmDataset} wordNumberLables={((object.wordNumberLabels).length === 0) ? [1, 2] : object.wordNumberLabels} typedWordDataset={object.typedWordDataset} incorrectCharsDataset={object.incorrectCharsDataset} />
                         );
                     }
                     else {
                         return null
                     }
-                })}
+                }) : <Chart wpmDataset={[]} wordNumberLables={[1, 2]} typedWordDataset={[]} incorrectCharsDataset={[]} />}
             </div>
         </div>
     )

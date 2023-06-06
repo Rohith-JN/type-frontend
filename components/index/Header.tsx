@@ -1,6 +1,6 @@
 import styles from '../../styles/Header.module.css'
 import { useMemo } from 'react';
-import Option from './Option';
+import Option from '../other/Option';
 import { resetTest } from "../../utils/test";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,7 +44,7 @@ const themeOptions: string[] = [
     "weird",
 ].sort();
 
-export const Header = () => {
+const Header = () => {
     const timeOptions = useMemo(() => [
         { id: 1, optionText: 15 },
         { id: 2, optionText: 30 },
@@ -130,3 +130,5 @@ export const Header = () => {
         </div>
     );
 }
+
+export default Header

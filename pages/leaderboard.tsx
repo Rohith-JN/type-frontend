@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import styles from '../styles/Leaderboard.module.css'
-import { useLeaderboardQuery } from "../generated/graphql";
+import { useLeaderboardQuery } from "../graphql/generated/graphql";
 import { useAuth } from "../firebase/auth";
 import { getTheme } from "../utils/getTheme";
 import { NextPageContext } from "next";

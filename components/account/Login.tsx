@@ -8,7 +8,7 @@ import { useAuth } from '../../firebase/auth';
 import { State } from '../../context/state';
 import { customToast } from '../../utils/customToast';
 
-export default function Login(props: { onClick: VoidFunction }) {
+const Login = (props: { onClick: VoidFunction }) => {
     const {
         result: { results }
     } = useSelector((state: State) => state);
@@ -46,3 +46,5 @@ export default function Login(props: { onClick: VoidFunction }) {
         </>
     );
 }
+
+export default Login

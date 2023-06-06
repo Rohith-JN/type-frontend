@@ -2,7 +2,7 @@ import styles from '../../styles/Signup.module.css';
 import React, { useState } from 'react';
 import firebase from 'firebase/compat/app';
 import 'react-toastify/dist/ReactToastify.css';
-import { useRegisterMutation, useValidateMutation } from '../../generated/graphql';
+import { useRegisterMutation, useValidateMutation } from '../../graphql/generated/graphql';
 import { toastOptions } from '../../utils/customToast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setResult } from '../../context/actions';
@@ -67,4 +67,5 @@ const Signup = (props: { onClick: VoidFunction }) => {
         </>
     );
 }
+
 export default Signup

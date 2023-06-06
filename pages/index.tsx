@@ -1,4 +1,4 @@
-import { Header } from '../components/index/Header';
+import Header from '../components/index/Header';
 import Test from '../components/index/Test';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
