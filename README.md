@@ -118,24 +118,24 @@ If you want to test the site locally follow these steps:
 3) Setup a new project on Firebase
 4) Enable authentication in Firebase
 5) Enable Email/Password provider
-6) Create a .env.local file 
-7) Copy the variables from .env.example file onto .env.local file
-8) Copy Firebase credentials onto the corresponding values in the .env.local file
-9) Set the backend PORT of your choice in .env.local *NEXT_PUBLIC_BACKEND_URL* and in *codegen.ts* or stick with the default PORT *4000*
-10) Run *npm install*
+6) Create a `.env.local` file 
+7) Copy the variables from `.env.example` file onto `.env.local` file
+8) Copy Firebase credentials onto the corresponding values in the `.env.local` file
+9) Set the backend PORT of your choice in .env.local `NEXT_PUBLIC_BACKEND_URL` and in `codegen.ts` or stick with the default PORT `4000`
+10) Run `npm install`
 11) You have successfully setup the Frontend
 
 **Backend**
 
 1) Fork the repository to your GitHub account.
 2) Git clone the repo
-3) Create a .env file 
-4) Copy the variables from .env.example file onto .env file
-5) Set the backend PORT of your choice in .env *PORT* or stick with the default PORT *4000*
+3) Create a `.env` file 
+4) Copy the variables from `.env.example` file onto .env file
+5) Set the backend PORT of your choice in .env PORT or stick with the default PORT `4000`
 6) Setup PostgreSQL in your machine
-7) Import migration: *migration1684564075219* into *src/data-source.ts* add it to *migrations* 
-8) Run *npm run migration:run*; this will setup the tables in postgres
-9) Run *npm install*
+7) Import migration: `migration1684564075219` into `src/data-source.ts` add it to `migrations` 
+8) Run `npm run migration:run` this will setup the tables in postgres
+9) Run `npm install`
 10) You have successfully setup the Backend
 
 ## Technologies Used
