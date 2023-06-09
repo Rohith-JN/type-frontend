@@ -39,6 +39,8 @@ p.info {
 }
 .leaderboard table td {
     color: var(--sub-color);
+    word-break: break-all;
+    max-width: 100px;
 }
 .leaderboard tbody tr:nth-of-type(even) {
     background-color: var(--sub-alt-color)
