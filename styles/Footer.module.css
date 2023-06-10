@@ -11,7 +11,7 @@
     border-collapse: separate;
     overflow:hidden;
     max-width: 55rem; 
-    width: 55rem;
+    width: 50rem;
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -49,7 +49,7 @@
     border-bottom-right-radius: 6px; 
     border-top-right-radius: 6px; 
 }
-@media only screen and (max-width: 55rem) {
+@media only screen and (max-width: 50rem) {
     .footer table {
       width: 100%;
     }
@@ -60,14 +60,6 @@
     .footer table tbody td:nth-child(2), .footer table thead th:nth-child(2) {
         border-top-left-radius: 6px; 
         border-bottom-left-radius: 6px;
-    }
-}
-@media screen and (max-width: 540px) {
-    table th.testTaken { display: none; }
-    table td.testTaken { display: none; }
-    .footer table tbody td:nth-child(6), .footer table thead th:nth-child(6) {
-        border-bottom-right-radius: 6px; 
-        border-top-right-radius: 6px; 
     }
 }
 @media screen and (max-width: 430px) {
@@ -106,7 +98,7 @@
         font-family: 'lexend';
     }
 }
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 285px) {
     table th.chars { display: none; }
     table td.chars { display: none; }
     .footer table tbody td:nth-child(6), .footer table thead th:nth-child(6) {

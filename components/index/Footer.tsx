@@ -70,10 +70,9 @@ const Footer = () => {
                         <th className={styles.sno}>S:No</th>
                         <th className={styles.wpm}>WPM</th>
                         <th className={styles.raw}>Raw</th>
-                        <th className={styles.acc}>Accuracy</th>
+                        <th className={styles.acc}>Acc</th>
                         <th className={styles.chars}>Chars</th>
                         <th className={styles.time}>Time</th>
-                        <th className={styles.testTaken}>Taken</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,7 +89,6 @@ const Footer = () => {
                                     <td className={styles.acc}>{round(object.accuracy, 1)}%</td>
                                     <td className={styles.chars}>{object.correctChars}{' '}/{' '}{object.incorrectChars}</td>
                                     <td className={styles.time}>{secondsToTime(object.time)}</td>
-                                    <td className={styles.testTaken}>{object.testTaken}</td>
                                 </tr>
                             );
                         }
@@ -101,7 +99,6 @@ const Footer = () => {
                         <td className={styles.acc}>-</td>
                         <td className={styles.chars}>-{' '}/{' '}-</td>
                         <td className={styles.time}>-</td>
-                        <td className={styles.testTaken}>-</td>
                     </tr>}
                 </tbody>
             </table>
