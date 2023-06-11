@@ -1,4 +1,4 @@
-mutation createTest($chars: String!, $wpm: Float!, $rawWpm: Float!, $accuracy: Float!, $time: String!, $uid: String!, $testTaken: String!) {
+mutation createTest($chars: String!, $wpm: Float!, $rawWpm: Float!, $accuracy: Float!, $time: Float!, $uid: String!, $testTaken: String!) {
   createTest(testOptions: {chars: $chars, wpm: $wpm, rawWpm: $rawWpm, accuracy: $accuracy, time: $time, uid: $uid, testTaken: $testTaken}) {
     id
     creatorId

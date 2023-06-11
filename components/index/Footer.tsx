@@ -51,7 +51,7 @@ const Footer = () => {
                     wpm: Math.round(wpm),
                     rawWpm: Math.round(rawWpm),
                     accuracy: round(accuracy, 1),
-                    time: `${time}`,
+                    time: time,
                     uid: `${firebase.auth().currentUser!.uid}`,
                     testTaken: testTaken,
                 }).catch((_) => {

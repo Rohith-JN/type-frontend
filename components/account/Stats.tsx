@@ -22,7 +22,7 @@ const Stats = ({ data }: { data: GetStatsQuery }) => {
                     {
                         data?.getStats.userStats.map((stat, index) => <tr key={index + 1}>
                             <td className={styles.sno}>{index + 1}</td>
-                            <td className={styles.time}>{secondsToTime(parseInt(stat.time))}</td>
+                            <td className={styles.time}>{secondsToTime(stat.time)}</td>
                             <td className={styles.pb}>{stat.pb}</td>
                             <td className={styles.wpm}>
                                 {stat.wpm.toString()} / {stat.recentWpm.toString()}</td>

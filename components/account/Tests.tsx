@@ -25,7 +25,7 @@ const Tests = ({ data, callBack }: { data: any[], callBack: () => void }) => {
                             <td className={styles.raw}>{test.rawWpm}</td>
                             <td className={styles.acc}>{test.accuracy}%</td>
                             <td className={styles.chars}>{test.chars}</td>
-                            <td className={styles.time}>{secondsToTime(parseInt(test.time))}</td>
+                            <td className={styles.time}>{secondsToTime(test.time)}</td>
                             <td className={styles.taken}>{test.testTaken}</td>
                         </tr>)
                     }

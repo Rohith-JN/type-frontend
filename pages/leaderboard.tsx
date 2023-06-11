@@ -26,7 +26,7 @@ const Leaderboard = ({ themeData }: {
     const [option, setOption] = useState(60);
     const [{ data, fetching }] = useLeaderboardQuery({
         variables: {
-            time: option.toString(),
+            time: option,
             uid: uid
         }
     })
@@ -71,7 +71,7 @@ const Leaderboard = ({ themeData }: {
                                 <td className={styles.wpm}>{test.wpm}</td>
                                 <td className={styles.rawWpm}>{test.rawWpm}</td>
                                 <td>{test.accuracy}%</td>
-                                <td>{secondsToTime(parseInt(test.time))}</td>
+                                <td>{secondsToTime(test.time)}</td>
                                 <td className={styles.taken}>{test.testTaken}</td>
                             </tr>)
                         }
@@ -85,7 +85,7 @@ const Leaderboard = ({ themeData }: {
                                 <td className={styles.wpm}>{data?.leaderboard.user.wpm}</td>
                                 <td className={styles.rawWpm}>{data?.leaderboard.user.rawWpm}</td>
                                 <td>{data?.leaderboard.user.accuracy}%</td>
-                                <td>{secondsToTime(parseInt(data?.leaderboard.user.time!))}</td>
+                                <td>{secondsToTime(data?.leaderboard.user.time!)}</td>
                                 <td className={styles.taken}>{data?.leaderboard.user.testTaken}</td>
                             </tr>
                             : null}

@@ -1,4 +1,4 @@
-query Leaderboard($uid: String!, $time: String!) {
+query Leaderboard($uid: String!, $time: Float!) {
   leaderboard(uid: $uid, time: $time) {
     leaderBoard {
       rank

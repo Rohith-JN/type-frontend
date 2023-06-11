@@ -40,7 +40,7 @@ export type LeaderBoardStatFields = {
     rank: Scalars["Float"];
     rawWpm: Scalars["Float"];
     testTaken: Scalars["String"];
-    time: Scalars["String"];
+    time: Scalars["Float"];
     user: Scalars["String"];
     wpm: Scalars["Float"];
 };
@@ -98,7 +98,7 @@ export type QueryGetStatsArgs = {
 };
 
 export type QueryLeaderboardArgs = {
-    time: Scalars["String"];
+    time: Scalars["Float"];
     uid: Scalars["String"];
 };
 
@@ -126,7 +126,7 @@ export type Test = {
     id: Scalars["Float"];
     rawWpm: Scalars["Float"];
     testTaken: Scalars["String"];
-    time: Scalars["String"];
+    time: Scalars["Float"];
     wpm: Scalars["Float"];
 };
 
@@ -135,7 +135,7 @@ export type TestOptions = {
     chars: Scalars["String"];
     rawWpm: Scalars["Float"];
     testTaken: Scalars["String"];
-    time: Scalars["String"];
+    time: Scalars["Float"];
     uid: Scalars["String"];
     wpm: Scalars["Float"];
 };
@@ -171,7 +171,7 @@ export type UserStatFields = {
     recentAccuracy: Scalars["String"];
     recentWpm: Scalars["Float"];
     testsTaken: Scalars["Float"];
-    time: Scalars["String"];
+    time: Scalars["Float"];
     wpm: Scalars["Float"];
 };
 
@@ -185,7 +185,7 @@ export type CreateTestMutationVariables = Exact<{
     wpm: Scalars["Float"];
     rawWpm: Scalars["Float"];
     accuracy: Scalars["Float"];
-    time: Scalars["String"];
+    time: Scalars["Float"];
     uid: Scalars["String"];
     testTaken: Scalars["String"];
 }>;
@@ -196,7 +196,7 @@ export type CreateTestMutation = {
         __typename?: "Test";
         id: number;
         creatorId: string;
-        time: string;
+        time: number;
         accuracy: number;
         wpm: number;
         rawWpm: number;
@@ -247,7 +247,7 @@ export type ValidateMutation = {
 
 export type LeaderboardQueryVariables = Exact<{
     uid: Scalars["String"];
-    time: Scalars["String"];
+    time: Scalars["Float"];
 }>;
 
 export type LeaderboardQuery = {
@@ -260,7 +260,7 @@ export type LeaderboardQuery = {
             user: string;
             wpm: number;
             rawWpm: number;
-            time: string;
+            time: number;
             accuracy: number;
             testTaken: string;
         }>;
@@ -270,7 +270,7 @@ export type LeaderboardQuery = {
             user: string;
             wpm: number;
             rawWpm: number;
-            time: string;
+            time: number;
             accuracy: number;
             testTaken: string;
         };
@@ -288,7 +288,7 @@ export type TestQuery = {
         __typename?: "Test";
         id: number;
         creatorId: string;
-        time: string;
+        time: number;
         accuracy: number;
         wpm: number;
         rawWpm: number;
@@ -323,7 +323,7 @@ export type GetStatsQuery = {
         __typename?: "UserStats";
         userStats: Array<{
             __typename?: "UserStatFields";
-            time: string;
+            time: number;
             wpm: number;
             pb: number;
             accuracy: string;
@@ -340,7 +340,7 @@ export const CreateTestDocument = gql`
         $wpm: Float!
         $rawWpm: Float!
         $accuracy: Float!
-        $time: String!
+        $time: Float!
         $uid: String!
         $testTaken: String!
     ) {
@@ -409,7 +409,7 @@ export function useValidateMutation() {
     );
 }
 export const LeaderboardDocument = gql`
-    query Leaderboard($uid: String!, $time: String!) {
+    query Leaderboard($uid: String!, $time: Float!) {
         leaderboard(uid: $uid, time: $time) {
             leaderBoard {
                 rank
