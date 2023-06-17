@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from '../../styles/Login.module.css';
-import 'react-toastify/dist/ReactToastify.css';
 import { toastOptions } from '../../utils/customToast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setResult } from '../../context/actions';
