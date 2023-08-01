@@ -11,6 +11,7 @@ import { CookiesProvider } from "react-cookie"
 import { ToastContainer } from 'react-toastify';
 import { Analytics } from '@vercel/analytics/react';
 import '../styles/Test.css';
+import Maintenance from '../components/other/Maintenance'
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -30,9 +31,10 @@ export default function App({ Component, pageProps }: AppProps) {
                             theme="colored"
                             icon={false}
                         />
-                        <Layout>
-                            <Component {...pageProps} />
-                        </Layout>
+                        {
+                            (process.env.NEXT_PUBLIC_MAINTENANCE === '0') ? <Layout><Component {...pageProps} /></Layout> : <Maintenance />
+                        }
+
                         <Analytics />
                     </CookiesProvider>
                 </ReduxProvider>

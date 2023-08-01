@@ -93,12 +93,12 @@ const Footer = () => {
                             );
                         }
                     }) : <tr>
-                        <td className={styles.sno}>-</td>
-                        <td className={styles.wpm}>-</td>
-                        <td className={styles.raw}>-</td>
-                        <td className={styles.acc}>-</td>
-                        <td className={styles.chars}>-{' '}/{' '}-</td>
-                        <td className={styles.time}>-</td>
+                        <td className={styles.sno}>1</td>
+                        <td className={styles.wpm}>0</td>
+                        <td className={styles.raw}>0</td>
+                        <td className={styles.acc}>0%</td>
+                        <td className={styles.chars}>0{' '}/{' '}0</td>
+                        <td className={styles.time}>{time}</td>
                     </tr>}
                 </tbody>
             </table>
