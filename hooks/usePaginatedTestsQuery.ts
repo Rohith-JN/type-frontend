@@ -54,7 +54,7 @@ export const usePaginatedTestsQuery = () => {
                 setpaginatedTestsFetching(false);
                 setpaginatedTestsError(true);
             });
-    }, [endCursor, graphqlClient, paginatedTestQuery, uid]);
+    }, [endCursor, paginatedTestQuery]);
 
     useEffect(() => {
         graphqlClient

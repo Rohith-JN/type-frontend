@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { State } from "../context/state";
 
 export const useCalculateChartStats = () => {
+    /*
     const {
         word: {
             typedDurationHistory,
@@ -28,11 +29,11 @@ export const useCalculateChartStats = () => {
     const incorrectCharsDataset = incorrectCharsHistory.map(
         (value, _) => value.totalIncorrectCharacters
     );
-
+    */
     return {
-        typedWordDataset,
-        wordNumberLabels,
-        wpmDataset,
-        incorrectCharsDataset,
+        typedWordDataset: [],
+        wordNumberLabels: [],
+        wpmDataset: [],
+        incorrectCharsDataset: [],
     };
 };

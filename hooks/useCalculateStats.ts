@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { State } from "../context/state";
 
 export const useCalculateStats = () => {
+    /*
     const {
         word: { currWord, wordList, typedHistory, incorrectCharsHistory },
         preferences: { time },
@@ -32,11 +33,12 @@ export const useCalculateStats = () => {
         (correctChars / (correctChars + incorrectChars)) * 100
             ? (correctChars / (correctChars + incorrectChars)) * 100
             : 0;
+            */
     return {
-        wpm,
-        rawWpm,
-        accuracy,
-        incorrectChars,
-        correctChars,
+        wpm: 0,
+        rawWpm: 0,
+        accuracy: 0,
+        incorrectChars: 0,
+        correctChars: 0,
     };
 };
