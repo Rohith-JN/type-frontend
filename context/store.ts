@@ -9,6 +9,7 @@ import {
 export const store = configureStore({
     reducer: {
         time: timerReducer,
+        word: wordReducer,
         preferences: preferenceReducer,
         result: resultReducer,
     },

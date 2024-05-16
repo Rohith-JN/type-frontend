@@ -31,7 +31,6 @@ export default function App({ Component, pageProps }: AppProps) {
                     {
                         (process.env.NEXT_PUBLIC_MAINTENANCE === '0') ? <Layout><Component {...pageProps} /></Layout> : <Maintenance />
                     }
-
                 </ReduxProvider>
             </UrqlProvider>
         </AuthUserProvider>

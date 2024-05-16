@@ -2,11 +2,9 @@ import { useSelector } from "react-redux";
 import { State } from "../context/state";
 
 export const useCalculateStats = () => {
-    /*
-    const {
-        word: { currWord, wordList, typedHistory, incorrectCharsHistory },
-        preferences: { time },
-    } = useSelector((state: State) => state);
+    const { currWord, wordList, typedHistory, incorrectCharsHistory } =
+        useSelector((state: State) => state.word);
+    const { time } = useSelector((state: State) => state.preferences);
     const spaces = wordList.indexOf(currWord);
     let correctChars = 0;
     const result = typedHistory.map(
@@ -33,12 +31,12 @@ export const useCalculateStats = () => {
         (correctChars / (correctChars + incorrectChars)) * 100
             ? (correctChars / (correctChars + incorrectChars)) * 100
             : 0;
-            */
+
     return {
-        wpm: 0,
-        rawWpm: 0,
-        accuracy: 0,
-        incorrectChars: 0,
-        correctChars: 0,
+        wpm,
+        rawWpm,
+        accuracy,
+        incorrectChars,
+        correctChars,
     };
 };

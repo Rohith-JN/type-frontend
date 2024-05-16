@@ -11,11 +11,10 @@ import styles from '../../styles/Footer.module.css';
 import { customToast, toastOptions } from "../../utils/customToast";
 
 const Footer = () => {
-    const {
-        time: { timerId, timer, testTaken },
-        preferences: { time },
-        result: { results },
-    } = useSelector((state: State) => state);
+    const { timerId, timer, testTaken } = useSelector((state: State) => state.time);
+    const { time } = useSelector((state: State) => state.preferences)
+    const { results } = useSelector((state: State) => state.result)
+
     const [, createTest] = useCreateTestMutation();
     const { wpm, accuracy, incorrectChars, correctChars, rawWpm } = useCalculateStats();
     const {

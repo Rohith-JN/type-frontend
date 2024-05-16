@@ -5,10 +5,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setTime,
+    setWordList,
     timerSet,
 } from "../../context/actions";
 import { State } from "../../context/state";
 import useLocalStorage from '../../hooks/useLocalStorage';
+import { resetTest } from '../../utils/test';
 
 const Header = () => {
     const timeOptions = useMemo(() => [
@@ -19,25 +21,23 @@ const Header = () => {
         { id: 5, optionText: 120 },
     ], []);
 
-    const {
-        preferences: { time },
-    } = useSelector((state: State) => state);
+    const { time } = useSelector((state: State) => state.preferences);
 
     const dispatch = useDispatch();
     const [selectedOption, setSelectedOption] = useLocalStorage("selectedOption", timeOptions.find(opt => opt.optionText === time)?.id || 4);
     const [option, setOption] = useLocalStorage("time", time || 60);
 
     useEffect(() => {
-        // import(`../../public/english.json`).then((words) =>
-        // dispatch(setWordList(words))
-        // );
+        import(`../../public/english.json`).then((words) =>
+            dispatch(setWordList(words))
+        );
         dispatch(timerSet(option));
         dispatch(setTime(option));
         setSelectedOption(timeOptions.find(opt => opt.optionText === option)?.id || 4);
     }, [dispatch, option]);
 
     useEffect(() => {
-        // resetTest()
+        resetTest()
         dispatch(setTime(option))
         dispatch(timerSet(option));
     }, [dispatch, option])

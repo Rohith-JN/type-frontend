@@ -2,15 +2,12 @@ import { useSelector } from "react-redux";
 import { State } from "../context/state";
 
 export const useCalculateChartStats = () => {
-    /*
     const {
-        word: {
-            typedDurationHistory,
-            typedHistory,
-            wordList,
-            incorrectCharsHistory,
-        },
-    } = useSelector((state: State) => state);
+        typedDurationHistory,
+        typedHistory,
+        wordList,
+        incorrectCharsHistory,
+    } = useSelector((state: State) => state.word);
     // wpm: doesn't include incorrect chars
     // rawWpm: includes correct chars
     const typedWordDataset = wordList.slice(0, typedHistory.length);
@@ -29,11 +26,11 @@ export const useCalculateChartStats = () => {
     const incorrectCharsDataset = incorrectCharsHistory.map(
         (value, _) => value.totalIncorrectCharacters
     );
-    */
+
     return {
-        typedWordDataset: [],
-        wordNumberLabels: [],
-        wpmDataset: [],
-        incorrectCharsDataset: [],
+        typedWordDataset,
+        wordNumberLabels,
+        wpmDataset,
+        incorrectCharsDataset,
     };
 };

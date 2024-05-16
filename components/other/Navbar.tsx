@@ -15,9 +15,7 @@ import { customToast } from '../../utils/customToast';
 import NavOption from './NavOption';
 
 const Navbar = () => {
-    const {
-        result: { results }
-    } = useSelector((state: State) => state);
+    const results = useSelector((state: State) => state.result.results);
     const dispatch = useDispatch()
     const { asPath } = useRouter();
     const { authUser, signOut } = useAuth()

@@ -1,3 +1,5 @@
+import { RefObject } from "react";
+
 export const SET_START_TIME = "SETSTARTTIME";
 export const TIMER_DECREMENT = "TIMERDECREMENT";
 export const TIMER_SET = "TIMERSET";
@@ -5,6 +7,17 @@ export const TIMERID_SET = "TIMERIDSET";
 export const SET_TIME = "SETTIME";
 export const SET_RESULT = "SETRESULT";
 export const SET_TEST_TAKEN = "SETTESTTAKEN";
+export const SET_WORD_LIST = "SETWORDLIST";
+export const APPEND_TYPED_HISTORY = "APPENDTYPEDHISTORY";
+export const SET_WORD_DURATION = "SETWORDDURATION";
+export const SET_WORD = "SETWORD";
+export const PREV_WORD = "PREVWORD";
+export const SET_WORDLIST = "SETWORDLIST";
+export const SET_THEME = "SETTHEME";
+export const SET_PALLET = "SETPALLET";
+export const SET_REF = "SETREF";
+export const SET_CARET_REF = "SETCARETREF";
+export const SET_INCORRECT_CHAR = "SETINCORRECTCHAR";
 
 // Time Actions
 export const timerDecrement = () => ({ type: TIMER_DECREMENT });
@@ -19,6 +32,41 @@ export const setTestTaken = (payload: string) => ({
 });
 
 // Word Actions
+export const setTypedWord = (payload: string) => ({ type: SET_WORD, payload });
+export const setTypedWordDuration = (payload: string) => ({
+    type: SET_WORD_DURATION,
+    payload,
+});
+export const setIncorrectChar = (payload: {
+    word: string;
+    idx: number;
+    totalIncorrectCharacters: number;
+    incorrectCharacters: number;
+    extraCharacters: number;
+}) => ({
+    type: SET_INCORRECT_CHAR,
+    payload,
+});
+export const appendTypedHistory = () => ({
+    type: APPEND_TYPED_HISTORY,
+});
+export const backtrackWord = (payload: boolean) => ({
+    type: PREV_WORD,
+    payload,
+});
+export const setWordList = (payload: string[]) => ({
+    type: SET_WORDLIST,
+    payload,
+});
+export const setRef = (payload: RefObject<HTMLDivElement>) => ({
+    type: SET_REF,
+    payload,
+});
+export const setCaretRef = (payload: RefObject<HTMLSpanElement>) => ({
+    type: SET_CARET_REF,
+    payload,
+});
+
 export const setStartTime = (payload: number) => ({
     type: SET_START_TIME,
     payload,
