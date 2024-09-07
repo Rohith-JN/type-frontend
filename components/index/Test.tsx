@@ -10,6 +10,7 @@ const Test = () => {
     const { wordList, typedHistory, typedWord } = useSelector((state: State) => state.word);
     const dispatch = useDispatch();
     const inputRef = useRef<HTMLInputElement>(null);
+    const currentWordRef = useRef<HTMLSpanElement | null>(null);
 
     const [typedChars, setTypedChars] = useState<string[]>([]); // Track characters for current word
 
@@ -42,6 +43,12 @@ const Test = () => {
             setTypedChars(inputValue.split(""));
         }
     };
+    useEffect(() => {
+        // Scroll to the current word when typedHistory updates
+        if (currentWordRef.current) {
+            currentWordRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    }, [typedHistory, typedWord]);
 
     return (
         <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
@@ -56,7 +63,7 @@ const Test = () => {
                             const isIncomplete = currWord.length >= 0 && currWord.length < word.length && typedHistory.includes(currWord);
                             const shouldHighlightWordRed = hasWrongChars || isExcessLength || isIncomplete;
                             return (
-                                <span key={wordIndex}>
+                                <span key={wordIndex} ref={isCurrentWord ? currentWordRef : null}>
                                     {word.split("").map((char, charIndex) => {
                                         let charColor = "#fff";
 
@@ -68,7 +75,7 @@ const Test = () => {
                                         }
 
                                         return (
-                                            <span key={charIndex} style={{ color: charColor }}>{char}</span>
+                                            <span key={charIndex} style={{ color: charColor, backgroundColor: (isCurrentWord && charIndex === typedChars.length) ? 'grey' : 'transparent', paddingBottom: (isCurrentWord && charIndex === typedChars.length) ? '5px' : '0px', paddingTop: (isCurrentWord && charIndex === typedChars.length) ? '5px' : '0px' }}>{char}</span>
                                         );
                                     })}
                                     {'\u00A0'}

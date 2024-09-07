@@ -1,5 +1,3 @@
-import { RefObject } from "react";
-
 export const SET_START_TIME = "SETSTARTTIME";
 export const TIMER_DECREMENT = "TIMERDECREMENT";
 export const TIMER_SET = "TIMERSET";
