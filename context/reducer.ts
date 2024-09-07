@@ -8,10 +8,7 @@ import {
     SET_TEST_TAKEN,
     APPEND_TYPED_HISTORY,
     SET_WORD,
-    PREV_WORD,
-    SET_CARET_REF,
     SET_INCORRECT_CHAR,
-    SET_REF,
     SET_START_TIME,
     SET_WORDLIST,
     SET_WORD_DURATION,
@@ -57,50 +54,20 @@ export const wordReducer = (
         case SET_WORD_DURATION:
             return { ...state, typedWordDuration: payload };
         case APPEND_TYPED_HISTORY:
-            const nextIdx = state.typedHistory.length + 1;
             return {
                 ...state,
-                typedWord: "", // sets the typedWord to ""
-                currWord: state.wordList[nextIdx], // sets the next word to be typed
-                typedHistory: [...state.typedHistory, state.typedWord],
+                typedWord: "", // reset typedWord
+                incorrectChars: {}, // reset incorrectChars after history is updated
+                typedHistory: [...state.typedHistory, state.typedWord], // add the typed word to history
                 incorrectCharsHistory: [
                     ...state.incorrectCharsHistory,
-                    state.incorrectChars,
+                    state.incorrectChars, // append the current incorrectChars to history
                 ],
                 typedDurationHistory: [
                     ...state.typedDurationHistory,
-                    state.typedWordDuration,
+                    state.typedWordDuration, // append duration if needed
                 ],
             }; // after used finishes typing a word, it updates typedHistory with the typed word
-        case PREV_WORD:
-            // initial incorrect chars if reverted to correct chars are counted as correct chars in the end
-            var prevIdx = state.typedHistory.length - 1; // index of the previous word
-            return {
-                ...state,
-                currWord: state.wordList[prevIdx], // set the word to be typed as the previous word
-                typedWord: !payload ? state.typedHistory[prevIdx] : "",
-                typedHistory: state.typedHistory.splice(0, prevIdx),
-                typedWordDuration: state.typedDurationHistory[prevIdx],
-                typedDurationHistory: state.typedDurationHistory.splice(
-                    0,
-                    prevIdx
-                ),
-                incorrectChars: state.incorrectCharsHistory[prevIdx],
-                incorrectCharsHistory: state.incorrectCharsHistory.splice(
-                    0,
-                    prevIdx
-                ),
-            };
-        case SET_REF:
-            return {
-                ...state,
-                activeWordRef: payload,
-            };
-        case SET_CARET_REF:
-            return {
-                ...state,
-                caretRef: payload,
-            };
         case SET_WORDLIST:
             if (Array.isArray(payload)) {
                 const shuffledWordList = [...payload].sort(

@@ -1,19 +1,14 @@
-import { RefObject } from "react";
-
 export interface State {
     preferences: {
         time: number; // user preferred time limit
     };
     word: {
         startTime: string;
-        currWord: string;
         typedWord: string;
         typedHistory: string[];
         typedWordDuration: string;
         typedDurationHistory: string[];
         wordList: string[];
-        activeWordRef: RefObject<HTMLDivElement> | null;
-        caretRef: RefObject<HTMLSpanElement> | null;
         incorrectChars: {
             word: string;
             idx: number;
@@ -59,30 +54,13 @@ export const initialState: State = {
     },
     word: {
         startTime: "",
-        currWord: "",
         typedWord: "",
         typedHistory: [],
         typedWordDuration: "",
         typedDurationHistory: [],
         wordList: [],
-        activeWordRef: null,
-        caretRef: null,
-        incorrectChars: {
-            word: "",
-            idx: 0,
-            totalIncorrectCharacters: 0,
-            incorrectCharacters: 0,
-            extraCharacters: 0,
-        },
-        incorrectCharsHistory: [
-            {
-                word: "",
-                idx: 0,
-                totalIncorrectCharacters: 0,
-                incorrectCharacters: 0,
-                extraCharacters: 0,
-            },
-        ],
+        incorrectChars: <any>{},
+        incorrectCharsHistory: [],
     },
     time: {
         timer: 1,

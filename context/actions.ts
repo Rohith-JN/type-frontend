@@ -11,12 +11,9 @@ export const SET_WORD_LIST = "SETWORDLIST";
 export const APPEND_TYPED_HISTORY = "APPENDTYPEDHISTORY";
 export const SET_WORD_DURATION = "SETWORDDURATION";
 export const SET_WORD = "SETWORD";
-export const PREV_WORD = "PREVWORD";
 export const SET_WORDLIST = "SETWORDLIST";
 export const SET_THEME = "SETTHEME";
 export const SET_PALLET = "SETPALLET";
-export const SET_REF = "SETREF";
-export const SET_CARET_REF = "SETCARETREF";
 export const SET_INCORRECT_CHAR = "SETINCORRECTCHAR";
 
 // Time Actions
@@ -50,23 +47,10 @@ export const setIncorrectChar = (payload: {
 export const appendTypedHistory = () => ({
     type: APPEND_TYPED_HISTORY,
 });
-export const backtrackWord = (payload: boolean) => ({
-    type: PREV_WORD,
-    payload,
-});
 export const setWordList = (payload: string[]) => ({
     type: SET_WORDLIST,
     payload,
 });
-export const setRef = (payload: RefObject<HTMLDivElement>) => ({
-    type: SET_REF,
-    payload,
-});
-export const setCaretRef = (payload: RefObject<HTMLSpanElement>) => ({
-    type: SET_CARET_REF,
-    payload,
-});
-
 export const setStartTime = (payload: number) => ({
     type: SET_START_TIME,
     payload,
