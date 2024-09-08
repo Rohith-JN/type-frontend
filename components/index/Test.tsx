@@ -11,6 +11,7 @@ const Test = () => {
     const dispatch = useDispatch();
     const inputRef = useRef<HTMLInputElement>(null);
     const currentWordRef = useRef<HTMLSpanElement | null>(null);
+    const [rotated, setRotated] = useState(false);
 
     const [typedChars, setTypedChars] = useState<string[]>([]); // Track characters for current word
 
@@ -44,9 +45,12 @@ const Test = () => {
         }
     };
     useEffect(() => {
-        // Scroll to the current word when typedHistory updates
         if (currentWordRef.current) {
-            currentWordRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+            const parent = currentWordRef.current.parentElement;
+            if (parent) {
+                const scrollOffset = currentWordRef.current.offsetTop - parent.offsetTop;
+                parent.scrollTop = scrollOffset - 10;  // Adjust scroll amount to fine-tune positioning
+            }
         }
     }, [typedHistory, typedWord]);
 
@@ -68,39 +72,41 @@ const Test = () => {
                                         let charColor = "#fff";
 
                                         if (wordIndex < typedHistory.length) {
-                                            charColor = shouldHighlightWordRed ? "red" : "green";
+                                            charColor = shouldHighlightWordRed ? "red" : "var(--main-color)";
                                         } else if (isCurrentWord) {
                                             const typedChar = typedChars[charIndex] || "";
-                                            charColor = typedChar === char ? "green" : typedChar !== "" ? "red" : "#fff";
+                                            charColor = typedChar === char ? "var(--main-color)" : typedChar !== "" ? "red" : "#fff";
                                         }
-
                                         return (
-                                            <span key={charIndex} style={{ color: charColor, backgroundColor: (isCurrentWord && charIndex === typedChars.length) ? 'grey' : 'transparent', paddingBottom: (isCurrentWord && charIndex === typedChars.length) ? '5px' : '0px', paddingTop: (isCurrentWord && charIndex === typedChars.length) ? '5px' : '0px' }}>{char}</span>
+                                            <span key={charIndex} style={{ color: charColor }}>{char}</span>
                                         );
                                     })}
-                                    {'\u00A0'}
+                                    {' '}
                                 </span>
                             );
                         })}
                     </p>
                 </div>
-                <div style={{ display: "flex", justifyContent: 'row' }}>
+                <div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between', height: '8vh', alignItems: 'center', }}>
                     <input
                         ref={inputRef}
                         value={typedWord}
                         onChange={handleInputChange}
-                        style={{
-                            backgroundColor: '#1b1b1b',
-                            border: '2px solid #007bff',
-                            color: '#fff',
-                            padding: '10px',
-                            borderRadius: '5px',
-                            width: '50%',
-                            fontSize: '18px',
-                            outline: 'none',
-                            marginBottom: '20px',
-                        }}
                     />
+                    <div style={{ width: '14.5%', display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--sub-alt-color)', borderRadius: '5px', }}>
+                        <p style={{ fontSize: 20, fontFamily: 'lexend', color: 'var(--text-color)' }}>0{' '}<span style={{ fontSize: 15 }}>WPM</span></p>
+                    </div>
+                    <div style={{ width: '14.5%', display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--sub-alt-color)', borderRadius: '5px', }}>
+                        <span style={{
+                            fontSize: 20, fontFamily: 'lexend', color: 'var(--text-color)',
+                        }}>{timer}s</span>
+                    </div>
+                    <div style={{ width: '14.5%', display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--sub-alt-color)', borderRadius: '5px', cursor: 'pointer' }} onClick={() => {
+                        setRotated(!rotated);
+                        resetTest();
+                    }}>
+                        <FiRefreshCcw size={25} color={'var(--text-color)'} className={rotated ? 'icon rotate' : 'icon'} />
+                    </div>
                 </div>
             </div>
         </div>

@@ -22,5 +22,3 @@ export function round(value: number, precision: any): number {
     var multiplier = Math.pow(10, precision || 0);
     return Math.round(value * multiplier) / multiplier;
 }
-
-export function findIncorrectChars(str1: string, str2: string) {}

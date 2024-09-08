@@ -1,6 +1,5 @@
 import {
     appendTypedHistory,
-    backtrackWord,
     setTypedWord,
     setTimerId,
     setWordList,
@@ -13,11 +12,23 @@ import {
 } from "../context/actions";
 import { store } from "../context/store";
 
-const handleBackspace = (ctrlKey: boolean) => {};
+export const recordTest = () => {};
 
-export const recordTest = (key: string, ctrlKey: boolean) => {};
-
-export const resetTest = () => {};
+export const resetTest = () => {
+    const { dispatch, getState } = store;
+    const {
+        time: { timerId },
+        preferences: { time },
+    } = getState();
+    if (timerId) {
+        clearInterval(timerId);
+        dispatch(setTimerId(null));
+    }
+    import(`../public/english.json`).then((words) =>
+        dispatch(setWordList(words.default))
+    );
+    dispatch(timerSet(time));
+};
 
 export const startTimer = () => {
     const { dispatch } = store;
