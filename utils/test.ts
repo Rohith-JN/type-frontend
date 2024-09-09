@@ -1,18 +1,24 @@
 import {
-    appendTypedHistory,
-    setTypedWord,
     setTimerId,
     setWordList,
     timerSet,
     timerDecrement,
     setTestTaken,
-    setTypedWordDuration,
-    setStartTime,
-    setIncorrectChar,
 } from "../context/actions";
 import { store } from "../context/store";
 
-export const recordTest = () => {};
+export const recordTest = () => {
+    const { getState } = store;
+    const {
+        time: { timer, timerId },
+    } = getState();
+    if (!timer) {
+        return;
+    }
+    if (!timerId) {
+        startTimer();
+    }
+};
 
 export const resetTest = () => {
     const { dispatch, getState } = store;

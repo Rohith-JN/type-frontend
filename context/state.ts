@@ -3,7 +3,6 @@ export interface State {
         time: number; // user preferred time limit
     };
     word: {
-        startTime: string;
         typedWord: string;
         typedHistory: string[];
         typedWordDuration: string;
@@ -53,7 +52,6 @@ export const initialState: State = {
         time: 0,
     },
     word: {
-        startTime: "",
         typedWord: "",
         typedHistory: [],
         typedWordDuration: "",

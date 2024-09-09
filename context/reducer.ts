@@ -9,7 +9,6 @@ import {
     APPEND_TYPED_HISTORY,
     SET_WORD,
     SET_INCORRECT_CHAR,
-    SET_START_TIME,
     SET_WORDLIST,
     SET_WORD_DURATION,
 } from "./actions";
@@ -49,8 +48,6 @@ export const wordReducer = (
     switch (type) {
         case SET_WORD:
             return { ...state, typedWord: payload }; // set typed word
-        case SET_START_TIME:
-            return { ...state, startTime: payload };
         case SET_WORD_DURATION:
             return { ...state, typedWordDuration: payload };
         case APPEND_TYPED_HISTORY:

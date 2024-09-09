@@ -30,9 +30,6 @@
   -webkit-line-clamp: 2;
           line-clamp: 2; 
   -webkit-box-orient: vertical;
-    white-space: normal; /* Allow text to wrap to the next line */
-    overflow-wrap: break-word; 
-
 }
 input {
   background-color: var(--sub-alt-color);
@@ -40,7 +37,7 @@ input {
   color: #fff;
   border-radius: 5px;
   padding-left: 20px;
-  width: 50%;
+  width: 37.5%;
   height: 100%;
   font-size: 18px;
   outline: none;

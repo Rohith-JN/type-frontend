@@ -49,10 +49,6 @@ export const setWordList = (payload: string[]) => ({
     type: SET_WORDLIST,
     payload,
 });
-export const setStartTime = (payload: number) => ({
-    type: SET_START_TIME,
-    payload,
-});
 // Prefrences Actions
 export const setTime = (payload: number) => ({ type: SET_TIME, payload });
 

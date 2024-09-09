@@ -9,11 +9,15 @@ import firebase from 'firebase/compat/app';
 import { useCreateTestMutation } from "../../graphql/generated/graphql";
 import styles from '../../styles/Footer.module.css';
 import { customToast, toastOptions } from "../../utils/customToast";
+import { setResult } from "../../context/actions";
+import { store } from "../../context/store";
+
 
 const Footer = () => {
     const { timerId, timer, testTaken } = useSelector((state: State) => state.time);
     const { time } = useSelector((state: State) => state.preferences)
     const { results } = useSelector((state: State) => state.result)
+    const { dispatch } = store;
 
     const [, createTest] = useCreateTestMutation();
     const { wpm, accuracy, incorrectChars, correctChars, rawWpm } = useCalculateStats();
@@ -26,19 +30,27 @@ const Footer = () => {
 
     useEffect(() => {
         if (!timer && timerId) {
-            results.splice(1, 0, {
-                wpm: wpm,
-                rawWpm: rawWpm,
-                accuracy: accuracy,
-                correctChars: correctChars,
-                incorrectChars: incorrectChars,
-                time: time,
-                testTaken: testTaken,
-                typedWordDataset: typedWordDataset,
-                wordNumberLabels: wordNumberLabels,
-                wpmDataset: wpmDataset,
-                incorrectCharsDataset: incorrectCharsDataset
-            });
+            // Create a new array with the updated results, without mutating the original array
+            const updatedResults = [
+                ...results.slice(0, 1), // elements before index 1
+                {
+                    wpm: wpm,
+                    rawWpm: rawWpm,
+                    accuracy: accuracy,
+                    correctChars: correctChars,
+                    incorrectChars: incorrectChars,
+                    time: time,
+                    testTaken: testTaken,
+                    typedWordDataset: typedWordDataset,
+                    wordNumberLabels: wordNumberLabels,
+                    wpmDataset: wpmDataset,
+                    incorrectCharsDataset: incorrectCharsDataset
+                },
+                ...results.slice(1) // elements after index 1
+            ];
+
+            // Dispatch action to update the results immutably
+            dispatch(setResult(updatedResults));
         }
     }, [timer, timerId]);
 

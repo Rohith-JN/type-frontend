@@ -2,10 +2,13 @@ import { useSelector } from "react-redux";
 import { State } from "../context/state";
 
 export const useCalculateStats = () => {
-    const { currWord, wordList, typedHistory, incorrectCharsHistory } =
+    const { typedWord, wordList, typedHistory, incorrectCharsHistory } =
         useSelector((state: State) => state.word);
     const { time } = useSelector((state: State) => state.preferences);
-    const spaces = wordList.indexOf(currWord);
+    const spaces =
+        time == 15 || time == 30 || time == 60 || time == 120
+            ? 0
+            : wordList.indexOf(typedWord);
     let correctChars = 0;
     const result = typedHistory.map(
         (typedWord, idx) => typedWord === wordList[idx]
@@ -25,8 +28,10 @@ export const useCalculateStats = () => {
     incorrectCharsHistory.map((object, _) => {
         incorrectChars += object.totalIncorrectCharacters;
     });
-    const wpm = ((correctChars + spaces) * 60) / time / 5;
-    const rawWpm = ((correctChars + incorrectChars + spaces) * 60) / time / 5;
+    const wpm = Math.floor(((correctChars + spaces) * 60) / time / 5);
+    const rawWpm = Math.floor(
+        ((correctChars + incorrectChars + spaces) * 60) / time / 5
+    );
     const accuracy =
         (correctChars / (correctChars + incorrectChars)) * 100
             ? (correctChars / (correctChars + incorrectChars)) * 100
