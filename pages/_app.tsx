@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
                         icon={false}
                     />
                     {
-                        (process.env.NEXT_PUBLIC_MAINTENANCE === '0') ? <Layout><Component {...pageProps} /></Layout> : <Maintenance />
+                        (process.env.MAINTENANCE === '0') ? <Layout><Component {...pageProps} /></Layout> : <Maintenance />
                     }
                 </ReduxProvider>
             </UrqlProvider>

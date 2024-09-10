@@ -12,9 +12,7 @@ function invalidateQuery(cache: Cache, field: string) {
 }
 
 export const urqlClient: Client = createClient({
-    url: __prod__
-        ? process.env.NEXT_PUBLIC_BACKEND_URL!
-        : "http://localhost:4000/graphql",
+    url: __prod__ ? process.env.BACKEND_URL! : "http://localhost:4000/graphql",
     exchanges: [
         fetchExchange,
         cacheExchange({
