@@ -19,25 +19,25 @@
   max-height: 8.5em;  
   height: 8.5em;
   user-select: none;
-
 }
 .box .word {
-  display: block;
-  font-size: 1.5rem;
-  overflow-y: hidden;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: normal; /* Ensure words wrap correctly */
   line-height: 1.8em;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-          line-clamp: 2; 
-  -webkit-box-orient: vertical;
+  max-height: 3.6em; /* Limit to 2 lines */
+  font-size: 1.5rem;
+  overflow: hidden;
 }
 input {
   background-color: var(--sub-alt-color);
   border: 1px solid var(--sub-color);
-  color: #fff;
+  color: var(--text-color);
   border-radius: 5px;
   padding-left: 20px;
-  width: 37.5%;
+  width: 65.5%;
+  max-width: 65.5%;
   height: 100%;
   font-size: 18px;
   outline: none;
@@ -55,4 +55,80 @@ input:focus {
 
 .rotate {
   transform: rotate(360deg);
+}
+.timer {
+  width: 14.5%; display: flex; height: 100%; align-items: center; justify-content: center; background-color: var(--sub-alt-color); border-radius: 5px;
+}
+.reset {
+  width: 14.5%; display: flex; height: 100%; align-items: center; justify-content: center; background-color: var(--sub-alt-color); border-radius: 5px;
+  cursor: pointer;
+}
+
+
+@media (max-width: 700px) {
+  input {
+    width: 50%;
+  }
+  .timer {
+    width: 21%;
+  }
+  .reset {
+    width: 21%;
+  }
+}
+@media (max-width: 600px) {
+  input {
+    width: 40%;
+  }
+  .timer {
+    width: 26%;
+  }
+  .reset {
+    width: 26%;
+  }
+}
+@media (max-width: 500px) {
+  input {
+    width: 46%;
+  }
+  .timer {
+    width: 22%;
+  }
+  .reset {
+    width: 22%;
+  }
+}
+@media (max-width: 400px) {
+  input {
+    width: 48%;
+  }
+  .timer {
+    width: 20%;
+  }
+  .reset {
+    width: 20%;
+  }
+}
+@media (max-width: 300px) {
+  input {
+    width: 38%;
+  }
+  .timer {
+    width: 24%;
+  }
+  .reset {
+    width: 24%;
+  }
+}
+
+@media (max-width: 200px) {
+  input {
+    width: 35%;
+  }
+  .timer {
+    width: 26.25%;
+  }
+  .reset {
+    width: 26.25%;
+  }
 }

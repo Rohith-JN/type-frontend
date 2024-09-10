@@ -4,7 +4,6 @@ import { appendTypedHistory, setIncorrectChar, setTimerId, setTypedWord, setWord
 import { State } from "../../context/state";
 import { FiRefreshCcw } from 'react-icons/fi';
 import { recordTest, resetTest } from "../../utils/test";
-import { useCalculateStats } from "../../hooks/useCalculateStats";
 
 const Test = () => {
     const { timer, timerId } = useSelector((state: State) => state.time);
@@ -15,7 +14,6 @@ const Test = () => {
     const [rotated, setRotated] = useState(false);
     const [test, setTest] = useState(false);
     const [startTime, setStartTime] = useState<number | null>(null);
-    const { wpm, rawWpm } = useCalculateStats()
 
     const [typedChars, setTypedChars] = useState<string[]>([]); // Track characters for current word
 
@@ -131,18 +129,12 @@ const Test = () => {
                         onChange={handleInputChange}
                         disabled={timer ? false : true}
                     />
-                    <div style={{ width: '14%', display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--sub-alt-color)', borderRadius: '5px', }}>
-                        <p style={{ fontSize: 20, fontFamily: 'lexend', color: 'var(--text-color)' }}>{rawWpm}{' '}<span style={{ fontSize: 15 }}>RAW</span></p>
-                    </div>
-                    <div style={{ width: '14%', display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--sub-alt-color)', borderRadius: '5px', }}>
-                        <p style={{ fontSize: 20, fontFamily: 'lexend', color: 'var(--text-color)' }}>{wpm}{' '}<span style={{ fontSize: 15 }}>WPM</span></p>
-                    </div>
-                    <div style={{ width: '14%', display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--sub-alt-color)', borderRadius: '5px', }}>
+                    <div className="timer">
                         <span style={{
                             fontSize: 20, fontFamily: 'lexend', color: 'var(--text-color)',
                         }}>{timer}s</span>
                     </div>
-                    <div style={{ width: '14%', display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--sub-alt-color)', borderRadius: '5px', cursor: 'pointer' }} onClick={() => {
+                    <div className="reset" onClick={() => {
                         setRotated(!rotated);
                         resetTest();
                         setTypedChars([]);

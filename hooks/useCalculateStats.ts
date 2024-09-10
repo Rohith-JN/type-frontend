@@ -6,7 +6,7 @@ export const useCalculateStats = () => {
         useSelector((state: State) => state.word);
     const { time } = useSelector((state: State) => state.preferences);
     const spaces =
-        time == 15 || time == 30 || time == 60 || time == 120
+        time == 15 || time == 30 || time == 45 || time == 60 || time == 120
             ? 0
             : wordList.indexOf(typedWord);
     let correctChars = 0;
