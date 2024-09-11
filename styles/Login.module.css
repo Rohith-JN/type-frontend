@@ -27,7 +27,10 @@
     background-color: var(--sub-alt-color);
     outline: none;
     border: 2px solid var(--sub-color);
-    padding: 0 0 0 20px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 20px;
+    padding-left: 20px;
     transition: 0.3s;
     color: var(--text-color);
     font-family: 'lexend';
