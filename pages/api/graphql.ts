@@ -8,7 +8,7 @@ export default async function handler(
         const response = await fetch(process.env.BACKEND_URL as string, {
             method: req.method,
             headers: {
-                "Content-Type": "application/json",
+                "content-Type": "application/json",
             },
             body: req.body,
         });
