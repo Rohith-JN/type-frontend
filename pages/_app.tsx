@@ -9,12 +9,14 @@ import { urqlClient } from '../utils/createUrqlClient';
 import { Provider as UrqlProvider } from 'urql';
 import { ToastContainer } from 'react-toastify';
 import '../styles/Test.css';
-import Maintenance from '../components/other/Maintenance'
+import Maintenance from '../components/other/Maintenance';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function App({ Component, pageProps }: AppProps) {
 
     return (
         <AuthUserProvider>
+            <SpeedInsights />
             <UrqlProvider value={urqlClient}>
                 <ReduxProvider store={store}>
                     <ToastContainer

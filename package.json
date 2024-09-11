@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.4",
     "@urql/exchange-graphcache": "^7.1.0",
+    "@vercel/speed-insights": "^1.0.12",
     "chart.js": "^4.4.2",
     "cookie": "^0.6.0",
     "eslint-config-next": "^14.2.7",
