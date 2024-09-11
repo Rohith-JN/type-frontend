@@ -6,11 +6,11 @@ export default async function handler(
 ) {
     try {
         const response = await fetch(process.env.BACKEND_URL as string, {
-            method: req.method,
+            method: req.method, // Forward the request method
             headers: {
-                "content-Type": "application/json",
+                "Content-Type": "application/json",
             },
-            body: req.body,
+            body: req.method === "POST" ? JSON.stringify(req.body) : undefined,
         });
 
         const data = await response.json();
