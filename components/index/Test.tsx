@@ -104,13 +104,13 @@ const Test = () => {
                             return (
                                 <span key={wordIndex} ref={isCurrentWord ? currentWordRef : null}>
                                     {word.split("").map((char, charIndex) => {
-                                        let charColor = "var(--text-color)";
+                                        let charColor = "var(--sub-color)";
 
                                         if (wordIndex < typedHistory.length) {
-                                            charColor = shouldHighlightWordRed ? "red" : "var(--main-color)";
+                                            charColor = shouldHighlightWordRed ? "red" : "var(--text-color)";
                                         } else if (isCurrentWord) {
                                             const typedChar = typedChars[charIndex] || "";
-                                            charColor = typedChar === char ? "var(--main-color)" : typedChar !== "" ? "red" : "#fff";
+                                            charColor = typedChar === char ? "var(--text-color)" : typedChar !== "" ? "red" : "var(--sub-color)";
                                         }
                                         return (
                                             <span key={charIndex} style={{ color: charColor }} className="character">{char}</span>

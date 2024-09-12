@@ -57,13 +57,12 @@ input:focus {
   transform: rotate(360deg);
 }
 .timer {
-  width: 14.5%; display: flex; height: 100%; align-items: center; justify-content: center; background-color: var(--sub-alt-color); border-radius: 5px;
+  width: 14.5%; display: flex; user-select: none; height: 100%; align-items: center; justify-content: center; background-color: var(--sub-alt-color); border-radius: 5px;
 }
 .reset {
   width: 14.5%; display: flex; height: 100%; align-items: center; justify-content: center; background-color: var(--sub-alt-color); border-radius: 5px;
   cursor: pointer;
 }
-
 
 @media (max-width: 700px) {
   input {
