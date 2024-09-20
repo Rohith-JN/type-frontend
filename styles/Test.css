@@ -38,6 +38,7 @@ input {
   padding-left: 20px;
   width: 65.5%;
   max-width: 65.5%;
+  min-height: 8vh;
   height: 8vh;
   font-size: 18px;
   outline: none;
@@ -57,10 +58,10 @@ input:focus {
   transform: rotate(360deg);
 }
 .timer {
-  width: 14.5%; display: flex; user-select: none; height: 8vh; align-items: center; justify-content: center; background-color: var(--sub-alt-color); border-radius: 5px;
+  width: 14.5%; display: flex; user-select: none; height: 8vh; min-height: 8vh; flex-shrink: 0; align-items: center; justify-content: center; background-color: var(--sub-alt-color); border-radius: 5px;
 }
 .reset {
-  width: 14.5%; display: flex; height: 8vh; align-items: center; justify-content: center; background-color: var(--sub-alt-color); border-radius: 5px;
+  width: 14.5%; display: flex; height: 8vh; align-items: center; min-height: 8vh; flex-shrink: 0; justify-content: center; background-color: var(--sub-alt-color); border-radius: 5px;
   cursor: pointer;
 }
 
