@@ -15,7 +15,7 @@ const Test = () => {
     const [test, setTest] = useState(false);
     const [startTime, setStartTime] = useState<number | null>(null);
 
-    const [typedChars, setTypedChars] = useState<string[]>([]); // Track characters for current word
+    const [typedChars, setTypedChars] = useState<string[]>([]);
 
     useEffect(() => {
         import("../../public/english.json").then((words) =>
@@ -23,6 +23,9 @@ const Test = () => {
         );
     }, [dispatch]);
 
+    useEffect(() => {
+        inputRef.current?.focus()
+    }, [timer, wordList])
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTest(true);
         const inputValue = e.target.value;
@@ -32,17 +35,14 @@ const Test = () => {
             const wordIndex = typedHistory.length;
             const word = wordList[wordIndex];
 
-            // Calculate time taken
             const endTime = new Date().getTime();
             if (startTime) {
                 const timeTaken = endTime - startTime!;
                 dispatch(setTypedWordDuration(timeTaken.toString()))
             }
 
-            // Reset start time for the next word
             setStartTime(Date.now());
 
-            // Existing logic
             const isExcessLength = currWord.length > word.length;
             const isIncomplete = currWord.length >= 0 && currWord.length < word.length && typedHistory.includes(currWord);
             const incorrectChars = currWord.split("")
@@ -55,7 +55,6 @@ const Test = () => {
             dispatch(appendTypedHistory())
             setTypedChars([]);
         } else {
-            // Record start time when a new word is being typed
             if (startTime === null) {
                 setStartTime(new Date().getTime());
             }
@@ -124,6 +123,7 @@ const Test = () => {
                 </div>
                 <div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between', height: '8vh', alignItems: 'center', }}>
                     <input
+                        type="text" autoCorrect="off" autoCapitalize="none"
                         ref={inputRef}
                         value={typedWord}
                         onChange={handleInputChange}
@@ -140,7 +140,6 @@ const Test = () => {
                         resetTest();
                         setTypedChars([]);
                         setTest(false)
-                        inputRef.current?.focus()
                     }}>
                         <FiRefreshCcw size={25} color={'var(--text-color)'} className={rotated ? 'icon rotate' : 'icon'} />
                     </div>

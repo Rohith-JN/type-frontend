@@ -5,10 +5,9 @@ export const useCalculateStats = () => {
     const { typedWord, wordList, typedHistory, incorrectCharsHistory } =
         useSelector((state: State) => state.word);
     const { time } = useSelector((state: State) => state.preferences);
-    const spaces =
-        time == 15 || time == 30 || time == 45 || time == 60 || time == 120
-            ? 0
-            : wordList.indexOf(typedWord);
+    const spaces = wordList.includes(typedWord)
+        ? wordList.indexOf(typedWord)
+        : 0;
     let correctChars = 0;
     const result = typedHistory.map(
         (typedWord, idx) => typedWord === wordList[idx]
@@ -17,7 +16,7 @@ export const useCalculateStats = () => {
         const typedWord = typedHistory[idx];
         const word = wordList[idx];
         let wordCorrectChars = 0;
-        for (let i = 0; i < typedWord.length; i++) {
+        for (let i = 0; i < Math.min(typedWord.length, word.length); i++) {
             if (typedWord[i] === word[i]) {
                 wordCorrectChars++;
             }
@@ -25,7 +24,7 @@ export const useCalculateStats = () => {
         correctChars += wordCorrectChars;
     });
     let incorrectChars = 0;
-    incorrectCharsHistory.map((object, _) => {
+    incorrectCharsHistory.forEach((object) => {
         incorrectChars += object.totalIncorrectCharacters;
     });
     const wpm = Math.floor(((correctChars + spaces) * 60) / time / 5);
@@ -33,7 +32,7 @@ export const useCalculateStats = () => {
         ((correctChars + incorrectChars + spaces) * 60) / time / 5
     );
     const accuracy =
-        (correctChars / (correctChars + incorrectChars)) * 100
+        correctChars + incorrectChars > 0
             ? (correctChars / (correctChars + incorrectChars)) * 100
             : 0;
 
