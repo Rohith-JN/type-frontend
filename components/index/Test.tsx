@@ -128,6 +128,7 @@ const Test = () => {
                         value={typedWord}
                         onChange={handleInputChange}
                         disabled={timer ? false : true}
+                        autoFocus={true}
                     />
                     <div className="timer">
                         <span style={{
@@ -139,6 +140,7 @@ const Test = () => {
                         resetTest();
                         setTypedChars([]);
                         setTest(false)
+                        inputRef.current?.focus()
                     }}>
                         <FiRefreshCcw size={25} color={'var(--text-color)'} className={rotated ? 'icon rotate' : 'icon'} />
                     </div>
