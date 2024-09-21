@@ -1,4 +1,8 @@
 
+* {
+  box-sizing: border-box;
+}
+
 .test {
     display: flex;
     flex-direction: column;
@@ -36,8 +40,8 @@ input {
   color: var(--text-color);
   border-radius: 5px;
   padding-left: 20px;
-  width: 65.5%;
-  max-width: 65.5%;
+  width: 68%;
+  max-width: 68%;
   min-height: 8vh;
   height: 8vh;
   font-size: 18px;
@@ -67,7 +71,7 @@ input:focus {
 
 @media (max-width: 700px) {
   input {
-    width: 50%;
+    width: 54.5%;
   }
   .timer {
     width: 21%;
@@ -78,7 +82,7 @@ input:focus {
 }
 @media (max-width: 600px) {
   input {
-    width: 40%;
+    width: 44.5%;
   }
   .timer {
     width: 26%;
@@ -89,7 +93,7 @@ input:focus {
 }
 @media (max-width: 500px) {
   input {
-    width: 46%;
+    width: 51.5%;
   }
   .timer {
     width: 22%;
@@ -100,7 +104,7 @@ input:focus {
 }
 @media (max-width: 400px) {
   input {
-    width: 48%;
+    width: 53.5%;
   }
   .timer {
     width: 20%;
@@ -111,7 +115,7 @@ input:focus {
 }
 @media (max-width: 300px) {
   input {
-    width: 38%;
+    width: 43.5%;
   }
   .timer {
     width: 24%;
@@ -123,7 +127,7 @@ input:focus {
 
 @media (max-width: 200px) {
   input {
-    width: 35%;
+    width: 40.5%;
   }
   .timer {
     width: 26.25%;
@@ -131,4 +135,4 @@ input:focus {
   .reset {
     width: 26.25%;
   }
-}
+} 
