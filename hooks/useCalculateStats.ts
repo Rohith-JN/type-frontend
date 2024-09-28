@@ -2,18 +2,13 @@ import { useSelector } from "react-redux";
 import { State } from "../context/state";
 
 export const useCalculateStats = () => {
-    const { typedWord, wordList, typedHistory, incorrectCharsHistory } =
-        useSelector((state: State) => state.word);
-    const { time } = useSelector((state: State) => state.preferences);
-    const spaces = wordList.includes(typedWord)
-        ? wordList.indexOf(typedWord)
-        : 0;
-    let correctChars = 0;
-    const result = typedHistory.map(
-        (typedWord, idx) => typedWord === wordList[idx]
+    const { wordList, typedHistory, incorrectCharsHistory } = useSelector(
+        (state: State) => state.word
     );
-    result.forEach((_, idx) => {
-        const typedWord = typedHistory[idx];
+    const { time } = useSelector((state: State) => state.preferences);
+    const spaces = typedHistory.length;
+    let correctChars = 0;
+    typedHistory.forEach((typedWord, idx) => {
         const word = wordList[idx];
         let wordCorrectChars = 0;
         for (let i = 0; i < Math.min(typedWord.length, word.length); i++) {

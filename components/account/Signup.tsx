@@ -22,8 +22,10 @@ const Signup = (props: { onClick: VoidFunction }) => {
         email: '',
         password: '',
     });
+    const [clicked, setClicked] = useState(false);
 
     const onSubmit = async (e: { preventDefault: () => void; }) => {
+        setClicked(true)
         e.preventDefault()
         const validation = await validate({
             username: user.username,
@@ -34,6 +36,7 @@ const Signup = (props: { onClick: VoidFunction }) => {
         if (validation.data?.validate.field === null && validation.data?.validate.message === null) {
             await createUserWithEmailAndPassword(user.email, user.password).then(function () {
                 dispatch(setResult([results[0]]));
+                // if user clicks sign-up multiple times then multiple users are created with the different uid
                 customToast.success("Signed Up!", toastOptions)
             }).catch(function (error) {
                 const message = error.message.replace("Firebase:", "");
@@ -59,7 +62,7 @@ const Signup = (props: { onClick: VoidFunction }) => {
                         onChange={(event) => setUser({ ...user, email: event.target.value })} required></input>
                     <input autoComplete="off" spellCheck='false' type="password" placeholder='Password' value={user.password}
                         onChange={(event) => setUser({ ...user, password: event.target.value })} required></input>
-                    <button type="submit" value="Submit" className={styles.slide}>Sign up</button>
+                    <button type="submit" value="Submit" className={styles.slide} disabled={clicked}>Sign up</button>
                 </form>
                 <p>Already have an account? <span onClick={props.onClick}>Log In</span></p>
             </div>

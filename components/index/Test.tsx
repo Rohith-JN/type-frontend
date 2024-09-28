@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { appendTypedHistory, setIncorrectChar, setTimerId, setTypedWord, setWordList, setTypedWordDuration } from "../../context/actions";
 import { State } from "../../context/state";
@@ -14,7 +14,6 @@ const Test = () => {
     const [rotated, setRotated] = useState(false);
     const [test, setTest] = useState(false);
     const [startTime, setStartTime] = useState<number | null>(null);
-
     const [typedChars, setTypedChars] = useState<string[]>([]);
 
     useEffect(() => {
@@ -26,7 +25,8 @@ const Test = () => {
     useEffect(() => {
         inputRef.current?.focus()
     }, [timer, wordList])
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setTest(true);
         const inputValue = e.target.value;
 
@@ -61,9 +61,9 @@ const Test = () => {
             dispatch(setTypedWord(inputValue))
             setTypedChars(inputValue.split(""));
         }
-    };
+    }, [dispatch, startTime, typedHistory, wordList]);
 
-    useEffect(() => {
+    const scrollToCurrentWord = useCallback(() => {
         if (currentWordRef.current) {
             const parent = currentWordRef.current.parentElement;
             if (parent) {
@@ -71,7 +71,11 @@ const Test = () => {
                 parent.scrollTop = scrollOffset - 10;
             }
         }
-    }, [typedHistory, typedWord]);
+    }, []);
+
+    useEffect(() => {
+        scrollToCurrentWord();
+    }, [typedHistory, typedWord, scrollToCurrentWord]);
 
     useEffect(() => {
         if (test) {
