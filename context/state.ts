@@ -1,6 +1,8 @@
 export interface State {
     preferences: {
         time: number; // user preferred time limit
+        palette: boolean;
+        theme: string;
     };
     word: {
         typedWord: string;
@@ -50,6 +52,8 @@ export interface State {
 export const initialState: State = {
     preferences: {
         time: 0,
+        palette: false,
+        theme: "",
     },
     word: {
         typedWord: "",

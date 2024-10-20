@@ -1,8 +1,10 @@
 import Login from '../components/account/Login';
 import Signup from '../components/account/Signup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../styles/Account.module.css';
 import Chart from '../components/account/Chart';
+import { getTheme } from '../utils/getTheme';
+import { NextPageContext } from 'next';
 import ConditionalRenderer from '../components/other/ConditionalRenderer';
 import Stats from '../components/account/Stats';
 import Tests from '../components/account/Tests';
@@ -10,7 +12,11 @@ import { useAuth } from '../firebase/auth';
 import { useTestsQuery, useGetStatsQuery } from '../graphql/generated/graphql';
 import { usePaginatedTestsQuery } from '../hooks/usePaginatedTestsQuery';
 
-const Account = () => {
+const Account = ({ themeData }: {
+  themeData: {
+    [key: string]: string;
+  }
+}) => {
   const { authUser } = useAuth();
   const [loginVisible, setLoginVisible] = useState("flex");
   const [signupVisible, setSignUpVisible] = useState("none");
@@ -27,6 +33,10 @@ const Account = () => {
     setSignUpVisible("none")
     setLoginVisible("flex")
   }
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", themeData.theme || "");
+  }, [themeData.theme]);
 
   const fetching = userStatsFetching || testsFetching || paginatedTestsFetching;
   const data = testsData && userStats && !paginatedTestsError
@@ -53,3 +63,6 @@ const Account = () => {
 };
 
 export default Account;
+export async function getServerSideProps(context: NextPageContext) {
+  return await getTheme(context);
+}

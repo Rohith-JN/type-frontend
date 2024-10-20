@@ -7,10 +7,42 @@ import {
     setTime,
     setWordList,
     timerSet,
+    setPallet,
+    setTheme,
 } from "../../context/actions";
 import { State } from "../../context/state";
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { resetTest } from '../../utils/test';
+import Palette from '../other/Palette';
+import { useCookies } from 'react-cookie';
+
+const themeOptions: string[] = [
+    "superuser",
+    "pink",
+    "aether",
+    "alduin",
+    "arch",
+    "aurora",
+    "bushido",
+    "carbon",
+    "dark",
+    "dev",
+    "drowning",
+    "gruvbox",
+    "matrix",
+    "metaverse",
+    "miami",
+    "mountain",
+    "nord",
+    "paper",
+    "pulse",
+    "scalene",
+    "shadow",
+    "stealth",
+    "viridescent",
+    "vscode",
+    "weird",
+].sort();
 
 const Header = () => {
     const timeOptions = useMemo(() => [
@@ -21,11 +53,37 @@ const Header = () => {
         { id: 5, optionText: 120 },
     ], []);
 
-    const { time } = useSelector((state: State) => state.preferences);
+    const { time, palette, theme } = useSelector((state: State) => state.preferences);
 
     const dispatch = useDispatch();
     const [selectedOption, setSelectedOption] = useLocalStorage("selectedOption", timeOptions.find(opt => opt.optionText === time)?.id || 4);
     const [option, setOption] = useLocalStorage("time", time || 60);
+
+    const [cookies, setCookie] = useCookies(["theme", "language"])
+
+    useEffect(() => {
+        if (!cookies.theme) {
+            setCookie("theme", "superuser", {
+                path: "/",
+                maxAge: 60 * 60 * 60 * 60 * 60,
+                sameSite: true,
+            })
+        }
+    }, [cookies.theme, dispatch, setCookie])
+
+    useEffect(() => {
+        dispatch(setTheme(cookies.theme))
+        document.documentElement.setAttribute("data-theme", cookies.theme);
+    }, [cookies.theme, dispatch]);
+
+    const onThemeClick = (option: string) => {
+        dispatch(setTheme(option));
+        setCookie("theme", option, {
+            path: "/",
+            maxAge: 60 * 60 * 60 * 60 * 60,
+            sameSite: true,
+        })
+    }
 
     useEffect(() => {
         import(`../../public/english.json`).then((words) =>
@@ -56,7 +114,19 @@ const Header = () => {
                         }}
                     />
                 ))}
+                <div className={`${styles.Divider} ${styles.theme}`}></div>
+                <h1 className={`${styles.NavText} ${styles.theme}`} style={{ color: 'var(--sub-color)' }} onClick={() => {
+                    dispatch(setPallet(true))
+                }
+                }>{theme}</h1>
             </div>
+            <Palette
+                open={palette}
+                callback={function (option: string): void {
+                    onThemeClick(option);
+                }}
+                options={themeOptions}
+            />
         </div>
     );
 }

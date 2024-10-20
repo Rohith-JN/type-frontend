@@ -1,12 +1,18 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styles from '../styles/Leaderboard.module.css'
 import { useLeaderboardQuery } from "../graphql/generated/graphql";
 import { useAuth } from "../firebase/auth";
+import { getTheme } from "../utils/getTheme";
+import { NextPageContext } from "next";
 import ConditionalRenderer from "../components/other/ConditionalRenderer";
 import Option from "../components/other/Option";
 import { secondsToTime } from "../utils/utils";
 
-const Leaderboard = () => {
+const Leaderboard = ({ themeData }: {
+    themeData: {
+        [key: string]: string;
+    }
+}) => {
     const { authUser } = useAuth();
     const uid = (authUser) ? authUser['uid'] : ''
     const wordOptions = useMemo(() => [
@@ -24,6 +30,10 @@ const Leaderboard = () => {
             uid: uid
         }
     })
+
+    useEffect(() => {
+        document.documentElement.setAttribute("data-theme", themeData.theme || "");
+    }, [themeData.theme]);
 
     return <ConditionalRenderer data={data ? true : false} fetching={fetching} title={"Type / Leaderboard"}>
         <div className={styles.leaderboard}>
@@ -88,3 +98,7 @@ const Leaderboard = () => {
 }
 
 export default Leaderboard
+
+export async function getServerSideProps(context: NextPageContext) {
+    return await getTheme(context);
+}

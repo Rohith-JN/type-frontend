@@ -11,6 +11,8 @@ import {
     SET_INCORRECT_CHAR,
     SET_WORDLIST,
     SET_WORD_DURATION,
+    SET_THEME,
+    SET_PALLET,
 } from "./actions";
 import { initialState } from "./state";
 
@@ -23,6 +25,13 @@ export const preferenceReducer = (
             return {
                 ...state,
                 time: payload,
+            };
+        case SET_THEME:
+            return { ...state, theme: payload };
+        case SET_PALLET:
+            return {
+                ...state,
+                palette: payload,
             };
         default:
             return state;

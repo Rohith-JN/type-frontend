@@ -4,7 +4,7 @@ import { NextPageContext } from 'next';
 import CustomError from "../components/other/Error";
 import Loader from "../components/other/Loader";
 
-const ErrorPage = ({ statusCode }: {
+const ErrorPage = ({ statusCode, data }: {
   statusCode: number, data: {
     [key: string]: string;
   }
@@ -14,6 +14,10 @@ const ErrorPage = ({ statusCode }: {
   useEffect(() => {
     setContentLoaded(true);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", data.theme || "");
+  }, [data.theme]);
 
   const [loading, setLoading] = useState(true);
 

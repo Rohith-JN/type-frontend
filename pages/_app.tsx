@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import '../styles/Test.css';
 import Maintenance from '../components/other/Maintenance';
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { CookiesProvider } from 'react-cookie';
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -19,20 +20,22 @@ export default function App({ Component, pageProps }: AppProps) {
             <SpeedInsights />
             <UrqlProvider value={urqlClient}>
                 <ReduxProvider store={store}>
-                    <ToastContainer
-                        position="top-right"
-                        autoClose={5000}
-                        hideProgressBar={false}
-                        newestOnTop={true}
-                        closeOnClick
-                        rtl={false}
-                        draggable
-                        theme="colored"
-                        icon={false}
-                    />
-                    {
-                        (process.env.NEXT_PUBLIC_MAINTENANCE === '0') ? <Layout><Component {...pageProps} /></Layout> : <Maintenance />
-                    }
+                    <CookiesProvider>
+                        <ToastContainer
+                            position="top-right"
+                            autoClose={5000}
+                            hideProgressBar={false}
+                            newestOnTop={true}
+                            closeOnClick
+                            rtl={false}
+                            draggable
+                            theme="colored"
+                            icon={false}
+                        />
+                        {
+                            (process.env.NEXT_PUBLIC_MAINTENANCE === '0') ? <Layout><Component {...pageProps} /></Layout> : <Maintenance />
+                        }
+                    </CookiesProvider>
                 </ReduxProvider>
             </UrqlProvider>
         </AuthUserProvider>
