@@ -40,4 +40,4 @@ jobs:
 
     - name: Upload Scan Results to AWS S3
       run: |
-        aws s3 cp results.json s3://docker-scan-results/results.json
+        aws s3 cp results.json s3://docker-scan-results-743050012855-ap-south-2-an/results.json
